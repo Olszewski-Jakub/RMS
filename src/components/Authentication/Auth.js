@@ -100,8 +100,8 @@ export default function Auth() {
                 }
             });
 
-            //console.log(res.data);
-            //console.log(res.status);
+            console.log(res.data);
+            console.log(res.status);
 
             const{idToken, refreshToken, email} = res.data;
             Cookies.set('idToken', idToken, {expires: 7});
