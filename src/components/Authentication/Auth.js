@@ -18,8 +18,6 @@ export default function Auth() {
         phoneNumber: ''
     });
 
-    
-
     const showLogin = () => {
         setLoginForm(true);
     }
@@ -77,8 +75,7 @@ export default function Auth() {
                     }
                 });
                 console.log(res.data);
-
-                
+                showLogin();
                 
             } catch (error) {
                 console.error("Error:", error.response ? error.response.data : error.message);
