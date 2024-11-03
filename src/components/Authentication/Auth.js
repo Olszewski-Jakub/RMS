@@ -74,7 +74,7 @@ export default function Auth() {
                         'Content-Type': 'application/json'
                     }
                 });
-                console.log(res.data);
+                //console.log(res.data);
                 showLogin();
                 
             } catch (error) {
@@ -100,7 +100,7 @@ export default function Auth() {
                 }
             });
 
-            console.log(res.data);
+            //console.log(res.data);
             //console.log(res.status);
 
             const{idToken, refreshToken, email} = res.data;
