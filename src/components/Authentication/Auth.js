@@ -107,8 +107,11 @@ export default function Auth() {
             Cookies.set('idToken', idToken, {expires: 7});
             Cookies.set('refreshToken', refreshToken, {expires: 7});
 
-            navigate('/');
-
+            if(formData.email === 'ownerrms@gmail.com'){
+                navigate('/dashboard');
+            }else{
+                navigate('/');
+            }
         }catch(err){
             console.error(err);
         }
