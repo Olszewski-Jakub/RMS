@@ -41,8 +41,12 @@ export default function Main(){
                     <h1>Welcome</h1>
                     <button onClick={handleLogout} style={{padding: "1rem"}}>Logout</button>
                 </div>
-             ) : "Not logged In"}
-            <button onClick={handleClick} style={{padding: "1rem"}}>Sign In</button>
+             ) : 
+             <div>
+                <h1>Not Logged In</h1>
+                <button onClick={handleClick} style={{padding: "1rem"}}>Sign In</button>
+            </div>
+            }
         </div>
     );
 }
