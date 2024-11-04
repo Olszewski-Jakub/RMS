@@ -1,10 +1,13 @@
 import React from "react";
-import "./Sidebar.css";
-import { CiLogout } from "react-icons/ci";
+import "../../../Styles/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { useEffect } from "react";
 import { useState } from "react";
+import { GoHome } from "react-icons/go";
+import { MdOutlineDashboard } from "react-icons/md";
+import { MdEventNote } from "react-icons/md";
+import { BiLogOut } from "react-icons/bi";
 
 const Sidebar = () => {
     const navigate = useNavigate(); 
@@ -25,13 +28,37 @@ const Sidebar = () => {
         setIsLoggedIn(false);
         navigate('/');
     };
-    return(
-        <div className="sidebar">
-            <div className="home-btn-container">
-                <CiLogout className="logout-icon" onClick={handleLogout}/>
-            </div>
 
-        </div>
+
+    return(
+        <nav className="sidebar">
+            <div className="nav-items">
+                <ul className="sidebar-nav">
+                    <li class="nav-item">
+                        <GoHome className="icons"/>
+                        <span className="link-txt">Home</span>
+                    </li>
+                    <li class="nav-item">
+                        <MdOutlineDashboard className="icons"/>
+                        <span className="link-txt">Dashboard</span>
+                    </li>
+                    <li class="nav-item">
+                        <MdEventNote className="icons"/>
+                        <span className="link-txt">Reservations</span>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div className="logout-container">
+                <ul className="sidebar-nav">
+                    <li class="nav-item">
+                        <BiLogOut className="icons"/>
+                        <span className="link-txt">Sign Out</span>
+                    </li>
+                </ul>
+                
+            </div>
+        </nav>
     )
 }
 
