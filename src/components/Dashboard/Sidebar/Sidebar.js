@@ -34,15 +34,15 @@ const Sidebar = () => {
         <nav className="sidebar">
             <div className="nav-items">
                 <ul className="sidebar-nav">
-                    <li class="nav-item">
+                    <li className="nav-item">
                         <GoHome className="icons"/>
                         <span className="link-txt">Home</span>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                         <MdOutlineDashboard className="icons"/>
                         <span className="link-txt">Dashboard</span>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                         <MdEventNote className="icons"/>
                         <span className="link-txt">Reservations</span>
                     </li>
@@ -51,7 +51,7 @@ const Sidebar = () => {
             </div>
             <div className="logout-container">
                 <ul className="sidebar-nav">
-                    <li class="nav-item">
+                    <li className="nav-item">
                         <BiLogOut className="icons"/>
                         <span className="link-txt">Sign Out</span>
                     </li>

@@ -125,7 +125,7 @@ export default function Auth() {
 
     return (
         <div className="auth-container">
-            <div clasName="return-container" onClick={returnHome} style={{cursor: "pointer", width: "5rem", height: "3rem", backgroundColor: "green", position: "absolute", top: "0", left: "0"}}>
+            <div onClick={returnHome} style={{cursor: "pointer", width: "5rem", height: "3rem", backgroundColor: "green", position: "absolute", top: "0", left: "0"}}>
                 <h4>Return Home</h4>
             </div>
             <div className="content-container">
