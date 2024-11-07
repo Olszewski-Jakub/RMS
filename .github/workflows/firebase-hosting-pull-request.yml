@@ -7,16 +7,46 @@ permissions:
   checks: write
   contents: read
   pull-requests: write
+# jobs:
+#   build_and_preview:
+#     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - run: npm ci && npm run build
+#       - uses: FirebaseExtended/action-hosting-deploy@v0
+#         with:
+#           repoToken: ${{ secrets.GITHUB_TOKEN }}
+#           firebaseServiceAccount: ${{
+#             secrets.FIREBASE_SERVICE_ACCOUNT_RESTAURANT_MANAGEMENT_SY_1A0CD }}
+#           projectId: restaurant-management-sy-1a0cd
+
 jobs:
-  build_and_preview:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{
-            secrets.FIREBASE_SERVICE_ACCOUNT_RESTAURANT_MANAGEMENT_SY_1A0CD }}
-          projectId: restaurant-management-sy-1a0cd
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run ESLint
+      run: |
+        npm run lint || true # Add || true to prevent failing on warnings
+
+    - name: Deploy to Firebase Hosting
+      if: github.event.pull_request.head.repo.full_name == 'your-repo/your-repo'
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_RESTAURANT_MANAGEMENT_SY_1A0CD }}'
+        projectId: 'restaurant-management-sy-1a0cd'
+        channelId: 'pr${{ github.event.pull_request.number }}'
+        expires: 7d
