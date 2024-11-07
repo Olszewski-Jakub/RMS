@@ -4,6 +4,7 @@ import "../../Styles/Auth.css";
 import axios from "axios";
 import countryCodes from "./countryCodes";
 import Cookies from 'js-cookie';
+import config from "../../config"; // Import the config file
 
 export default function Auth() {
     const navigate = useNavigate();
@@ -59,7 +60,7 @@ export default function Auth() {
             return;
         }else if(!loginForm && checkPassword()){
             //console.log("Passwords match");
-            const url = '/app/auth/register';
+            const url = config.baseURL +'/auth/register';
             const fullPhoneNumber = formData.countryCode + formData.phoneNumber;
 
             try {
@@ -89,7 +90,7 @@ export default function Auth() {
         //console.log("login button clicked");
 
         try{
-            const url = '/app/auth/login';
+            const url = config.baseURL +'/auth/login';
 
             const res = await axios.post(url, {
                 email: formData.email,
