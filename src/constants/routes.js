@@ -1,7 +1,8 @@
 export const ROUTES = {
   HOME: "/",
   AUTH: "/auth",
-  DASHBOARD: "/dashboard",
+  OWNERDB: "/owner-dashboard",
+  CUSTOMERDB: "/customer-dashboard",
   NOT_FOUND: "*", // Wildcard route for 404
 };
 

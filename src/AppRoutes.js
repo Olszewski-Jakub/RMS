@@ -7,7 +7,8 @@ import {
 
 import Home from "./pages/Home/Home.js";
 import Auth from "./pages/Authentication/Auth.js";
-import Dashboard from "./pages/Dashboard/Dashboard.js";
+import OwnerDB from "./pages/Dashboard/OwnerDB.js";
+import CustomerDB from "./pages/Dashboard/CustomerDB.js";
 import NotFound from "./pages/NotFound/NotFound.js";
 
 import { ROUTES } from "./constants/routes.js";
@@ -19,7 +20,8 @@ function AppRoutes() {
         {/* Public Routes */}
         <Route>
           <Route path={ROUTES.HOME} element={<Home />} />
-          <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+          <Route path={ROUTES.OWNERDB} element={<OwnerDB />} />
+          <Route path={ROUTES.CUSTOMERDB} element={<CustomerDB />} />
         </Route>
 
         {/* Auth Routes */}

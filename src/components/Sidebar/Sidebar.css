@@ -32,11 +32,13 @@
     margin-bottom: 1rem;
     cursor:pointer;
     padding: 0.5rem;
-    border-radius: 0.2rem;
+    border-radius: 0.3rem;
     transition: background-color 0.3s;
+    transition: color 0.3s;
 }
 .nav-item:hover{
-    background-color: lightgray;
+    background-color: #ffdcc4;
+    color: white;
 }
 
 .logout-container {
