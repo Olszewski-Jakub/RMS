@@ -1,7 +1,6 @@
 import React from "react";
-import Sidebar from "./Sidebar/Sidebar";
-import "../../Styles/Dashboard.css";
-import { useState } from "react";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import "./Dashboard.css";
 
 const Dashboard = () => {
     return(
