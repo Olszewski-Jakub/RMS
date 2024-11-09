@@ -1,24 +1,15 @@
-import React from 'react';
-import { ReserveTableContainer } from './ReserveTableStyle';
-const ReserveTable = () => {
-    return (
-        <div id="reserve">
-            <ReserveTableContainer>
-            <div className="hero-container">
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-                <h1>Reserve Table</h1>
-            </div>
-            </ReserveTableContainer>
-        </div>
-    )
-}
+import React, { useState } from "react";
+import { ReserveTableContainer } from "./ReserveTableStyle";
+import FloorPlan from "./FloorPlan";
 
-export default ReserveTable
+const ReserveTable = () => {
+  return (
+    <div id="reserve">
+      <ReserveTableContainer>
+        <FloorPlan />
+      </ReserveTableContainer>
+    </div>
+  );
+};
+
+export default ReserveTable;

@@ -9,6 +9,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
+    "devextreme": "24.1.7",
+    "devextreme-react": "24.1.7",
     "firebase": "^10.14.1",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.456.0",
