@@ -8,7 +8,6 @@ import ReserveTable from "../../components/ReserveTable/ReserveTable";
 import LocationSection from "../../components/Location/Location";
 import MenuSection from "../../components/Menu/Menu";
 import Footer from "../../components/Footer/Footer";
-
 export default function Home() {
   const navigate = useNavigate();
 

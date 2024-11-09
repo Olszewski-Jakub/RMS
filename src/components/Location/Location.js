@@ -1,5 +1,5 @@
 // LocationSection.js
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { LocationStyles } from "./LocationStyle";
 import DayHours from "./DayHours"; 
 import Map from './Map';
@@ -7,8 +7,25 @@ import LocationPin from './icons/LocationPin';
 import PhoneIcon from './icons/PhoneIcon';
 import ClockIcon from './icons/ClockIcon';
 import EmailIcon from './icons/EmailIcon';
+import openingHoursService from "../../services/openingHoursService";
+
 
 const LocationSection = () => {  
+  const [openingHours, setOpeningHours] = useState([]);
+
+  useEffect(() => {
+    const fetchOpeningHours = async () => {
+      try {
+        const data = await openingHoursService.getAll();
+        console.log(data);
+        setOpeningHours(data);
+      } catch (error) {
+        console.error('Error fetching opening hours:', error);
+      }
+    };
+
+    fetchOpeningHours();
+  }, []);
   return (
     <div id="location">
     <section className="location-section">
@@ -50,15 +67,9 @@ const LocationSection = () => {
               </h3>
               <div className="operating-hours">
                 <div className="hours-container">
-                  <DayHours
-                    day="Monday - Thursday"
-                    hours="11:00 AM - 10:00 PM"
-                  />
-                  <DayHours
-                    day="Friday - Saturday"
-                    hours="11:00 AM - 11:00 PM"
-                  />
-                  <DayHours day="Sunday" hours="11:00 AM - 9:00 PM" />
+                {openingHours.map((hours, index) => (
+                    <DayHours key={index} day={hours.day} hours={`${hours.startTime}-${hours.endTime}`} />
+                  ))}
                 </div>
               </div>
             </div>

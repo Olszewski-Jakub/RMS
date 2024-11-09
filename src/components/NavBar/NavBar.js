@@ -21,7 +21,7 @@ import { AuthContext } from "../../contexts/AuthContext"; // Adjust the path as 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   const navigateToLogin = () => {
     navigate(ROUTES.AUTH);
