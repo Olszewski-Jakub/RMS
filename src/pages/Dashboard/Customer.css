@@ -1,0 +1,8 @@
+.main-container{
+    border: 1px solid black;
+    height: 200vh;
+}
+.reservation-container{
+    border: 1px solid black;
+    height: 25rem;
+}
