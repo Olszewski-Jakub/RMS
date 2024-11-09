@@ -1,32 +1,27 @@
 import React, { useContext } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../../contexts/AuthContext'; // Adjust the path as necessary
-import { ROUTES } from "../../constants/routes";
+import { AuthContext } from "../../contexts/AuthContext"; // Adjust the path as necessary
+import Navbar from "../../components/NavBar/NavBar";
+import Hero from "../../components/Hero/Hero";
+import ReserveTable from "../../components/ReserveTable/ReserveTable";
+import LocationSection from "../../components/Location/Location";
+import MenuSection from "../../components/Menu/Menu";
+import Footer from "../../components/Footer/Footer";
 
-export default function Home(){
-    const navigate = useNavigate(); 
-    const { isLoggedIn, logout } = useContext(AuthContext);
+export default function Home() {
+  const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate(ROUTES.AUTH); 
-    };
-
-    return(
-        /* Write your HTML Code here */
-        <div>
-            <h1>Main Page</h1>
-            {isLoggedIn ? (
-                <div>
-                    <h1>Welcome</h1>
-                    <button onClick={logout} style={{padding: "1rem"}}>Logout</button>
-                </div>
-             ) : 
-             <div>
-                <h1>Not Logged In</h1>
-                <button onClick={handleClick} style={{padding: "1rem"}}>Sign In</button>
-            </div>
-            }
-        </div>
-    );
+  return (
+    <>
+    <Navbar />
+    <div className="body">
+        <Hero />
+        <ReserveTable />
+        <MenuSection />
+        <LocationSection />
+        <Footer />
+    </div>
+    </>
+  );
 }

@@ -1,10 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from "react";
+import { ThemeProvider } from "styled-components";
 import AppRoutes from './AppRoutes';
+import { lightTheme } from "./utils/Themes.js";
 
 function App() {
+  const [darkMode] = useState(false);
+
   return (
-    <AppRoutes />
+    <ThemeProvider theme={darkMode ? lightTheme : lightTheme}>
+      <AppRoutes />
+    </ThemeProvider>
   );
 }
 
