@@ -1,12 +1,10 @@
 import React from "react";
-import "../../../Styles/Sidebar.css";
+import "./Sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { GoHome } from "react-icons/go";
-import { MdOutlineDashboard } from "react-icons/md";
-import { MdEventNote } from "react-icons/md";
+import { MdOutlineDashboard,MdEventNote } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 
 const Sidebar = () => {

@@ -1,6 +1,6 @@
 // config.js
-const config = {
+const apiConfig = {
     baseURL: "https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app"
 };
 
-export default config;
+export default apiConfig;
