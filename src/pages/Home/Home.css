@@ -4,3 +4,14 @@
     margin: 0;
     font-family: 'Poppins';
 }
+.home-container {
+    background-image: url('./background.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+    height: 100vh; 
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: start; 
+}

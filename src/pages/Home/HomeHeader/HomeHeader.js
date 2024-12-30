@@ -9,9 +9,9 @@ const HomeHeader = () => {
     }
 
     return(
-        <div className="header">
+        <div className="header-container">
             <div className="header-left">
-                <h1 className="logo">RMS</h1>
+                <h1 className="logo">R<span style={{color: "#FF7D05", fontFamily: "Lavishly Yours"}}>M</span>S</h1>
             </div>
             <div className="header-center">
                 <h3

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../../contexts/AuthContext'; // Adjust the path as necessary
+import { AuthContext } from '../../contexts/AuthContext'; 
 import { ROUTES } from "../../constants/routes";
 import HomeHeader from "./HomeHeader/HomeHeader";
 import HomeMain from "./HomeMain/HomeMain";
@@ -16,7 +16,7 @@ export default function Home(){
 
     return(
         /* Write your HTML Code here */
-        <div>
+        <div className="home-container">
             <HomeHeader />
             <HomeMain />
             {/*{isLoggedIn ? (
