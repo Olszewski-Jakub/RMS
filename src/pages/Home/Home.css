@@ -9,9 +9,10 @@
     background-size: cover; 
     background-position: center; 
     background-attachment: fixed; 
-    height: 100vh; 
+    height: 100%; 
     width: 100%; 
     display: flex;
     flex-direction: column;
     justify-content: start; 
+    overflow-y: auto;
 }

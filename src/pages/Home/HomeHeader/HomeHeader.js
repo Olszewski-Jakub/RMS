@@ -15,18 +15,22 @@ const HomeHeader = () => {
             </div>
             <div className="header-center">
                 <h3
+                    className="header-btn"
                     onClick={() => handleCurrentPage("Home")}
                     style={{color: currentPage === "Home" ? "#FF7D05" : "black", borderBottom: currentPage === "Home" ? "3px solid #FF7D05" : "none"}}
                 >Home</h3>
                 <h3
+                    className="header-btn"
                     onClick={() => handleCurrentPage("Dashboard")}
                     style={{color: currentPage === "Dashboard" ? "#FF7D05" : "black", borderBottom: currentPage === "Dashboard" ? "3px solid #FF7D05" : "none"}}
                 >Dashboard</h3>
                 <h3
+                    className="header-btn"
                     onClick={() => handleCurrentPage("Menu")}
                     style={{color: currentPage === "Menu" ? "#FF7D05" : "black", borderBottom: currentPage === "Menu" ? "3px solid #FF7D05" : "none"}}
                 >Menu</h3>
                 <h3
+                    className="header-btn"
                     onClick={() => handleCurrentPage("Location")}
                     style={{color: currentPage === "Location" ? "#FF7D05" : "black", borderBottom: currentPage === "Location" ? "3px solid #FF7D05" : "none"}}
                 >Location</h3>

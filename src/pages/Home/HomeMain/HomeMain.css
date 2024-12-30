@@ -1,12 +1,14 @@
 .main {
     padding: 2rem 4vw;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    min-height: 33rem;
+    min-height: 100vh;
+    height: auto;
+    overflow: auto;
 }
 
-.main-content-container {
+.main-content-container, .openhours-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -20,7 +22,7 @@
     background-color: white;
 }
 
-.mainImg-container {
+.img-container1 {
     flex: 1 1 60%;
     padding: 1rem;
     display: flex;
@@ -28,7 +30,7 @@
     align-items: center;
 }
 
-.mainImg-container img {
+.img-container1 img {
     max-width: 100%;
     height: auto;
     border-radius: 1rem;
@@ -91,3 +93,60 @@
         font-size: 1rem;
     }
 }
+
+
+.openhours-text, .img-container2{
+    border: 1px solid black;
+    height: auto;
+    width: 50%;
+}
+
+.openhours-text{
+    display:flex;
+    justify-content: center;
+    padding: 2rem;
+    border: 3px solid #FF7D05;
+    border-radius: 1rem;
+    flex-direction: column;
+}
+
+.openhours-text-top, .clock-icon{
+    display:flex;
+    align-items: center;
+    color: #FF7D05;
+    padding: none;
+}
+.openhours-text-top{
+    margin-bottom: 1.5rem;
+}
+.clock-icon{
+    font-size: 2.125rem;
+    margin-left: 0.5rem;
+}
+
+.openhours-text-btm{
+    display:flex;
+    flex-direction: column;
+}
+
+.openhours-text-btm p{
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.phoneNumber-txt{
+    margin-top: 2rem;
+    display:flex;
+    align-items: center;
+}
+.phone-icon{
+    font-size: 3.5rem;
+    margin-right: 1.5rem;
+    color: #FF7D05;
+}
+
+.phoneNumber{
+    font-size: 2rem;
+}
+
