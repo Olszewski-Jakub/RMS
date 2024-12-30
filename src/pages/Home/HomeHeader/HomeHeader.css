@@ -1,0 +1,45 @@
+.header{
+    display:flex;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+
+}
+.header, .header-left, .header-center, .header-right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}    
+.header-left{
+    margin-left: 1rem;
+    width: 13%;
+}
+.header-right{
+    margin-right: 1rem;
+    width: 20%;
+}
+.header-center{
+    flex-grow: 1;
+}
+
+.logo{
+    font-family: "Lavishly Yours", serif;
+}
+
+.auth-btn{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: 10rem;
+    border-radius: 1.5rem;
+    cursor:pointer;
+    transition: transform 0.1s ease;
+}
+
+.auth-btn:active{
+    transform: scale(0.95);
+}
+
+h3{
+    margin-left: 6rem;
+    color: #1E1E1E;
+    cursor:pointer;
+}
