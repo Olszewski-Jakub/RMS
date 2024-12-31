@@ -1,6 +1,5 @@
 import React from "react";
 import "./HomeMain.css";
-import homeImage from "./homeImage.png";
 import { FaCalendarAlt } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
 import { BiSolidPhoneCall } from "react-icons/bi";
@@ -9,8 +8,17 @@ import image22 from "./image22.jpg";
 import image3 from "./image3.jpg";
 import image33 from "./image33.jpg";
 import image333 from "./image333.jpg";
+import ImageSlider from "./ImageSlider";
+import food1 from "./food1.jpg";
+import food2 from "./food2.jpg";
+import food3 from "./food3.jpg";
+import food4 from "./food4.jpg";
+import food5 from "./food5.jpg";
+
 
 const HomeMain = () => {
+
+    const images = [food1, food2, food3, food4, food5];
     return (
         <div className="main" style={{
             display: "flex", flexDirection: "column"
@@ -21,7 +29,8 @@ const HomeMain = () => {
                 }}
             >
                 <div className="img-container1">
-                    <img src={homeImage} alt="Delicious food" />
+                    {/*<img src={homeImage} alt="Delicious food" />*/}
+                    <ImageSlider imageUrls={images} />
                 </div>
                 <div className="content">
                     <h1 style={{
