@@ -16,3 +16,22 @@
     justify-content: start; 
     overflow-y: auto;
 }
+
+::-webkit-scrollbar {
+    width: 12px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #FF7D05; 
+    border-radius: 6px; 
+    border: 3px solid white; 
+}
+
+::-webkit-scrollbar-track {
+    background: #f4f4f4; 
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e66b04; 
+}

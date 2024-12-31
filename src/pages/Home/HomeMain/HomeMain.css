@@ -8,7 +8,7 @@
     overflow: auto;
 }
 
-.main-content-container, .openhours-container{
+.main-content-container, .openhours-container, .aboutus-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -20,6 +20,9 @@
     max-width: 1200px;
     width: 100%;
     background-color: white;
+}
+.openhours-container{
+    position: relative;
 }
 
 .img-container1 {
@@ -96,7 +99,6 @@
 
 
 .openhours-text, .img-container2{
-    border: 1px solid black;
     height: auto;
     width: 50%;
 }
@@ -148,5 +150,58 @@
 
 .phoneNumber{
     font-size: 2rem;
+}
+
+
+.img-container2 {
+    position: relative; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.img-container2 img {
+    position: absolute; 
+    max-width: 100%;
+    height: auto;
+    border-radius: 1rem;
+}
+
+.img-container2 img:first-child {
+    left: 2.5rem;
+    top: -5rem;
+    width: 65%;
+    z-index: 1; 
+    border: 2px solid #FF7D05;
+}
+
+.img-container2 img:last-child {
+    right: 2rem;
+    width: 50%;
+    border: 2px solid #FF7D05;
+    top: -10rem; 
+    z-index: 2; 
+}
+
+.aboutus-content-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border: 3px solid #FF7D05;
+    text-align: center;
+    border-radius: 1rem;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+
+.aboutus-content-container p {
+    margin-bottom: 1rem;
+}
+.img3-container img{
+    border: 2px solid #FF7D05;
+    border-radius: 1rem;
 }
 
