@@ -1,0 +1,43 @@
+.footer-container{
+    background-color: #FF7D05;
+    width: 100%;
+    height: auto;
+    padding: 2rem;
+    display:flex;
+    justify-content: space-between;
+}
+.first-container{
+    width: 30%;
+}
+
+.socials {
+    background-color: white;
+    padding: 0.5rem; 
+    width: 3rem;
+    height: 3rem; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-right: 1rem;
+    cursor:pointer;
+}
+.apps{
+    font-size: 1.3rem;
+}
+
+.second-container{
+    width: 30%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.second-container h4, .third-container h4{
+    color: white;
+}
+
+.third-container{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
