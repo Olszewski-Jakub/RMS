@@ -5,6 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { ROUTES } from "../../constants/routes";
 import HomeHeader from "./HomeHeader/HomeHeader";
 import HomeMain from "./HomeMain/HomeMain";
+import HomeFooter from "./HomeFooter/HomeFooter.js";
 
 export default function Home(){
     const navigate = useNavigate(); 
@@ -19,6 +20,7 @@ export default function Home(){
         <div className="home-container">
             <HomeHeader />
             <HomeMain />
+            <HomeFooter />
             {/*{isLoggedIn ? (
                 <div>
                     <h1>Welcome</h1>
