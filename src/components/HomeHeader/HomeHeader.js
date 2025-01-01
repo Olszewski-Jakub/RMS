@@ -52,7 +52,8 @@ const HomeHeader = () => {
                 className="login-btn auth-btn" style={{
                     color: "#FF7D05",
                     border: "1px solid #FF7D05",
-                    marginRight: "1rem"
+                    marginRight: "1rem",
+                    backgroundColor: "white"
                 }}>Log In</button>
 
                 <button 

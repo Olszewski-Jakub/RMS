@@ -64,7 +64,7 @@
 }
 
 
-.login-btn{
+.auth-login-btn, .auth-reg-btn{
     background-color: #FF7D05;
     padding: 1rem;
     border: none;
