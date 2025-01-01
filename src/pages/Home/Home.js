@@ -3,9 +3,9 @@ import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../contexts/AuthContext'; 
 import { ROUTES } from "../../constants/routes";
-import HomeHeader from "./HomeHeader/HomeHeader";
-import HomeMain from "./HomeMain/HomeMain";
-import HomeFooter from "./HomeFooter/HomeFooter.js";
+import HomeHeader from "../../components/HomeHeader/HomeHeader.js";
+import HomeMain from "../../components/HomeMain/HomeMain.js";
+import HomeFooter from "../../components/HomeFooter/HomeFooter.js";
 
 export default function Home(){
     const navigate = useNavigate(); 
