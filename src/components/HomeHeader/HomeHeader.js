@@ -1,8 +1,19 @@
 import React, {useState} from "react";
 import "./HomeHeader.css";
+import { useNavigate } from "react-router-dom";
 
 const HomeHeader = () => {
     const [currentPage, setCurrentPage] = useState("Home");
+
+    const navigate = useNavigate();
+
+    const handleLoginClick = () => {
+        navigate("/auth");
+    };
+
+    const handleSignUpClick = () => {
+        navigate("/auth");
+    };
 
     const handleCurrentPage = (page) => {
         setCurrentPage(page);
@@ -36,16 +47,22 @@ const HomeHeader = () => {
                 >Location</h3>
             </div>
             <div className="header-right">
-                <button className="login-btn auth-btn" style={{
+                <button 
+                onClick={handleLoginClick}
+                className="login-btn auth-btn" style={{
                     color: "#FF7D05",
-                    border: "1px solid #FF7D05"
+                    border: "1px solid #FF7D05",
+                    marginRight: "1rem"
                 }}>Log In</button>
 
-                <button className="signup-btn auth-btn" style={{
+                <button 
+                onClick={handleSignUpClick}
+                className="signup-btn auth-btn" style={{
                     color: "white",
                     border: "none",
                     backgroundColor: "#FF7D05"
-                }}>Sign Up</button>
+                }}
+                >Sign Up</button>
             </div>
         </div>
     )
