@@ -3,17 +3,17 @@ import "./HomeMain.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
 import { BiSolidPhoneCall } from "react-icons/bi";
-import image2 from "./image2.jpg";
-import image22 from "./image22.jpg";
-import image3 from "./image3.jpg";
-import image33 from "./image33.jpg";
-import image333 from "./image333.jpg";
+import image2 from "../../assets/image2.jpg";
+import image22 from "../../assets/image22.jpg";
+import image3 from "../../assets/image3.jpg";
+import image33 from "../../assets/image33.jpg";
+import image333 from "../../assets/image333.jpg";
 import ImageSlider from "./ImageSlider";
-import food1 from "./food1.jpg";
-import food2 from "./food2.jpg";
-import food3 from "./food3.jpg";
-import food4 from "./food4.jpg";
-import food5 from "./food5.jpg";
+import food1 from "../../assets/food1.jpg";
+import food2 from "../../assets/food2.jpg";
+import food3 from "../../assets/food3.jpg";
+import food4 from "../../assets/food4.jpg";
+import food5 from "../../assets/food5.jpg";
 
 
 const HomeMain = () => {
