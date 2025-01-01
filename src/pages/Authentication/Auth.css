@@ -85,6 +85,25 @@ span{
     cursor:pointer;
 }
 
+.return-home-container {
+    background-color: rgb(34, 34, 34);
+    top: 1rem;
+    left: 1rem;
+    position: absolute;
+    z-index: 100;
+    padding: 1rem;
+    border-radius: 2rem;
+    cursor:pointer;
+}
+
+.return-home-container p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FF7D05;
+    font-size: 1.5rem;
+}
+
 
 
 

@@ -7,6 +7,8 @@ import Cookies from 'js-cookie';
 import { IoMdReturnLeft } from "react-icons/io";
 import { Routes } from "../../constants/routes.js";
 import AuthBackground from "../../assets/auth-background.jpg";
+import { FaHome } from "react-icons/fa";
+
 
 export default function Auth() {
     const navigate = useNavigate();
@@ -262,6 +264,9 @@ export default function Auth() {
                     </form>
                 </div>
             </div>*/}
+            <div className="return-home-container" onClick={returnHome}>
+                <p><FaHome style={{marginRight: "0.5rem"}}/> Home</p>
+            </div>
 
             <img src={AuthBackground} className="auth-background" alt="Background" />
             <div className="auth-form-container">
