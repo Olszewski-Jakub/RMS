@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 import Auth from "./pages/Authentication/Auth";
-import OwnerDB from "./pages/Dashboard/OwnerDB";
-import CustomerDB from "./pages/Dashboard/CustomerDB";
 import NotFound from "./pages/NotFound/NotFound";
 import Menu from "./pages/Menu/Menu";
 import Layout from "./components/Layout";
@@ -31,22 +29,8 @@ function AppRoutes() {
             </Layout>
           }
         />
-        <Route
-          path={ROUTES.OWNERDB}
-          element={
-            <Layout>
-              <OwnerDB />
-            </Layout>
-          }
-        />
-        <Route
-          path={ROUTES.CUSTOMERDB}
-          element={
-            <Layout>
-              <CustomerDB />
-            </Layout>
-          }
-        />
+       
+     
 
         {/* Auth Route */}
         <Route path={ROUTES.AUTH} element={<Auth />} />
