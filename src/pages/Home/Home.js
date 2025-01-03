@@ -18,7 +18,7 @@ export default function Home(){
     return(
         /* Write your HTML Code here */
         <div className="home-container">
-            <HomeHeader />
+            {/*<HomeHeader />*/}
             <HomeMain />
             <HomeFooter />
             {/*{isLoggedIn ? (
