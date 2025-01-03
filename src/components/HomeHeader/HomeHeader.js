@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import "./HomeHeader.css";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes.js";
 
 const HomeHeader = () => {
     const [currentPage, setCurrentPage] = useState("Home");
@@ -17,6 +18,25 @@ const HomeHeader = () => {
 
     const handleCurrentPage = (page) => {
         setCurrentPage(page);
+
+        switch(page){
+            case "Home":
+                navigate("/");
+                break;
+            case "Dashboard":
+                navigate(ROUTES.MENU);
+                break;
+            case "Menu":
+                navigate(ROUTES.MENU);
+                break;
+            case "Location":
+                navigate("/");
+                break;
+            default:
+                navigate("/");
+            
+        }
+
     }
 
     return(
