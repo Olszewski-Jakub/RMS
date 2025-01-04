@@ -48,7 +48,9 @@ const menuItems = [
     { id: 47, name: "Duck Confit", category: "Main", price: "20.99", description: "Slow-cooked duck with crispy skin." },
     { id: 48, name: "Eclairs", category: "Dessert", price: "7.25", description: "Pastry filled with cream and topped with chocolate." },
     { id: 49, name: "Meatballs", category: "Starter", price: "9.99", description: "Savory and tender meatballs." },
-    { id: 50, name: "Ratatouille", category: "Main", price: "14.50", description: "A French vegetable medley." }
+    { id: 50, name: "Ratatouille", category: "Main", price: "14.50", description: "A French vegetable medley." },
+    { id: 51, name: "Mushroom Risotto", category: "Main", price: "17.75", description: "Creamy risotto with earthy mushrooms." },
+    { id: 52, name: "Lemon Meringue Pie", category: "Dessert", price: "6.99", description: "Tangy lemon filling with a fluffy meringue topping." }
   ];
   
   export default menuItems;
