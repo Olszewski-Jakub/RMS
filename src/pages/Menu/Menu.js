@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Menu.css";
 import menuItems from "../../constants/MenuItems.js";
+import { FaRegClock } from "react-icons/fa6";
 
 const Menu = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -10,8 +11,9 @@ const Menu = () => {
         const filtered = menuItems.filter(item => 
             item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
             item.category.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            item.description.toLowerCase().includes(searchTerm.toLowerCase())
+            item.time.toLowerCase().includes(searchTerm.toLowerCase())
         );
+        
         setFilteredItems(filtered);
 
     }, [searchTerm]);
@@ -24,7 +26,7 @@ const Menu = () => {
                     placeholder="Search for food"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-
+                    className="food-searchbar"
                 />
             </div>
             <div className="menuItems-container">
@@ -43,10 +45,16 @@ const Menu = () => {
                         <div className="item-image-container">
                             <h1>Item Image</h1>
                         </div>
+                        <p style={{marginTop: "0.5rem", marginBottom: "0.5rem", fontSize: "1.25rem"}}>{item.name}</p>
                         <div className="menu-item-details-container">
-                            <h3>{item.name}</h3>
-                            <h3>{item.price}</h3>
-                            <h3>{item.description}</h3>
+                            <div className="menu-item-info-container">
+                                <span><FaRegClock style={{marginRight: "0.25rem"}}/> {item.time}</span>
+                                <span>{item.kcal} kcal</span>
+                            </div>
+                            <div className="menu-item-btn-container">
+                                <p style={{fontSize: "1.25rem", marginTop: "0.5rem"}}>&euro;{item.price}</p>
+                                <button className="item-btn" onClick={() => console.log("+++")}>+</button>
+                            </div>
                         </div>
                     </div>
                 ))}
