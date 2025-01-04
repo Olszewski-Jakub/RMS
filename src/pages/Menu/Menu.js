@@ -6,6 +6,7 @@ import { FaRegClock } from "react-icons/fa6";
 const Menu = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredItems, setFilteredItems] = useState(menuItems);
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         const filtered = menuItems.filter(item => 
@@ -17,6 +18,32 @@ const Menu = () => {
         setFilteredItems(filtered);
 
     }, [searchTerm]);
+
+    const addToCart = (item) => {
+        const existingItem = cart.find(cartItem => cartItem.id === item.id);
+
+        if(existingItem){
+            setCart(cart.map(cartItem => 
+                cartItem.id === item.id
+                ? {...cartItem, quantity: cartItem.quantity + 1}
+                : cartItem
+            ));
+        }else{
+            setCart([...cart, {...item, quantity: 1}]);
+        }
+    };
+
+    const removeFromCart = (itemId) => {
+        setCart(cart.map(item => 
+            item.id === itemId && item.quantity > 1
+            ? {...item, quantity: item.quantity - 1} 
+            : item
+        ).filter(item => item.quantity > 0));
+    };
+    
+    const getTotal = () => {
+        return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+      };
 
     return(
         <div className="menu-container">
