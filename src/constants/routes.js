@@ -5,5 +5,4 @@ export const ROUTES = {
   NOT_FOUND: "*",
 };
 
-
 export default ROUTES;

@@ -30,7 +30,6 @@ function AppRoutes() {
           }
         />
        
-     
 
         {/* Auth Route */}
         <Route path={ROUTES.AUTH} element={<Auth />} />
