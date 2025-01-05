@@ -1,7 +1,6 @@
 .header-container{
     display:flex;
     padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     background-color: white;
 }
 .header, .header-left, .header-center, .header-right{
