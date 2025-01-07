@@ -30,7 +30,7 @@ const HomeHeader = () => {
                 navigate(ROUTES.MENU);
                 break;
             case "Location":
-                navigate("/");
+                navigate(ROUTES.LOCATION);
                 break;
             default:
                 navigate("/");
