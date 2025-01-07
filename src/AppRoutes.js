@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import Auth from "./pages/Authentication/Auth";
 import NotFound from "./pages/NotFound/NotFound";
 import Menu from "./pages/Menu/Menu";
+import Location from "./pages/Location/Location";
 import Layout from "./components/Layout";
 import { ROUTES } from "./constants/routes";
 
@@ -26,6 +27,14 @@ function AppRoutes() {
           element={
             <Layout>
               <Menu />
+            </Layout>
+          }
+        />
+        <Route
+          path={ROUTES.LOCATION}
+          element={
+            <Layout>
+              <Location />
             </Layout>
           }
         />
