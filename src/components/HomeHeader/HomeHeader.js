@@ -32,6 +32,9 @@ const HomeHeader = () => {
             case "Location":
                 navigate(ROUTES.LOCATION);
                 break;
+            case "Reservation":
+                navigate(ROUTES.RESERVETABLE);
+                break;
             default:
                 navigate("/");
             
@@ -55,6 +58,11 @@ const HomeHeader = () => {
                     onClick={() => handleCurrentPage("Dashboard")}
                     style={{color: currentPage === "Dashboard" ? "#FF7D05" : "black", borderBottom: currentPage === "Dashboard" ? "3px solid #FF7D05" : "none"}}
                 >Dashboard</h3>
+                <h3
+                    className="header-btn"
+                    onClick={() => handleCurrentPage("Reservation")}
+                    style={{color: currentPage === "Reservation" ? "#FF7D05" : "black", borderBottom: currentPage === "Reservation" ? "3px solid #FF7D05" : "none"}}
+                >Reserve</h3>
                 <h3
                     className="header-btn"
                     onClick={() => handleCurrentPage("Menu")}
