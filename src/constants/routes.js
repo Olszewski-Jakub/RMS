@@ -3,6 +3,7 @@ export const ROUTES = {
   AUTH: "/auth",
   MENU: "/menu",
   LOCATION: "/location",
+  RESERVETABLE: "/reserve-table",
   NOT_FOUND: "*",
 };
 

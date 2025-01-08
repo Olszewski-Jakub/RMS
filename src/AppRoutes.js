@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Menu from "./pages/Menu/Menu";
 import Location from "./pages/Location/Location";
 import Layout from "./components/Layout";
+import ReserveTable from "./pages/Reservation/ReserveTable";
 import { ROUTES } from "./constants/routes";
 
 function AppRoutes() {
@@ -35,6 +36,14 @@ function AppRoutes() {
           element={
             <Layout>
               <Location />
+            </Layout>
+          }
+        />
+        <Route
+          path={ROUTES.RESERVETABLE}
+          element={
+            <Layout>
+              <ReserveTable />
             </Layout>
           }
         />
