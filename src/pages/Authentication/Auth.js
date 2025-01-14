@@ -7,6 +7,7 @@ import { IoMdReturnLeft } from "react-icons/io";
 import { Routes } from "../../constants/routes.js";
 import AuthBackground from "../../assets/auth-background.jpg";
 import { FaHome } from "react-icons/fa";
+import authService from "../../services/authService.js";
 
 
 export default function Auth() {
@@ -62,70 +63,46 @@ export default function Auth() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        //console.log("register button clicked");
 
-        if (!loginForm && !checkPassword()) {
-            //console.log("Passwords do not match");
+        if (!checkPassword()) {
+            // Passwords do not match
             return;
-        }else if(!loginForm && checkPassword()){
-            //console.log("Passwords match");
-            const url = '/app/auth/register';
-            const fullPhoneNumber = formData.countryCode + formData.phoneNumber;
-
-            try {
-                const res = await axios.post(url, {
-                    firstName: formData.firstName,
-                    lastName: formData.lastName,
-                    email: formData.email,
-                    password: formData.password,
-                    phoneNumber: fullPhoneNumber
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                console.log(res.data);
-                showLogin();
-                
-            } catch (error) {
-                console.error("Error:", error.response ? error.response.data : error.message);
-            }
         }
 
-    }
+        const formDataForRegister = {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password,
+            phoneNumber: formData.phoneNumber,
+            countryCode: formData.countryCode
+        };
+
+        try {
+            const data = await authService.register(formDataForRegister);
+            console.log("Register response:", data);
+            showLogin();
+        } catch (error) {
+            console.error("Registration error:", error);
+        }
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        //console.log("login button clicked");
-
-        try{
-            const url = '/app/auth/login';
-
-            const res = await axios.post(url, {
-                email: formData.email,
-                password: formData.password
-            }, {
-                headers: {
-                    'Content-Type' : 'application/json'
-                }
-            });
-
-            console.log(res.data);
-            console.log(res.status);
-
-            const{idToken, refreshToken, email} = res.data;
-            Cookies.set('idToken', idToken, {expires: 7});
-            Cookies.set('refreshToken', refreshToken, {expires: 7});
-
-            if(formData.email === 'ownerrms@gmail.com'){
+        try {
+            const { email, password } = formData;
+            const data = await authService.login(email, password);
+            
+            const { idToken, refreshToken, email: userEmail } = data;
+            if (userEmail === 'ownerrms@gmail.com') {
                 navigate('/owner-dashboard');
-            }else{
+            } else {
                 navigate('/customer-dashboard');
             }
-        }catch(err){
-            console.error(err);
+        } catch (err) {
+            console.error("Login error:", err);
         }
-    }
+    };
     
     const returnHome = () => {
         navigate('/');
