@@ -1,10 +1,10 @@
-import axiosInstance from '../config/apiConfig';
 import cookieManager from '../utils/cookieManager';
 import COOKIE_KEYS from '../constants/cookieKeys';
+import axios from 'axios';
 
 const authService = {
     login: async (email, password) => {
-        const response = await axiosInstance.post(`/auth/login`, {
+        const response = await axios.post("https://api-d4o6tbc5fq-uc.a.run.app" + `/auth/login`, {
             email,
             password
         });
@@ -20,7 +20,7 @@ const authService = {
             phoneNumber: code + formData.phoneNumber,
         };
 
-        const response = await axiosInstance.post(`/auth/register`, updatedFormData);
+        const response = await axios.post("https://api-d4o6tbc5fq-uc.a.run.app" + `/auth/register`, updatedFormData);
         const data = response.data.data; 
         return data;
     },
@@ -34,7 +34,7 @@ const authService = {
             throw new Error('No refresh token available');
         }
 
-        const response = await axiosInstance.post(`/auth/refreshToken`, {
+        const response = await axios.post("https://api-d4o6tbc5fq-uc.a.run.app" + `/auth/refreshToken`, {
             refreshToken: refreshToken
         });
 

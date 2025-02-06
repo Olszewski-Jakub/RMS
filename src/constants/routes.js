@@ -4,6 +4,7 @@ export const ROUTES = {
   MENU: "/menu",
   LOCATION: "/location",
   RESERVETABLE: "/reserve-table",
+  PROFILE: "/profile",
   NOT_FOUND: "*",
 };
 

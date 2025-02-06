@@ -1,0 +1,30 @@
+/* Custom styling for the DatePicker */
+.custom-datepicker {
+  border: 2px solid #007bff; /* Blue border */
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.custom-datepicker__input-container {
+  display: block;
+  position: relative;
+}
+
+/* Add more styles as needed */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
