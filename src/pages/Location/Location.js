@@ -6,12 +6,13 @@ import LocationPin from './icons/LocationPin';
 import PhoneIcon from './icons/PhoneIcon';
 import ClockIcon from './icons/ClockIcon';
 import EmailIcon from './icons/EmailIcon';
+import openingHoursService from "../../services/openingHoursService";
 
 
 const LocationSection = () => {  
   const [openingHours, setOpeningHours] = useState([]);
 
-  {/*useEffect(() => {
+  useEffect(() => {
     const fetchOpeningHours = async () => {
       try {
         const data = await openingHoursService.getAll();
@@ -23,7 +24,8 @@ const LocationSection = () => {
     };
 
     fetchOpeningHours();
-  }, []);*/}
+  }, []);
+  
   return (
     <div id="location">
     <section className="location-section">

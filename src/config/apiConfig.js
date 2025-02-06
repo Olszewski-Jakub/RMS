@@ -2,7 +2,7 @@ import axios from 'axios';
 import authService from '../services/authService';
 
 const apiConfig = {
-    baseURL: "https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net/app"
+    baseURL: "https://api-d4o6tbc5fq-uc.a.run.app"
 };
 
 const axiosInstance = axios.create({

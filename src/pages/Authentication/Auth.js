@@ -1,245 +1,63 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
-import axios from "axios";
-import Cookies from 'js-cookie';
-import { IoMdReturnLeft } from "react-icons/io";
-import { Routes } from "../../constants/routes.js";
+import {ROUTES} from "../../constants/routes.js";
 import AuthBackground from "../../assets/auth-background.jpg";
 import { FaHome } from "react-icons/fa";
-import authService from "../../services/authService.js";
+import {AuthContext} from "../../contexts/AuthContext";
 
 
 export default function Auth() {
     const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
-    const [isOwner, setIsOwner] = useState(false);
     const [loginForm, setLoginForm] = useState(true);
+    const { isLoggedIn, login, register } = useContext(AuthContext);
+
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        countryCode: '+353',
-        phoneNumber: ''
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      countryCode: "+353",
+      phoneNumber: "",
     });
 
-    const handleTogglePassword = () => {
-        setShowPassword(!showPassword);
-    };
+    useEffect(() => {
+      if (isLoggedIn) {
+        navigate(ROUTES.HOME);
+      }
+    }, [isLoggedIn, navigate]);
 
-    const showLogin = () => {
-        setLoginForm(true);
-    }
-    const showRegister = () => {
-        setLoginForm(false);
-    }
+    const showLogin = () => setLoginForm(true);
+    const showRegister = () => setLoginForm(false);
+    const checkPassword = () => formData.password === formData.confirmPassword;
+    const returnHome = () => navigate(ROUTES.HOME);
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-
-        if(loginForm && (name == 'email' || name == 'password')){
-            setFormData((prevData) => {
-                return{
-                    ...prevData,
-                    [name] : value
-                }
-            });
-        }else {
-            setFormData((prevData) => {
-                return{
-                    ...prevData,
-                    [name] : value
-                }
-            }); 
-        }
-
-    }
-
-    const checkPassword = () => {
-        return formData.password === formData.confirmPassword;
-    }
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
 
     const handleRegister = async (e) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        if (!checkPassword()) {
-            // Passwords do not match
-            return;
-        }
-
-        const formDataForRegister = {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            password: formData.password,
-            phoneNumber: formData.phoneNumber,
-            countryCode: formData.countryCode
-        };
-
-        try {
-            const data = await authService.register(formDataForRegister);
-            console.log("Register response:", data);
-            showLogin();
-        } catch (error) {
-            console.error("Registration error:", error);
-        }
+      if (!checkPassword()) {
+        console.error("Passwords do not match");
+        return;
+      }
+        await register(formData, () => showLogin());
     };
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const { email, password } = formData;
-            const data = await authService.login(email, password);
-            
-            const { idToken, refreshToken, email: userEmail } = data;
-            if (userEmail === 'ownerrms@gmail.com') {
-                navigate('/owner-dashboard');
-            } else {
-                navigate('/customer-dashboard');
-            }
-        } catch (err) {
-            console.error("Login error:", err);
-        }
+      e.preventDefault();
+      await login(formData.email, formData.password);
     };
-    
-    const returnHome = () => {
-        navigate('/');
-    }
-
 
     return (
         <div className="auth-container">
-            {/*<div className="return-container" onClick={returnHome} style={{cursor: "pointer", width: "10rem", height: "3rem", position: "absolute", top: "1rem", left: "1rem", display:"flex", alignItems: "center"}}>
-                <IoMdReturnLeft style={{fontSize: "2rem", marginRight: "1rem"}}/>
-                <span style={{fontSize: "1rem"}}>Return Home</span>
-            </div>
-            <div className="content-container">
-                <div className="btn-container">
-                    <button className="login-btn auth-btn" onClick={showLogin}>Login</button>
-                    <button className="register-btn auth-btn" onClick={showRegister}>Register</button>
-                </div>
-                <div className="form-container" style={{width: '100%'}}>
-                    <form 
-                        style={{display: 'flex', flexDirection: 'column'}}
-                        onSubmit={loginForm ? handleLogin : handleRegister}
-                    >
-                        {loginForm ? (
-                            <>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    placeholder="Email"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={formData.password}
-                                    placeholder="Password"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <button type="submit" className="submit-btn">Login</button>
-                            </>
-                        ) : (
-                            <>
-                                <div className="name-container" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <input
-                                        type="text"
-                                        name="firstName"
-                                        value={formData.firstName}
-                                        id="firstName"
-                                        placeholder="First Name"
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    <input
-                                        type="text"
-                                        name="lastName"
-                                        value={formData.lastName}
-                                        id="lastName"
-                                        placeholder="Last Name"
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    placeholder="Enter Email"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={formData.password}
-                                    placeholder="Enter Password"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <input
-                                    type="password"
-                                    name="confirmPassword"
-                                    value={formData.confirmPassword}
-                                    placeholder="Confirm Password"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                 <div className="phone-container" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <select
-                                        name="countryCode"
-                                        value={formData.countryCode}
-                                        onChange={handleChange}
-                                        style={{ 
-                                            minWidth: '25%', 
-                                            padding: '10px', 
-                                            height: '40px',
-                                        }}
-                                        required
-                                    >
-                                        {countryCodes.map((country) => (
-                                            <option 
-                                                key={country.code} 
-                                                value={country.code}
-                                            >
-                                                ({country.code})
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <input
-                                        type="text"
-                                        name="phoneNumber"
-                                        value={formData.phoneNumber}
-                                        placeholder="Phone Number"
-                                        onChange={handleChange}
-                                        style={{ 
-                                            width: '70%', 
-                                            padding: '10px', 
-                                            height: '40px',
-                                        }}
-                                        required
-                                    />
-                                </div>
-                                {/*<input
-                                    type="text"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
-                                    placeholder="Phone Number"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <button type="submit" className="submit-btn">Register</button>
-                            </>
-                        )}
-                    </form>
-                </div>
-            </div>*/}
             <div className="return-home-container" onClick={returnHome}>
                 <p><FaHome style={{marginRight: "0.5rem"}}/> Home</p>
             </div>
