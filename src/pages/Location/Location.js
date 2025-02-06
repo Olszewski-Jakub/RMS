@@ -1,13 +1,12 @@
 import React, { useEffect,useState } from "react";
-import { LocationStyles } from "./LocationStyle";
-import DayHours from "./DayHours"; 
-import Map from './Map';
-import LocationPin from './icons/LocationPin'; 
-import PhoneIcon from './icons/PhoneIcon';
-import ClockIcon from './icons/ClockIcon';
-import EmailIcon from './icons/EmailIcon';
+import LocationPin from '../../components/Location/icons/LocationPin';
+import PhoneIcon from '../../components/Location/icons/PhoneIcon';
+import ClockIcon from '../../components/Location/icons/ClockIcon';
+import EmailIcon from '../../components/Location/icons/EmailIcon';
 import openingHoursService from "../../services/openingHoursService";
-
+import {LocationStyles} from "../../components/Location/LocationStyle";
+import DayHours from "../../components/Location/DayHours";
+import Map from "../../components/Location/Map"
 
 const LocationSection = () => {  
   const [openingHours, setOpeningHours] = useState([]);

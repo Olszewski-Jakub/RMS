@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
 import {AuthContext} from "../../contexts/AuthContext";
+import {useNavigate} from "react-router-dom";
+import ROUTES from "../../constants/routes";
 
 
 export default function Profile(){
+    const navigate = useNavigate();
     const {logout} = useContext(AuthContext);
-
+    const handleLogoutClick = () => {
+        logout()
+        navigate(ROUTES.HOME);
+    }
     return(
-        <div className="home-container">
-            <button onClick={logout}/>
-        </div>
+            <button onClick={logout}>Logout</button>
+
     );
 }
