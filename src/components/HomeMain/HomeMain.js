@@ -3,6 +3,8 @@ import "./HomeMain.css";
 import {FaCalendarAlt} from "react-icons/fa";
 import {LuClock3} from "react-icons/lu";
 import {BiSolidPhoneCall} from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import {ROUTES} from "../../constants/routes.js";
 import image2 from "../../assets/image2.jpg";
 import image22 from "../../assets/image22.jpg";
 import image3 from "../../assets/image3.jpg";
@@ -19,6 +21,7 @@ import openingHoursService from "../../services/openingHoursService";
 const HomeMain = () => {
     const images = [food1, food2, food3, food4, food5];
     const [openingHours, setOpeningHours] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOpeningHours = async () => {
@@ -33,6 +36,8 @@ const HomeMain = () => {
 
         fetchOpeningHours();
     }, []);
+
+    const goToReservation = () => { navigate(ROUTES.RESERVETABLE);};
 
     return (
         <div className="main" style={{
@@ -62,7 +67,7 @@ const HomeMain = () => {
                         Experience the taste of excellence with every dish we serve.
                         Where good food meets great company.
                     </p>
-                    <button className="reserve-btn">Reserve Now<FaCalendarAlt style={{
+                    <button className="reserve-btn" onClick={goToReservation}>Reserve Now<FaCalendarAlt style={{
                         marginLeft: "0.5rem"
                     }}/></button>
                 </div>
