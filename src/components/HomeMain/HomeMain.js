@@ -22,8 +22,7 @@ const HomeMain = () => {
     const images = [food1, food2, food3, food4, food5];
     const [openingHours, setOpeningHours] = useState([]);
     const navigate = useNavigate();
-    
-    
+
     useEffect(() => {
         const fetchOpeningHours = async () => {
             try {
@@ -38,7 +37,9 @@ const HomeMain = () => {
         fetchOpeningHours();
     }, []);
 
-    const goToReservation = () => { navigate(ROUTES.RESERVETABLE);};
+    const goToReservation = () => { 
+        navigate(ROUTES.RESERVETABLE);
+    };
 
     return (
         <div className="main" style={{
