@@ -1,0 +1,84 @@
+.profile-container {
+    width: 60%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reservation-details {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reservation-details p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  
+  .buttons {
+    margin-top: 15px;
+  }
+  
+  .manage-btn, .cancel-btn, .logout-btn {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .manage-btn {
+    background-color: white;
+    color: #FF7D05;
+    border: 1px solid #FF7D05;
+  }
+  
+  .cancel-btn {
+    background-color: #FF7D05;
+    color: white;
+  }
+  
+  .logout-btn {
+    background-color: white;
+    color: #FF7D05;
+    border: 1px solid #FF7D05;
+    margin-top: 15px;
+    margin-left: auto;
+    display: block; 
+    width: fit-content;
+  }
+  
+  .history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .history-table th, .history-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .history-table th {
+    background-color: #FF7D05;
+    color: white;
+  }
+  
+  .history-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+

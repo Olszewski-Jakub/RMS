@@ -22,7 +22,7 @@ const ReserveTable = () => {
         {/*number={number}*/}
         {/*setNumber={setNumber}*/}
         {/*onSearch={ }*/}
-      />
+      /
       </ReserveTableContainer>
     </div>
   );
