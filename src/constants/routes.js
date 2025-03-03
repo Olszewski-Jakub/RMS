@@ -6,6 +6,7 @@ export const ROUTES = {
   RESERVETABLE: "/reserve-table",
   PROFILE: "/profile",
   NOT_FOUND: "*",
+  ADMIN: "/admin"
 };
 
 export default ROUTES;

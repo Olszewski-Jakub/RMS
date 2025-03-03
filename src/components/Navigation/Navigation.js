@@ -17,6 +17,8 @@ const Navigation = () => {
 
     const handleProfileClick = () => navigate(ROUTES.PROFILE)
 
+    const hadndleDashboardClick = () => navigate(ROUTES.ADMIN)
+
     const handleCurrentPage = (page) => {
         setCurrentPage(page);
         switch (page) {
@@ -46,7 +48,7 @@ const Navigation = () => {
 
             <NavigationTabs currentPage={currentPage} handleCurrentPage={handleCurrentPage}/>
 
-                {isLoggedIn ? <ProfileButton handleProfileClick={handleProfileClick}/> :
+                {isLoggedIn ? <ProfileButton handleProfileClick={handleProfileClick} handleDashboardOnClick={hadndleDashboardClick}/> :
                     <AuthButtons handleLoginClick={handleLoginClick} handleSignUpClick={handleSignUpClick}/>}
         </div>
     );

@@ -27,6 +27,7 @@ const authService = {
     logout: async () => {
         cookieManager.remove(COOKIE_KEYS.ID_TOKEN);
         cookieManager.remove(COOKIE_KEYS.REFRESH_TOKEN);
+        cookieManager.remove(COOKIE_KEYS.USER)
     },
     refreshToken: async () => {
         const refreshToken = cookieManager.get(COOKIE_KEYS.REFRESH_TOKEN);

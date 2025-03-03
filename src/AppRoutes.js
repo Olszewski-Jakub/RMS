@@ -10,7 +10,8 @@ import Layout from "./components/Layout";
 import ReserveTable from "./pages/Reservation/ReserveTable";
 import {ROUTES} from "./constants/routes";
 import Profile from "./pages/Profile/Profile";
-
+import ProtectedRoute from "./ProtectedRoute";
+import Dashboard from "./pages/Dashboard/Dashboard";
 function AppRoutes() {
   return (
     <Router>
@@ -62,6 +63,11 @@ function AppRoutes() {
 
         {/* Redirect unknown routes to 404 page */}
         <Route path={ROUTES.NOT_FOUND} element={<NotFound/>}/>
+
+        <Route path={ROUTES.ADMIN} element={<ProtectedRoute roles={['owner','employee']}/>}>
+          <Route index element={<Dashboard />} />
+        </Route>
+
       </Routes>
     </Router>
   );
