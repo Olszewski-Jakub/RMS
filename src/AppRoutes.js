@@ -11,7 +11,7 @@ import ReserveTable from "./pages/Reservation/ReserveTable";
 import {ROUTES} from "./constants/routes";
 import Profile from "./pages/Profile/Profile";
 import ProtectedRoute from "./ProtectedRoute";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import RestaurantDashboard from "./pages/Dashboard/Dashboard";
 function AppRoutes() {
   return (
     <Router>
@@ -65,7 +65,7 @@ function AppRoutes() {
         <Route path={ROUTES.NOT_FOUND} element={<NotFound/>}/>
 
         <Route path={ROUTES.ADMIN} element={<ProtectedRoute roles={['owner','employee']}/>}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<RestaurantDashboard />} />
         </Route>
 
       </Routes>

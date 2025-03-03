@@ -39,6 +39,10 @@ const reservationService = {
             endTime
         });
         return response.data.data;
+    },
+    getAll: async () => {
+        const response = await axiosInstance.get(`/reservation/all`);
+        return response.data.data;
     }
 };
 

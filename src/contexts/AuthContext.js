@@ -20,8 +20,7 @@ export const AuthProvider = ({ children }) => {
       await authService.login(email, password);
       setIsLoggedIn(true);
       const userResponse = await userService.userDetails();
-
-
+      cookieManager.set(COOKIE_KEYS.USER, userResponse.privileges)
 
     } catch (error) {
       console.error("Login error:", error);

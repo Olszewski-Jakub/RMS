@@ -25,9 +25,6 @@ const Navigation = () => {
             case "Home":
                 navigate(ROUTES.HOME);
                 break;
-            case "Dashboard":
-                navigate(ROUTES.MENU);
-                break;
             case "Menu":
                 navigate(ROUTES.MENU);
                 break;

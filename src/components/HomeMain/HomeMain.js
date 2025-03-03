@@ -3,7 +3,7 @@ import "./HomeMain.css";
 import {FaCalendarAlt} from "react-icons/fa";
 import {LuClock3} from "react-icons/lu";
 import {BiSolidPhoneCall} from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {ROUTES} from "../../constants/routes.js";
 import image2 from "../../assets/image2.jpg";
 import image22 from "../../assets/image22.jpg";
@@ -37,7 +37,7 @@ const HomeMain = () => {
         fetchOpeningHours();
     }, []);
 
-    const goToReservation = () => { 
+    const goToReservation = () => {
         navigate(ROUTES.RESERVETABLE);
     };
 
@@ -92,15 +92,20 @@ const HomeMain = () => {
                     </div>
 
                     <div className="openhours-text-btm">
-                        {openingHours.map((hours, index) => (
-                            <p key={index}>
-                                {hours.day} <span style={{color: "#FF7D05"}}> - </span>
-                                {hours.startTime} <span style={{color: "#FF7D05"}}> AM </span> -
-                                {hours.endTime} <span style={{color: "#FF7D05"}}> PM </span>
-                            </p>
-                        ))}
-                        <p className="phoneNumber-txt"><BiSolidPhoneCall className="phone-icon"/> <span
-                            className="phoneNumber">+123456789</span></p>
+                        {openingHours.map((hours, index) =>
+                            hours.startTime != null && hours.endTime != null ? (
+                                <p key={index}>
+                                    {hours.day} <span style={{color: "#FF7D05"}}> - </span>
+                                    {hours.startTime} <span style={{color: "#FF7D05"}}> AM </span> -
+                                    {hours.endTime} <span style={{color: "#FF7D05"}}> PM </span>
+                                </p>
+                            ) : null
+                        )}
+
+                        <p className="phoneNumber-txt">
+                            <BiSolidPhoneCall className="phone-icon"/>{" "}
+                            <span className="phoneNumber">+123456789</span>
+                        </p>
                     </div>
 
                 </div>
