@@ -50,3 +50,83 @@ h3{
     color: #1E1E1E;
     cursor:pointer;
 }
+/* Add these styles to your Navigation.css file */
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    position: relative;
+}
+
+.hamburger-menu {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #FF7D05;
+    display: none;
+    z-index: 1000;
+}
+
+.mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-header-center {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.mobile-header-btn {
+    padding: 0.75rem 0;
+    cursor: pointer;
+    margin: 0.25rem 0;
+    text-align: left;
+}
+
+.mobile-header-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.mobile-auth-btn {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .header-center, 
+    .header-right {
+        display: none;
+    }
+    
+    .hamburger-menu {
+        display: block;
+    }
+    
+    .header-container {
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .mobile-menu {
+        display: none;
+    }
+}
