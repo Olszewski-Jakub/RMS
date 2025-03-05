@@ -16,7 +16,7 @@ import food2 from "../../assets/food2.jpg";
 import food3 from "../../assets/food3.jpg";
 import food4 from "../../assets/food4.jpg";
 import food5 from "../../assets/food5.jpg";
-import openingHoursService from "../../services/openingHoursService";
+import openingHoursService from "../../services/openingHours.service";
 
 const HomeMain = () => {
     const images = [food1, food2, food3, food4, food5];

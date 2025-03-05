@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ReserveTableContainer } from "./ReserveTableStyle";
-import FloorPlan from "./FloorPlan";
+import FloorPlan from "../../components/Table/FloorPlan";
 import DateTimeForm from "./DateTimeForm";
 
 const ReserveTable = () => {

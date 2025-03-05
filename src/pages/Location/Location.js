@@ -3,7 +3,7 @@ import LocationPin from '../../components/Location/icons/LocationPin';
 import PhoneIcon from '../../components/Location/icons/PhoneIcon';
 import ClockIcon from '../../components/Location/icons/ClockIcon';
 import EmailIcon from '../../components/Location/icons/EmailIcon';
-import openingHoursService from "../../services/openingHoursService";
+import openingHoursService from "../../services/openingHours.service";
 import {LocationStyles} from "../../components/Location/LocationStyle";
 import DayHours from "../../components/Location/DayHours";
 import Map from "../../components/Location/Map"

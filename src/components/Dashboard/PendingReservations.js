@@ -14,14 +14,14 @@ const PendingReservations = ({ pendingReservations, handleApproveReservation, ha
               <div className="flex justify-between">
                 <div>
                   <div className="flex items-center mb-1">
-                    <h3 className="font-semibold">{reservation.name} - {reservation.guests} guests</h3>
+                    <h3 className="font-semibold">{reservation.fullName} - {reservation.people} guests</h3>
                     <span className="ml-3 px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
                       {getTableName(reservation.tableId)}
                     </span>
                   </div>
-                  <p className="text-gray-600">{reservation.date} at {reservation.time}</p>
-                  <p className="text-gray-600">Contact: {reservation.contact}</p>
-                  {reservation.notes && <p className="text-gray-600 mt-2">Notes: {reservation.notes}</p>}
+                  <p className="text-gray-600">{reservation.date} at {reservation.startTime} - {reservation.endTime}</p>
+                  <p className="text-gray-600">Contact: {reservation.phoneNumber}</p>
+
                 </div>
                 <div className="flex">
                   <button

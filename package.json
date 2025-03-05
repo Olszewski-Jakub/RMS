@@ -5,13 +5,17 @@
   "proxy": "https://us-central1-restaurant-management-sy-1a0cd.cloudfunctions.net",
   "dependencies": {
     "@mui/x-date-pickers": "^7.25.0",
+    "@shadcn/ui": "^0.0.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "firebase": "^10.14.1",
     "js-cookie": "^3.0.5",
+    "lucide-react": "^0.477.0",
     "postcss-nested": "^7.0.2",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
@@ -22,6 +26,9 @@
     "react-scripts": "5.0.1",
     "react-time-picker": "^7.0.0",
     "styled-components": "^6.1.14",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.1.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

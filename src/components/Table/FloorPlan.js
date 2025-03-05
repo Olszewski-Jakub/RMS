@@ -1,7 +1,7 @@
 // FloorPlan.js
 import React, { useState } from "react";
-import TableWithChairs from "./Table/TableWithChairs";
-import { tableTypes } from "./Table/tableTypes";
+import TableWithChairs from "./TableWithChairs";
+import { tableTypes } from "./tableTypes";
 const FloorPlan = () => {
   const [selectedRoom, setSelectedRoom] = useState(null);
 

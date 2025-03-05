@@ -4,11 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="ci/cd" />
+    <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="ci/cd">
+      <change afterPath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/door.service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/floorPlan.service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/table.service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/walls.service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/window.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/PendingReservations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/PendingReservations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/TablesManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/TablesManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HomeMain/HomeMain.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HomeMain/HomeMain.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/apiConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/apiConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/contexts/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/contexts/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useTailwindLayout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Dashboard/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Location/Location.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Location/Location.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Reservation/FloorPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/FloorPlan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Reservation/ReserveTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Reservation/ReserveTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Reservation/Table/Chair.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/Chair.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Reservation/Table/TableWithChairs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/TableWithChairs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Reservation/Table/tableTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/tableTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/authService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/openingHoursService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/openingHours.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/reservationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/reservation.service.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -18,9 +52,21 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Olszewski-Jakub&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Olszewski-Jakub/RMS.git&quot;,
+    &quot;accountId&quot;: &quot;0b618a94-2208-4e61-9ea0-82fd6da5cc42&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2sfBkYvrZ28e7z1UkOdkRjgJ7uw" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -30,18 +76,29 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Node.js.FloorPlanDesigner.js.executor": "Run",
+    "Node.js.TablesManagement.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "release",
+    "git-widget-placeholder": "admin-dashboard",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "npm.start.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Users/jakubolszewski/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components" />
+      <recent name="$PROJECT_DIR$/src/pages/Reservation/Table" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -58,6 +115,8 @@
       <option name="presentableId" value="Default" />
       <updated>1738836892770</updated>
       <workItem from="1738836893823" duration="1276000" />
+      <workItem from="1741094531759" duration="751000" />
+      <workItem from="1741095286485" duration="20628000" />
     </task>
     <task id="LOCAL-00001" summary="ci/cd">
       <option name="closed" value="true" />

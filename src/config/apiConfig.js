@@ -1,5 +1,5 @@
 import axios from 'axios';
-import authService from '../services/authService';
+import authService from '../services/auth.service';
 import cookieManager from "../utils/cookieManager";
 import COOKIE_KEYS from "../constants/cookieKeys";
 const apiConfig = {

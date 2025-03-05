@@ -7,11 +7,12 @@ import OpeningHours from '../../components/Dashboard/OpeningHours';
 import TablesManagement from '../../components/Dashboard/TablesManagement';
 import EmployeeManagement from '../../components/Dashboard/EmployeeManagement';
 import AllReservations from '../../components/Dashboard/AllReservations';
+import FloorPlanDesigner from '../../components/Dashboard/FloorPlanDesigner';
 import './Dashboard.css';
-import reservationService from '../../services/reservationService';
-import openingHoursService from "../../services/openingHoursService";
+import reservationService from '../../services/reservation.service';
+import openingHoursService from "../../services/openingHours.service";
 // Custom hook for managing active tab state
-const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, setOpeningHours) => {
+const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservation) => {
   const [activeTab, setActiveTab] = useState(initialTab);
 
   // Side effect to listen for activeTab changes
@@ -58,7 +59,27 @@ const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, se
             console.error('Failed to fetch opeening hours:', error);
           }
           break;
+        case "pendingReservations":
+          try {
+            const pendingReservationResponse = await reservationService.getByStatus("pending")
+            const refactoredReservations = pendingReservationResponse.map(reservation => {
+                // Parse the start and end times
+                const start = new Date(reservation.startTime);
+                const end = new Date(reservation.endTime);
 
+                // Format the new data
+                return {
+                    ...reservation,
+                    date: start.toISOString().split('T')[0], // Date in YYYY-MM-DD format
+                    startTime: start.toISOString().split('T')[1].split('.')[0], // Time in HH:mm:ss format
+                    endTime: end.toISOString().split('T')[1].split('.')[0], // Time in HH:mm:ss format
+                };
+            });
+            setPendingReservation(refactoredReservations);
+          }catch (e) {
+            console.log(e)
+          }
+          break
         default:
           console.log(activeTab);
           break;
@@ -74,7 +95,9 @@ const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, se
 const RestaurantDashboard = () => {
   const [allReservations, setAllReservations] = useState([]);
   const [openingHours, setOpeningHours] = useState([]);
-  const [activeTab, setActiveTab] = useActiveTab('pendingReservations', setAllReservations, setOpeningHours);
+  const [pendingReservations, setPendingReservations] = useState([]);
+
+  const [activeTab, setActiveTab] = useActiveTab('pendingReservations', setAllReservations, setOpeningHours, setPendingReservations);
   const [editingHours, setEditingHours] = useState(false);
   const [employees, setEmployees] = useState([
     { id: 1, firstName: 'John', lastName: 'Doe', email: 'john.doe@restaurant.com', phone: '555-123-4567', role: 'Waiter' },
@@ -91,34 +114,41 @@ const RestaurantDashboard = () => {
     { id: 7, name: 'Table 7', capacity: 6, location: 'Patio', isActive: false },
     { id: 8, name: 'Table 8', capacity: 4, location: 'Bar', isActive: true },
   ]);
-  const [pendingReservations, setPendingReservations] = useState([
-    { id: 1, name: 'John Smith', date: '2025-03-04', time: '19:00', guests: 4, tableId: 3, contact: '555-123-4567', notes: 'Anniversary dinner' },
-    { id: 2, name: 'Maria Garcia', date: '2025-03-05', time: '20:30', guests: 6, tableId: 5, contact: '555-987-6543', notes: 'Window seat preferred' },
-    { id: 3, name: 'David Chen', date: '2025-03-03', time: '18:00', guests: 2, tableId: 1, contact: '555-456-7890', notes: 'Gluten-free options needed' },
-  ]);
 
-  const handleApproveReservation = (id) => {
-    const reservation = pendingReservations.find((res) => res.id === id);
+  const handleApproveReservation = async (id) => {
+    pendingReservations.find((res) => res.id === id);
     const updatedPending = pendingReservations.filter((res) => res.id !== id);
 
     setPendingReservations(updatedPending);
 
+    try {
+      await reservationService.confirm(id)
+    } catch (e) {
+      console.log(e)
+    }
+
     // Update in all reservations
     setAllReservations((prevReservations) =>
       prevReservations.map((res) =>
-        res.id === id ? { ...res, status: 'Confirmed' } : res
+        res.id === id ? {...res, status: 'confirmed'} : res
       )
     );
   };
 
-  const handleRejectReservation = (id) => {
+  const handleRejectReservation = async (id) => {
     const updatedPending = pendingReservations.filter((res) => res.id !== id);
     setPendingReservations(updatedPending);
+
+    try {
+      await reservationService.cancel(id)
+    } catch (e) {
+      console.log(e)
+    }
 
     // Update in all reservations
     setAllReservations((prevReservations) =>
       prevReservations.map((res) =>
-        res.id === id ? { ...res, status: 'Rejected' } : res
+        res.id === id ? {...res, status: 'Cancelled'} : res
       )
     );
   };
@@ -206,10 +236,14 @@ const RestaurantDashboard = () => {
             />
           )}
           {activeTab === 'tables' && (
-            <TablesManagement
-              tables={tables}
-              handleToggleTableActive={handleToggleTableActive}
-            />
+              <>
+                <TablesManagement
+                    tables={tables}
+                    handleToggleTableActive={handleToggleTableActive}
+                />
+                <FloorPlanDesigner/>
+              </>
+
           )}
           {activeTab === 'employees' && (
             <EmployeeManagement
