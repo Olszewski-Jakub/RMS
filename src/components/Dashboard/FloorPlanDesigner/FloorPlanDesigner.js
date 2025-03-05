@@ -29,16 +29,10 @@ const DrawingMode = {
     RESIZE: 'resize'
 };
 
-const FloorPlanDesigner = ({tablesList = []}) => {
-
-    //listen for change in tablesList
-    useEffect(() => {
-        setTables(tablesList);
-    }, []);
-
+const FloorPlanDesigner = () => {
     // State management
     const [editMode, setEditMode] = useState(false);
-    const [tables, setTables] = useState(tablesList);
+    const [tables, setTables] = useState([]);
     const [walls, setWalls] = useState(sampleFloorPlan.walls || []);
     const [doors, setDoors] = useState(sampleFloorPlan.doors || []);
     const [windows, setWindows] = useState(sampleFloorPlan.windows || []);
@@ -80,8 +74,8 @@ const FloorPlanDesigner = ({tablesList = []}) => {
                 const tables = data.map(table => ({
                     ...table,
                     type: tableTypes[table.type] || null,
-                    intId: table.id,  // Create new field `intId` and assign value from `id`
-                    id: uuidv4()  // Assign a new UUID v4 to the `id` field
+                    intId: table.id,
+                    id: uuidv4()
                 }));
 
                 setTables(tables);
@@ -199,14 +193,11 @@ const FloorPlanDesigner = ({tablesList = []}) => {
                 setTables(updatedTables);
                 break;
             case 'wall':
-                // Fixed wall dragging
                 const updatedWalls = walls.map(wall => {
                     if (wall.id === draggedItem.id) {
-                        // Calculate the displacement based on where the user initially clicked
                         const newX1 = x - draggedItem.offsetX;
                         const newY1 = y - draggedItem.offsetY;
 
-                        // Maintain the same wall vector (length and direction)
                         const dx = wall.x2 - wall.x1;
                         const dy = wall.y2 - wall.y1;
 
@@ -243,17 +234,14 @@ const FloorPlanDesigner = ({tablesList = []}) => {
         }
     };
 
-// And here's the fixed startDragElement function to properly set the offset:
     const startDragElement = (element, event, type) => {
         if (currentDrawingMode !== DrawingMode.SELECT) return;
 
         event.stopPropagation();
         setIsDragging(true);
 
-        // Calculate offset to prevent jumping
         const {x, y} = getCursorPosition(event);
 
-        // For walls, we need to track the offset from the first point
         const offsetX = type === 'wall' ? x - element.x1 : x - element.x;
         const offsetY = type === 'wall' ? y - element.y1 : y - element.y;
 
@@ -265,11 +253,8 @@ const FloorPlanDesigner = ({tablesList = []}) => {
         });
     };
 
-// And here's the fixed stopDragging function:
     const stopDragging = async () => {
-        // First handle resizing if that's what we're doing
         if (isResizing && resizeElement) {
-            // Save the updates to the backend based on the element type
             switch (resizeElement.type) {
                 case 'wall':
                     const updatedWall = walls.find(wall => wall.id === resizeElement.id);
@@ -313,14 +298,12 @@ const FloorPlanDesigner = ({tablesList = []}) => {
                     break;
             }
 
-            // Reset the resizing state variables
             setIsResizing(false);
             setResizeElement(null);
             setResizeStartPoint(null);
-            return; // Exit function after handling resize
+            return;
         }
 
-        // Now handle dragging if that's what we're doing
         if (!draggedItem || !draggedItem.type) {
             setIsDragging(false);
             setDraggedItem(null);
@@ -390,7 +373,6 @@ const FloorPlanDesigner = ({tablesList = []}) => {
         setDraggedItem(null);
     };
 
-    // Start resize
     const startResize = (element, event, type) => {
         event.stopPropagation();
         setIsResizing(true);
@@ -408,8 +390,6 @@ const FloorPlanDesigner = ({tablesList = []}) => {
 
         switch (resizeElement.type) {
             case 'table':
-                // For tables, we can't directly resize since they use predefined types
-                // Could implement custom table sizes here if needed
                 break;
             case 'wall':
                 const updatedWalls = walls.map(wall =>
@@ -614,7 +594,7 @@ const FloorPlanDesigner = ({tablesList = []}) => {
             width: 50,
             height: 10,
             rotation: 0,
-            swing: 0 // 0 for swing right, 1 for swing left
+            swing: 0
         };
 
         const doorId = await doorService.create(newDoor.x, newDoor.y, newDoor.width, newDoor.height, newDoor.rotation);
@@ -691,7 +671,6 @@ const FloorPlanDesigner = ({tablesList = []}) => {
                         stroke="black"
                     />
 
-                    {/* Simplified chair representation for preview */}
                     {Array.from({length: table.type.chairsTop}, (_, i) => (
                         <circle
                             key={`top-${i}`}
@@ -840,14 +819,13 @@ const FloorPlanDesigner = ({tablesList = []}) => {
         );
     };
 
-    // Render door with swing - FIXED: Door rotation handling
+    // Render door with swing
     const renderDoor = (door) => {
         // Calculate center of the door for rotation transform
         const centerX = door.x + door.width / 2;
         const centerY = door.y + door.height / 2;
         const rotation = door.rotation || 0;
 
-        // Create a visually appealing door
         let pathD;
 
         // Always draw the arc on the "top" side based on door's rotation
@@ -916,7 +894,6 @@ const FloorPlanDesigner = ({tablesList = []}) => {
                 {editMode ? "View Mode" : "Edit Mode"}
             </button>
 
-            {/* Canvas Resize Controls Button */}
             {editMode ?
                 <div style={{position: 'absolute', top: '10px', right: '150px', zIndex: 100}}>
                     <button
@@ -1001,9 +978,9 @@ const FloorPlanDesigner = ({tablesList = []}) => {
                         >
                             Add Window
                         </button>
-                        <button onClick={saveFloorPlan}>
-                            Save Floor Plan
-                        </button>
+                        {/*<button onClick={saveFloorPlan}>*/}
+                        {/*    Save Floor Plan*/}
+                        {/*</button>*/}
                     </div>
                 )}
 

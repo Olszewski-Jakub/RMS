@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="ci/cd">
-      <change afterPath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner/FloorPlanDesigner.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner/FloorPlanDesigner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/TablesManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/TablesManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/AllReservations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/AllReservations/AllReservations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/EmployeeManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/EmployeeManagement/EmployeeManagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner/FloorPlanDesigner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner/FloorPlanDesigner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Header/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/OpeningHours.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/OpeningHours/OpeningHours.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/PendingReservations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/PendingReservations/PendingReservations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/Sidebar/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/TablesManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/TablesManagement/TablesManagement.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Dashboard/Dashboard.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,9 +80,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner" />
-      <recent name="$PROJECT_DIR$/src/components" />
-      <recent name="$PROJECT_DIR$/src/pages/Reservation/Table" />
+      <recent name="$PROJECT_DIR$/src/components/Dashboard/PendingReservations" />
+      <recent name="$PROJECT_DIR$/src/components/Dashboard/Sidebar" />
+      <recent name="$PROJECT_DIR$/src/components/Dashboard/TablesManagement" />
+      <recent name="$PROJECT_DIR$/src/components/Dashboard/OpeningHours" />
+      <recent name="$PROJECT_DIR$/src/components/Dashboard/Header" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -98,7 +104,7 @@
       <updated>1738836892770</updated>
       <workItem from="1738836893823" duration="1276000" />
       <workItem from="1741094531759" duration="751000" />
-      <workItem from="1741095286485" duration="24269000" />
+      <workItem from="1741095286485" duration="24750000" />
     </task>
     <task id="LOCAL-00001" summary="ci/cd">
       <option name="closed" value="true" />

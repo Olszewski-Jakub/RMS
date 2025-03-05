@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from '../../components/Dashboard/Sidebar';
-import Header from '../../components/Dashboard/Header';
-import PendingReservations from '../../components/Dashboard/PendingReservations';
-import OpeningHours from '../../components/Dashboard/OpeningHours';
-import TablesManagement from '../../components/Dashboard/TablesManagement';
-import EmployeeManagement from '../../components/Dashboard/EmployeeManagement';
-import AllReservations from '../../components/Dashboard/AllReservations';
+import Sidebar from '../../components/Dashboard/Sidebar/Sidebar';
+import Header from '../../components/Dashboard/Header/Header';
+import PendingReservations from '../../components/Dashboard/PendingReservations/PendingReservations';
+import OpeningHours from '../../components/Dashboard/OpeningHours/OpeningHours';
+import TablesManagement from '../../components/Dashboard/TablesManagement/TablesManagement';
+import EmployeeManagement from '../../components/Dashboard/EmployeeManagement/EmployeeManagement';
+import AllReservations from '../../components/Dashboard/AllReservations/AllReservations';
 import FloorPlanDesigner from '../../components/Dashboard/FloorPlanDesigner/FloorPlanDesigner';
 import './Dashboard.css';
 import reservationService from '../../services/reservation.service';
