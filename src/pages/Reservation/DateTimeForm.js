@@ -1,127 +1,201 @@
-import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './DateTimeForm.css';
+import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {
+  FormContainer,
+  FormGroup,
+  StyledSelect,
+  StyledInput,
+  TimeSelectContainer,
+  SearchButton
+} from "./ReserveTableStyle";
 
-const DateTimeForm = ({ date, setDate, startTime, setStartTime, endTime, setEndTime, number, setNumber, onSearch }) => {
-  const [isValid, setIsValid] = useState(false);
+const DateTimeForm = ({
+  date,
+  setDate,
+  startTime,
+  setStartTime,
+  endTime,
+  setEndTime,
+  number,
+  setNumber,
+  onSearch,
+  loading
+}) => {
+  // Generate hours options (1-12)
+  const hoursOptions = Array.from({ length: 12 }, (_, i) => ({
+    value: String(i + 1).padStart(2, "0"),
+    label: String(i + 1).padStart(2, "0")
+  }));
 
-  const hours = Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0'));
-  const minutes = Array.from({ length: 60 }, (_, i) => (i).toString().padStart(2, '0'));
-  const ampm = ['AM', 'PM'];
+  // Generate minutes options (00, 15, 30, 45)
+  const minutesOptions = ["00", "15", "30", "45"].map(value => ({
+    value,
+    label: value
+  }));
 
-  const validateForm = () => {
-    const startTimeDate = new Date(`1970-01-01T${startTime.hour}:${startTime.minute} ${startTime.ampm}`);
-    const endTimeDate = new Date(`1970-01-01T${endTime.hour}:${endTime.minute} ${endTime.ampm}`);
-    setIsValid(
-      date &&
-      startTime &&
-      endTime &&
-      startTimeDate <= endTimeDate &&
-      number > 0
-    );
+  // Handle hour change for start time
+  const handleStartHourChange = (e) => {
+    setStartTime({ ...startTime, hour: e.target.value });
   };
 
-  const handleSearch = () => {
-    console.log({
-      date: date ? date.toLocaleDateString() : null,
-      startTime: `${startTime.hour}:${startTime.minute} ${startTime.ampm}`,
-      endTime: `${endTime.hour}:${endTime.minute} ${endTime.ampm}`,
-      number,
-    });
+  // Handle minute change for start time
+  const handleStartMinuteChange = (e) => {
+    setStartTime({ ...startTime, minute: e.target.value });
   };
 
-  useEffect(() => {
-    validateForm();
-  }, [date, startTime, endTime, number]);
+  // Handle AM/PM change for start time
+  const handleStartAmPmChange = (e) => {
+    setStartTime({ ...startTime, ampm: e.target.value });
+  };
+
+  // Handle hour change for end time
+  const handleEndHourChange = (e) => {
+    setEndTime({ ...endTime, hour: e.target.value });
+  };
+
+  // Handle minute change for end time
+  const handleEndMinuteChange = (e) => {
+    setEndTime({ ...endTime, minute: e.target.value });
+  };
+
+  // Handle AM/PM change for end time
+  const handleEndAmPmChange = (e) => {
+    setEndTime({ ...endTime, ampm: e.target.value });
+  };
+
+  // Custom styles for DatePicker
+  const datePickerCustomStyles = {
+    width: "100%",
+    padding: "0.75rem",
+    border: "2px solid rgba(255, 255, 255, 0.3)",
+    borderRadius: "6px",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    fontSize: "1rem",
+    transition: "all 0.2s ease",
+  };
+
+  // Filter to disable past dates
+  const filterPastDates = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date >= today;
+  };
 
   return (
-    <div className="form-container">
-      <div className="form-item">
-        <label>Date:</label>
+    <FormContainer>
+      <h3>Make a Reservation</h3>
+
+      <FormGroup>
+        <label htmlFor="date">Date:</label>
         <DatePicker
+          id="date"
           selected={date}
-          onChange={(date) => setDate(date)}
+          onChange={date => setDate(date)}
           dateFormat="MM/dd/yyyy"
-          className="datepicker"
-         showMonthYearDropdown/>
-      </div>
-
-      <div className="form-item">
-        <label>Start Time:</label>
-        <select
-          value={startTime.hour}
-          onChange={(e) => setStartTime({ ...startTime, hour: e.target.value })}
-        >
-          {hours.map((hour) => (
-            <option key={hour} value={hour}>{hour}</option>
-          ))}
-        </select>
-        :
-        <select
-          value={startTime.minute}
-          onChange={(e) => setStartTime({ ...startTime, minute: e.target.value })}
-        >
-          {minutes.map((minute) => (
-            <option key={minute} value={minute}>{minute}</option>
-          ))}
-        </select>
-        <select
-          value={startTime.ampm}
-          onChange={(e) => setStartTime({ ...startTime, ampm: e.target.value })}
-        >
-          {ampm.map((period) => (
-            <option key={period} value={period}>{period}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="form-item">
-        <label>End Time:</label>
-        <select
-          value={endTime.hour}
-          onChange={(e) => setEndTime({ ...endTime, hour: e.target.value })}
-        >
-          {hours.map((hour) => (
-            <option key={hour} value={hour}>{hour}</option>
-          ))}
-        </select>
-        :
-        <select
-          value={endTime.minute}
-          onChange={(e) => setEndTime({ ...endTime, minute: e.target.value })}
-        >
-          {minutes.map((minute) => (
-            <option key={minute} value={minute}>{minute}</option>
-          ))}
-        </select>
-        <select
-          value={endTime.ampm}
-          onChange={(e) => setEndTime({ ...endTime, ampm: e.target.value })}
-        >
-          {ampm.map((period) => (
-            <option key={period} value={period}>{period}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="form-item">
-        <label>Number:</label>
-        <input
-          type="number"
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
-          min="0"
+          minDate={new Date()}
+          filterDate={filterPastDates}
+          placeholderText="Select a date"
+          style={datePickerCustomStyles}
+          customInput={<StyledInput />}
         />
-      </div>
+      </FormGroup>
 
-      <button
-        onClick={onSearch}
-        disabled={!isValid}
+      <FormGroup>
+        <label htmlFor="startTime">Start Time:</label>
+        <TimeSelectContainer>
+          <StyledSelect
+            id="startHour"
+            value={startTime.hour}
+            onChange={handleStartHourChange}
+          >
+            {hoursOptions.map(option => (
+              <option key={`start-hour-${option.value}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </StyledSelect>
+          <StyledSelect
+            id="startMinute"
+            value={startTime.minute}
+            onChange={handleStartMinuteChange}
+          >
+            {minutesOptions.map(option => (
+              <option key={`start-minute-${option.value}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </StyledSelect>
+          <StyledSelect
+            id="startAmPm"
+            value={startTime.ampm}
+            onChange={handleStartAmPmChange}
+          >
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </StyledSelect>
+        </TimeSelectContainer>
+      </FormGroup>
+
+      <FormGroup>
+        <label htmlFor="endTime">End Time:</label>
+        <TimeSelectContainer>
+          <StyledSelect
+            id="endHour"
+            value={endTime.hour}
+            onChange={handleEndHourChange}
+          >
+            {hoursOptions.map(option => (
+              <option key={`end-hour-${option.value}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </StyledSelect>
+          <StyledSelect
+            id="endMinute"
+            value={endTime.minute}
+            onChange={handleEndMinuteChange}
+          >
+            {minutesOptions.map(option => (
+              <option key={`end-minute-${option.value}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </StyledSelect>
+          <StyledSelect
+            id="endAmPm"
+            value={endTime.ampm}
+            onChange={handleEndAmPmChange}
+          >
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </StyledSelect>
+        </TimeSelectContainer>
+      </FormGroup>
+
+      <FormGroup>
+        <label htmlFor="number">Number of People:</label>
+        <StyledInput
+          id="number"
+          type="number"
+          min="1"
+          value={number}
+          onChange={e => setNumber(e.target.value)}
+          placeholder="Enter number of guests"
+        />
+      </FormGroup>
+
+      <SearchButton 
+        onClick={onSearch} 
+        disabled={loading}
       >
-        Search
-      </button>
-    </div>
+        {loading ? "Searching..." : "Find Available Tables"}
+      </SearchButton>
+      
+      <div style={{ marginTop: "1.5rem", fontSize: "0.9rem", opacity: "0.9", textAlign: "center" }}>
+        Select a date and time to check table availability, then click on an available table to make your reservation.
+      </div>
+    </FormContainer>
   );
 };
 

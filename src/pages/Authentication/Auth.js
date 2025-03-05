@@ -67,7 +67,6 @@ export default function Auth() {
                 <h1 style={{color: "#FF7D05", marginBottom: "2rem"}}>{loginForm ? "LOGIN" : "CREATE AN ACCOUNT"}</h1>
                 <form 
                 className="auth-form"
-                style={{display: "flex", flexDirection: "column"}}
                 onSubmit={loginForm ? handleLogin : handleRegister}>
                     {loginForm ? (
                         <>
@@ -88,11 +87,11 @@ export default function Auth() {
                                 required
                             />
                             <button type="submit" className="auth-login-btn">Sign In</button>
-                            <h4 style={{display: "flex", justifyContent: "center"}}>Don&apos;t have an account?<span onClick={showRegister}> Sign Up </span></h4>
+                            <h4>Don&apos;t have an account?<span onClick={showRegister}> Sign Up </span></h4>
                         </>
                     ) : (
                         <>
-                            <div className="reg-name-container" style={{display: "flex"}}>
+                            <div className="reg-name-container">
                                 <input
                                     type="text"
                                     name="firstName"
@@ -100,10 +99,6 @@ export default function Auth() {
                                     placeholder="First Name"
                                     onChange={handleChange}
                                     required
-                                    style={{
-                                        width: "45%",
-                                        marginRight: "10%"
-                                    }}
                                 />
                                 <input
                                     type="text"
@@ -112,9 +107,6 @@ export default function Auth() {
                                     placeholder="Last Name"
                                     onChange={handleChange}
                                     required
-                                    style={{
-                                        width: "45%"
-                                    }}
                                 />
                             </div>
                             
@@ -151,12 +143,11 @@ export default function Auth() {
                                 required
                             />
                             <button type="submit" className="auth-reg-btn">Register</button>
-                            <h4 style={{display: "flex", justifyContent: "center"}}>Already have an account?<span onClick={showLogin}> Login </span></h4>
+                            <h4>Already have an account?<span onClick={showLogin}> Login </span></h4>
                         </>
                     )}
                 </form>
             </div>
-            
         </div>
     );
 }
