@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReserveTableContainer } from "./ReserveTableStyle";
 import FloorPlan from "../../components/Table/FloorPlan";
 

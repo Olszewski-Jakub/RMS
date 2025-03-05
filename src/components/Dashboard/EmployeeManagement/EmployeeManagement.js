@@ -1,260 +1,387 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import './EmployeeManagement.css';
 
-const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee }) => {
-  const [showAddEmployeeForm, setShowAddEmployeeForm] = useState(false);
-  const [newEmployee, setNewEmployee] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: ''
-  });
-  const [formErrors, setFormErrors] = useState({});
-
-  const handleAddEmployeeClick = () => {
-    setShowAddEmployeeForm(true);
-  };
-
-  const handleEmployeeInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewEmployee({
-      ...newEmployee,
-      [name]: value
+const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee, updateEmployeeRole }) => {
+    const [showDialog, setShowDialog] = useState(false);
+    const [showActionsMenu, setShowActionsMenu] = useState(null);
+    const [showRoleModal, setShowRoleModal] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [selectedRole, setSelectedRole] = useState('employee');
+    const [newEmployee, setNewEmployee] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phoneNumber: '',
+        role: 'employee' // Default role
     });
-  };
+    const [formErrors, setFormErrors] = useState({});
+    const dialogRef = useRef(null);
 
-  const validateEmployeeForm = () => {
-    const errors = {};
+    // Handle clicks outside of action menu to close it
+    useEffect(() => {
+        function handleClickOutside(event) {
+            // Close dropdown menu when clicking outside
+            if (showActionsMenu !== null &&
+                !event.target.closest('.dots-button') &&
+                !event.target.closest('.dropdown-menu')) {
+                setShowActionsMenu(null);
+            }
+        }
 
-    if (!newEmployee.firstName.trim()) errors.firstName = "First name is required";
-    if (!newEmployee.lastName.trim()) errors.lastName = "Last name is required";
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showActionsMenu]);
 
-    if (!newEmployee.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(newEmployee.email)) {
-      errors.email = "Email is invalid";
-    }
-
-    if (!newEmployee.password) {
-      errors.password = "Password is required";
-    } else if (newEmployee.password.length < 6) {
-      errors.password = "Password must be at least 6 characters";
-    }
-
-    if (newEmployee.password !== newEmployee.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
-    }
-
-    if (!newEmployee.phone.trim()) {
-      errors.phone = "Phone number is required";
-    }
-
-    return errors;
-  };
-
-  const handleAddEmployee = (e) => {
-    e.preventDefault();
-
-    const errors = validateEmployeeForm();
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
-
-    // Clear any previous errors
-    setFormErrors({});
-
-    // Add new employee to the list
-    const newEmployeeId = employees.length > 0 ? Math.max(...employees.map(emp => emp.id)) + 1 : 1;
-
-    const employeeToAdd = {
-      firstName: newEmployee.firstName,
-      lastName: newEmployee.lastName,
-      email: newEmployee.email,
-      phone: newEmployee.phone,
-      role: 'employee' // Default role
+    const handleAddEmployeeClick = () => {
+        setShowDialog(true);
     };
 
-    createNewEmployee(employeeToAdd)
-    // Reset form and hide it
-    setNewEmployee({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      phone: ''
-    });
+    const handleEmployeeInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewEmployee({
+            ...newEmployee,
+            [name]: value
+        });
+    };
 
-    setShowAddEmployeeForm(false);
-  };
+    const validateEmployeeForm = () => {
+        const errors = {};
 
-  const cancelAddEmployee = () => {
-    setShowAddEmployeeForm(false);
-    setNewEmployee({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      phone: ''
-    });
-    setFormErrors({});
-  };
+        if (!newEmployee.firstName.trim()) errors.firstName = "First name is required";
+        if (!newEmployee.lastName.trim()) errors.lastName = "Last name is required";
 
-  return (
-    <div>
-      {/* Employee List */}
-      <div className="bg-white rounded shadow overflow-x-auto mb-6">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-4 py-2 text-left">ID</th>
-              <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Email</th>
-              <th className="px-4 py-2 text-left">Phone</th>
-              <th className="px-4 py-2 text-left">Role</th>
-              <th className="px-4 py-2 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {employees.map(employee => (
-              <tr key={employee.id} className="border-t">
-                <td className="px-4 py-2">{employee.id}</td>
-                <td className="px-4 py-2">{employee.firstName} {employee.lastName}</td>
-                <td className="px-4 py-2">{employee.email}</td>
-                <td className="px-4 py-2">{employee.phone}</td>
-                <td className="px-4 py-2">{employee.role}</td>
-                <td className="px-4 py-2">
-                  <button
-                    className="px-3 py-1 bg-red-500 text-white rounded"
-                    onClick={() => handleRemoveEmployee(employee.id)}
-                  >
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {employees.length === 0 && (
-              <tr>
-                <td colSpan="6" className="px-4 py-4 text-center text-gray-500">
-                  No employees found
-                </td>
-              </tr>
+        if (!newEmployee.email.trim()) {
+            errors.email = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(newEmployee.email)) {
+            errors.email = "Email is invalid";
+        }
+
+        if (!newEmployee.password) {
+            errors.password = "Password is required";
+        } else if (newEmployee.password.length < 6) {
+            errors.password = "Password must be at least 6 characters";
+        }
+
+        if (newEmployee.password !== newEmployee.confirmPassword) {
+            errors.confirmPassword = "Passwords do not match";
+        }
+
+        if (!newEmployee.phoneNumber?.trim()) {
+            errors.phone = "Phone number is required";
+        } else if (!/^\+[1-9]\d{0,2}[ -]?\d{1,14}$/.test(newEmployee.phoneNumber)) {
+            errors.phone = "Phone number must include a country code (e.g., +1 for US)";
+        }
+
+        return errors;
+    };
+
+    const handleAddEmployee = (e) => {
+        e.preventDefault();
+
+        const errors = validateEmployeeForm();
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
+        }
+
+        // Clear any previous errors
+        setFormErrors({});
+
+        const employeeToAdd = {
+            firstName: newEmployee.firstName,
+            lastName: newEmployee.lastName,
+            email: newEmployee.email,
+            phoneNumber: newEmployee.phoneNumber,
+            password: newEmployee.password,
+            role: newEmployee.role
+        };
+
+        createNewEmployee(employeeToAdd);
+
+        // Reset form and hide it
+        setNewEmployee({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            phoneNumber: '',
+            role: 'employee'
+        });
+
+        setShowDialog(false);
+    };
+
+    const openRoleModal = (employee) => {
+        setSelectedEmployee(employee);
+        setSelectedRole(employee.privileges || employee.role);
+        setShowRoleModal(true);
+        setShowActionsMenu(null);
+    };
+
+    const handleRoleChange = (e) => {
+        setSelectedRole(e.target.value);
+    };
+
+    const saveRoleChange = () => {
+        if (selectedEmployee && selectedRole) {
+            updateEmployeeRole(selectedEmployee.uid, selectedRole);
+            setShowRoleModal(false);
+            setSelectedEmployee(null);
+        }
+    };
+
+    const closeDialog = () => {
+        setShowDialog(false);
+        setNewEmployee({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            phoneNumber: '',
+            role: 'employee'
+        });
+        setFormErrors({});
+    };
+
+    return (
+        <div className="employee-management">
+            {/* Employee List */}
+            <div className="employee-table-container">
+                <table className="employee-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {employees.map(employee => (
+                        <tr key={employee.uid}>
+                            <td>{employee.uid}</td>
+                            <td>{employee.firstName} {employee.lastName}</td>
+                            <td>{employee.email}</td>
+                            <td>{employee.phoneNumber}</td>
+                            <td>{employee.privileges || employee.role}</td>
+                            <td className="actions-cell">
+                                <div className="dropdown">
+                                    <button
+                                        className="dots-button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowActionsMenu(showActionsMenu === employee.uid ? null : employee.uid);
+                                        }}
+                                    >
+                                        ⋮
+                                    </button>
+
+                                    {showActionsMenu === employee.uid && (
+                                        <div className="dropdown-menu">
+                                            <ul>
+                                                <li onClick={() => openRoleModal(employee)}>
+                                                    Change Role
+                                                </li>
+                                                <li className="delete-option" onClick={() => {
+                                                    handleRemoveEmployee(employee.uid);
+                                                    setShowActionsMenu(null);
+                                                }}>
+                                                    Delete User
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                    {employees.length === 0 && (
+                        <tr>
+                            <td colSpan="6" className="no-data">
+                                No employees found
+                            </td>
+                        </tr>
+                    )}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Add Employee Button */}
+            <div className="add-button-container">
+                <button
+                    className="add-button"
+                    onClick={handleAddEmployeeClick}
+                >
+                    Add New Employee
+                </button>
+            </div>
+
+            {/* Modal Dialog for New Employee */}
+            {showDialog && (
+                <div className="modal-overlay">
+                    <div className="modal-dialog" ref={dialogRef}>
+                        <div className="modal-header">
+                            <h3>Add New User</h3>
+                            <button className="close-button" onClick={closeDialog}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <form onSubmit={handleAddEmployee}>
+                                <div className="form-grid">
+                                    <div className="form-group">
+                                        <label>First Name</label>
+                                        <input
+                                            type="text"
+                                            name="firstName"
+                                            value={newEmployee.firstName}
+                                            onChange={handleEmployeeInputChange}
+                                        />
+                                        {formErrors.firstName && <div className="error-message">{formErrors.firstName}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Last Name</label>
+                                        <input
+                                            type="text"
+                                            name="lastName"
+                                            value={newEmployee.lastName}
+                                            onChange={handleEmployeeInputChange}
+                                        />
+                                        {formErrors.lastName && <div className="error-message">{formErrors.lastName}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Email</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={newEmployee.email}
+                                            onChange={handleEmployeeInputChange}
+                                        />
+                                        {formErrors.email && <div className="error-message">{formErrors.email}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Phone</label>
+                                        <input
+                                            type="tel"
+                                            name="phoneNumber"
+                                            placeholder="+1 2345678901"
+                                            value={newEmployee.phoneNumber || ''}
+                                            onChange={handleEmployeeInputChange}
+                                        />
+                                        <small className="help-text">Include country code (e.g., +1 for US)</small>
+                                        {formErrors.phone && <div className="error-message">{formErrors.phone}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Password</label>
+                                        <input
+                                            type="password"
+                                            name="password"
+                                            value={newEmployee.password}
+                                            onChange={handleEmployeeInputChange}
+                                        />
+                                        {formErrors.password && <div className="error-message">{formErrors.password}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            name="confirmPassword"
+                                            value={newEmployee.confirmPassword}
+                                            onChange={handleEmployeeInputChange}
+                                        />
+                                        {formErrors.confirmPassword && <div className="error-message">{formErrors.confirmPassword}</div>}
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Role</label>
+                                        <select
+                                            name="role"
+                                            value={newEmployee.role}
+                                            onChange={handleEmployeeInputChange}
+                                        >
+                                            <option value="employee">Employee</option>
+                                            <option value="owner">Owner</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-actions">
+                                    <button
+                                        type="button"
+                                        className="cancel-button"
+                                        onClick={closeDialog}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="submit-button"
+                                    >
+                                        Add User
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             )}
-          </tbody>
-        </table>
-      </div>
 
-      {/* Add Employee Button or Form */}
-      {!showAddEmployeeForm ? (
-        <div className="flex justify-end">
-          <button
-            className="px-4 py-2 bg-indigo-600 text-white rounded"
-            onClick={handleAddEmployeeClick}
-          >
-            Add New Employee
-          </button>
+            {/* Role Change Modal */}
+            {showRoleModal && (
+                <div className="modal-overlay">
+                    <div className="modal-dialog role-modal">
+                        <div className="modal-header">
+                            <h3>Change User Role</h3>
+                            <button className="close-button" onClick={() => setShowRoleModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Change role for {selectedEmployee?.firstName} {selectedEmployee?.lastName}</p>
+
+                            <div className="form-group">
+                                <label>Select Role</label>
+                                <select
+                                    value={selectedRole}
+                                    onChange={handleRoleChange}
+                                    className="role-select"
+                                >
+                                    <option value="employee">Employee</option>
+                                    <option value="owner">Owner</option>
+                                </select>
+                            </div>
+
+                            <div className="form-actions">
+                                <button
+                                    type="button"
+                                    className="cancel-button"
+                                    onClick={() => setShowRoleModal(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    className="submit-button"
+                                    onClick={saveRoleChange}
+                                >
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-      ) : (
-        <div className="bg-white p-6 rounded shadow">
-          <h3 className="text-lg font-semibold mb-4">Add New Employee</h3>
-          <form onSubmit={handleAddEmployee}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={newEmployee.firstName}
-                  onChange={handleEmployeeInputChange}
-                  className="w-full border rounded p-2"
-                />
-                {formErrors.firstName && <p className="text-red-600 text-sm mt-1">{formErrors.firstName}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={newEmployee.lastName}
-                  onChange={handleEmployeeInputChange}
-                  className="w-full border rounded p-2"
-                />
-                {formErrors.lastName && <p className="text-red-600 text-sm mt-1">{formErrors.lastName}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={newEmployee.email}
-                  onChange={handleEmployeeInputChange}
-                  className="w-full border rounded p-2"
-                />
-                {formErrors.email && <p className="text-red-600 text-sm mt-1">{formErrors.email}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={newEmployee.phone}
-                  onChange={handleEmployeeInputChange}
-                  className="w-full border rounded p-2"
-                />
-                {formErrors.phone && <p className="text-red-600 text-sm mt-1">{formErrors.phone}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={newEmployee.password}
-                  onChange={handleEmployeeInputChange}
-                  className="w-full border rounded p-2"
-                />
-                {formErrors.password && <p className="text-red-600 text-sm mt-1">{formErrors.password}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={newEmployee.confirmPassword}
-                  onChange={handleEmployeeInputChange}
-                  className="w-full border rounded p-2"
-                />
-                {formErrors.confirmPassword && <p className="text-red-600 text-sm mt-1">{formErrors.confirmPassword}</p>}
-              </div>
-            </div>
-
-            <div className="mt-6 flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={cancelAddEmployee}
-                className="px-4 py-2 border border-gray-300 rounded text-gray-700"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-indigo-600 text-white rounded"
-              >
-                Add Employee
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default EmployeeManagement;

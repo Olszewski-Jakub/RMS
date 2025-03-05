@@ -1,6 +1,7 @@
 import cookieManager from '../utils/cookieManager';
 import COOKIE_KEYS from '../constants/cookieKeys';
 import axios from 'axios';
+import axiosInstance from '../config/apiConfig';
 
 const authService = {
     login: async (email, password) => {
@@ -8,9 +9,9 @@ const authService = {
             email,
             password
         });
-        const data = response.data.data; 
-        cookieManager.set(COOKIE_KEYS.ID_TOKEN, data.idToken, { expires: 1 });
-        cookieManager.set(COOKIE_KEYS.REFRESH_TOKEN, data.refreshToken, { expires: 7 });
+        const data = response.data.data;
+        cookieManager.set(COOKIE_KEYS.ID_TOKEN, data.idToken, {expires: 1});
+        cookieManager.set(COOKIE_KEYS.REFRESH_TOKEN, data.refreshToken, {expires: 7});
         return data;
     },
     register: async (formData) => {
@@ -21,7 +22,7 @@ const authService = {
         };
 
         const response = await axios.post("https://api-d4o6tbc5fq-uc.a.run.app" + `/auth/register`, updatedFormData);
-        const data = response.data.data; 
+        const data = response.data.data;
         return data;
     },
     logout: async () => {
@@ -40,12 +41,23 @@ const authService = {
         });
 
         const data = response.data.data;
-        cookieManager.set(COOKIE_KEYS.ID_TOKEN, data.idToken, { expires: 1 });
-        cookieManager.set(COOKIE_KEYS.REFRESH_TOKEN, data.refreshToken, { expires: 7 });
+        cookieManager.set(COOKIE_KEYS.ID_TOKEN, data.idToken, {expires: 1});
+        cookieManager.set(COOKIE_KEYS.REFRESH_TOKEN, data.refreshToken, {expires: 7});
 
         return data.idToken;
+    },
+    createEmployee: async (formData) => {
+        const response = await axiosInstance.post(`/auth/createEmployee`, formData);
+        return response.data.data;
+    },
+    createOwner: async (formData) => {
+        const response = await axiosInstance.post(`/auth/createOwner`, formData);
+        return response.data.data;
+    },
+    deleteEmployee: async (uid) => {
+        const response = await axiosInstance.delete(`/auth/deleteEmployee/${uid}`);
+        return response.data.data;
     }
-
 };
 
 export default authService;

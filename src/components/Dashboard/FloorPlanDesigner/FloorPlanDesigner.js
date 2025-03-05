@@ -165,7 +165,7 @@ const FloorPlanDesigner = () => {
                 x: x - selectedTableType.width / 2,
                 y: y - selectedTableType.height / 2,
                 type: selectedTableType,
-                isActive:true,
+                isActive: true,
                 rotation: 0
             };
             setTables([...tables, newTable]);
@@ -541,12 +541,20 @@ const FloorPlanDesigner = () => {
     };
 
     const activateTable = async (element) => {
-        await tableService.activate(element.intId)
+        try {
+            await tableService.activate(element.intId)
+        } catch (error) {
+            console.error('Error activating table:', error);
+        }
         setTables(tables.map(table => table.id === element.id ? {...table, isActive: true} : table));
     }
 
     const deactivateTable = async (element) => {
-        await tableService.deactivate(element.intId)
+        try {
+            await tableService.deactivate(element.intId)
+        } catch (error) {
+            console.error('Error deactivating table:', error);
+        }
         setTables(tables.map(table => table.id === element.id ? {...table, isActive: false} : table));
     }
 
@@ -574,10 +582,14 @@ const FloorPlanDesigner = () => {
                 y2: y
             };
             console.log(newWall);
-            const wallId = await wallsService.create(newWall.x1, newWall.y1, newWall.x2, newWall.y2);
-            newWall.intId = wallId.id;
+            try {
+                const wallId = await wallsService.create(newWall.x1, newWall.y1, newWall.x2, newWall.y2);
+                newWall.intId = wallId.id;
+                setWalls([...walls, newWall]);
+            } catch (e) {
+                console.log(e)
+            }
 
-            setWalls([...walls, newWall]);
         }
         setStartPoint(null);
     };
@@ -597,12 +609,15 @@ const FloorPlanDesigner = () => {
             rotation: 0,
             swing: 0
         };
+        try {
+            const doorId = await doorService.create(newDoor.x, newDoor.y, newDoor.width, newDoor.height, newDoor.rotation);
+            newDoor.intId = doorId.id;
+            setDoors([...doors, newDoor]);
+            setDoors([...doors, newDoor]);
 
-        const doorId = await doorService.create(newDoor.x, newDoor.y, newDoor.width, newDoor.height, newDoor.rotation);
-        console.log(doorId);
-        newDoor.intId = doorId.id;
-        console.log(newDoor);
-        setDoors([...doors, newDoor]);
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     // Add window
@@ -620,10 +635,14 @@ const FloorPlanDesigner = () => {
             rotation: 0
         };
 
-        const windowId = await windowService.create(newWindow.x, newWindow.y, newWindow.width, newWindow.height, newWindow.rotation);
-        newWindow.intId = windowId.id;
+        try {
+            const windowId = await windowService.create(newWindow.x, newWindow.y, newWindow.width, newWindow.height, newWindow.rotation);
+            newWindow.intId = windowId.id;
 
-        setWindows([...windows, newWindow]);
+            setWindows([...windows, newWindow]);
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     // Show element details

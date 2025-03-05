@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Sidebar from '../../components/Dashboard/Sidebar/Sidebar';
 import Header from '../../components/Dashboard/Header/Header';
 import PendingReservations from '../../components/Dashboard/PendingReservations/PendingReservations';
 import OpeningHours from '../../components/Dashboard/OpeningHours/OpeningHours';
-import TablesManagement from '../../components/Dashboard/TablesManagement/TablesManagement';
 import EmployeeManagement from '../../components/Dashboard/EmployeeManagement/EmployeeManagement';
 import AllReservations from '../../components/Dashboard/AllReservations/AllReservations';
 import FloorPlanDesigner from '../../components/Dashboard/FloorPlanDesigner/FloorPlanDesigner';
-import './Dashboard.css';
 import reservationService from '../../services/reservation.service';
 import openingHoursService from "../../services/openingHours.service";
 import tableService from "../../services/table.service";
+import userService from "../../services/user.service";
+import './Dashboard.css';
+import authService from "../../services/auth.service";
 
-const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservation, setTables) => {
+const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservation, setTables, setEmployees) => {
     const [activeTab, setActiveTab] = useState(initialTab);
 
     useEffect(() => {
@@ -77,6 +78,13 @@ const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, se
                         console.log(e);
                     }
                     break;
+                case "employees":
+                    try {
+                        const employees = await userService.getAllPrivilegedUsers();
+                        setEmployees(employees);
+                    } catch (e) {
+                        console.log(e);
+                    }
                 default:
                     console.log(activeTab);
                     break;
@@ -94,34 +102,10 @@ const RestaurantDashboard = () => {
     const [openingHours, setOpeningHours] = useState([]);
     const [pendingReservations, setPendingReservations] = useState([]);
     const [tables, setTables] = useState([]);
-    const [activeTab, setActiveTab] = useActiveTab('pendingReservations', setAllReservations, setOpeningHours, setPendingReservations, setTables);
+    const [employees, setEmployees] = useState([]);
+    const [activeTab, setActiveTab] = useActiveTab('pendingReservations', setAllReservations, setOpeningHours, setPendingReservations, setTables, setEmployees);
     const [editingHours, setEditingHours] = useState(false);
-    const [employees, setEmployees] = useState([
-        {
-            id: 1,
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'john.doe@restaurant.com',
-            phone: '555-123-4567',
-            role: 'Waiter'
-        },
-        {
-            id: 2,
-            firstName: 'Jane',
-            lastName: 'Smith',
-            email: 'jane.smith@restaurant.com',
-            phone: '555-987-6543',
-            role: 'Chef'
-        },
-        {
-            id: 3,
-            firstName: 'Mike',
-            lastName: 'Johnson',
-            email: 'mike.johnson@restaurant.com',
-            phone: '555-456-7890',
-            role: 'Host'
-        },
-    ]);
+
 
     const handleApproveReservation = async (id) => {
         pendingReservations.find((res) => res.id === id);
@@ -137,7 +121,7 @@ const RestaurantDashboard = () => {
 
         setAllReservations((prevReservations) =>
             prevReservations.map((res) =>
-                res.id === id ? { ...res, status: 'confirmed' } : res
+                res.id === id ? {...res, status: 'confirmed'} : res
             )
         );
     };
@@ -154,7 +138,7 @@ const RestaurantDashboard = () => {
 
         setAllReservations((prevReservations) =>
             prevReservations.map((res) =>
-                res.id === id ? { ...res, status: 'Cancelled' } : res
+                res.id === id ? {...res, status: 'Cancelled'} : res
             )
         );
     };
@@ -162,7 +146,7 @@ const RestaurantDashboard = () => {
     const handleHoursChange = (dayId, field, value) => {
         setOpeningHours((prevHours) =>
             prevHours.map((day) =>
-                day.dayId === dayId ? { ...day, [field]: value } : day
+                day.dayId === dayId ? {...day, [field]: value} : day
             )
         );
     };
@@ -170,22 +154,7 @@ const RestaurantDashboard = () => {
     const handleToggleDay = (dayId) => {
         setOpeningHours((prevHours) =>
             prevHours.map((hours) =>
-                hours.dayId === dayId ? { ...hours, isOpen: !hours.isOpen } : hours
-            )
-        );
-    };
-
-    const handleToggleTableActive = async (id) => {
-        const table = tables.find((t) => t.id === id);
-        if (table.isActive) {
-            await tableService.deactivate(id);
-        } else {
-            await tableService.activate(id);
-        }
-
-        setTables((prevTables) =>
-            prevTables.map((table) =>
-                table.id === id ? { ...table, isActive: !table.isActive } : table
+                hours.dayId === dayId ? {...hours, isOpen: !hours.isOpen} : hours
             )
         );
     };
@@ -198,7 +167,7 @@ const RestaurantDashboard = () => {
         setEditingHours(false);
         try {
             for (const hour of openingHours) {
-                if (hour.isOpen == false) {
+                if (hour.isOpen === false) {
                     hour.startTime = null;
                     hour.endTime = null;
                 }
@@ -209,15 +178,46 @@ const RestaurantDashboard = () => {
         }
     };
 
-    const handleRemoveEmployee = (id) => {
+    const handleRemoveEmployee = async (id) => {
         if (window.confirm('Are you sure you want to remove this employee?')) {
-            setEmployees((prevEmployees) => prevEmployees.filter((emp) => emp.id !== id));
+            try {
+                await authService.deleteEmployee(id);
+                setEmployees((prevEmployees) => prevEmployees.filter((emp) => emp.uid !== id));
+            } catch (e) {
+                console.log(e);
+            }
         }
     };
 
-    const createNewEmployee = (employee) => {
-        // Add logic to create a new employee
+    const createNewEmployee = async (employee) => {
+        try {
+            if (employee.role === "owner") {
+                await authService.createOwner(employee);
+                setTimeout(async () => {
+                    const users = await userService.getAllPrivilegedUsers();
+                    setEmployees(users);
+                }, 2000); // 2 seconds delay
+            } else if (employee.role === "employee") {
+                await authService.createEmployee(employee);
+                setTimeout(async () => {
+                    const users = await userService.getAllPrivilegedUsers();
+                    setEmployees(users);
+                }, 2000); // 2 seconds delay
+            }
+        } catch (e) {
+            console.log(e);
+        }
     };
+
+    const updateEmployeeRole = async (id, role) => {
+        try {
+            await userService.changePrivilege(id, role);
+            const users = await userService.getAllPrivilegedUsers();
+            setEmployees(users);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const getTableName = (tableId) => {
         const table = tables.find((t) => t.id === tableId);
@@ -226,9 +226,9 @@ const RestaurantDashboard = () => {
 
     return (
         <div className="flex h-screen bg-gray-100">
-            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} pendingReservations={pendingReservations} />
+            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} pendingReservations={pendingReservations}/>
             <div className="flex-1 flex flex-col overflow-hidden">
-                <Header activeTab={activeTab} editingHours={editingHours} toggleEditMode={toggleEditMode} />
+                <Header activeTab={activeTab} editingHours={editingHours} toggleEditMode={toggleEditMode}/>
                 <main className="flex-1 overflow-y-auto p-6">
                     {activeTab === 'pendingReservations' && (
                         <PendingReservations
@@ -249,7 +249,7 @@ const RestaurantDashboard = () => {
                     )}
                     {activeTab === 'tables' && (
                         <>
-                            <FloorPlanDesigner tableList={tables} />
+                            <FloorPlanDesigner tableList={tables}/>
                         </>
                     )}
                     {activeTab === 'employees' && (
@@ -257,6 +257,7 @@ const RestaurantDashboard = () => {
                             employees={employees}
                             handleRemoveEmployee={handleRemoveEmployee}
                             createNewEmployee={createNewEmployee}
+                            updateEmployeeRole={updateEmployeeRole}
                         />
                     )}
                     {activeTab === 'allReservations' && (
