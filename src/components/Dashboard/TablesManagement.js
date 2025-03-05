@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 const styles = {
     container: {
@@ -85,8 +85,10 @@ const styles = {
 
 const TablesManagement = ({
                               tables = [],
-                              handleToggleTableActive = () => {},
-                              onAddTable = () => {}
+                              handleToggleTableActive = () => {
+                              },
+                              onAddTable = () => {
+                              }
                           }) => {
     const [newTable, setNewTable] = useState({
         name: '',
@@ -96,7 +98,7 @@ const TablesManagement = ({
     const [isAddTableDialogOpen, setIsAddTableDialogOpen] = useState(false);
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewTable(prev => ({
             ...prev,
             [name]: value
@@ -132,9 +134,7 @@ const TablesManagement = ({
                 <thead>
                 <tr>
                     <th style={styles.tableHeader}>Table ID</th>
-                    <th style={styles.tableHeader}>Name</th>
                     <th style={styles.tableHeader}>Capacity</th>
-                    <th style={styles.tableHeader}>Location</th>
                     <th style={styles.tableHeader}>Status</th>
                     <th style={styles.tableHeader}>Actions</th>
                 </tr>
@@ -144,9 +144,7 @@ const TablesManagement = ({
                     tables.map(table => (
                         <tr key={table.id} style={styles.tableRow}>
                             <td style={styles.tableCell}>{table.id}</td>
-                            <td style={styles.tableCell}>{table.name}</td>
-                            <td style={styles.tableCell}>{table.capacity} persons</td>
-                            <td style={styles.tableCell}>{table.location}</td>
+                            <td style={styles.tableCell}>{table.seats} persons</td>
                             <td style={styles.tableCell}>
                   <span style={table.isActive ? styles.activeStatus : styles.inactiveStatus}>
                     {table.isActive ? 'Active' : 'Inactive'}
