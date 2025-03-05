@@ -3,8 +3,8 @@ import TableWithChairs from "./TableWithChairs";
 import {tableTypes} from "./tableTypes";
 import floorPlanService from "../../services/floorPlan.service";
 import "./FloorPlan.css";
-const FloorPlan = () => {
-    const [selectedTable, setSelectedTable] = useState(null);
+const FloorPlan = ({ freeTables = [], onTableSelect }) => {
+    const [selectedTable, handleTableOnClick] = useState(null);
     const [tables, setTables] = useState([]);
     const [walls, setWalls] = useState([]);
     const [doors, setDoors] = useState([]);
@@ -15,6 +15,21 @@ const FloorPlan = () => {
     // Canvas dimensions
     const [canvasWidth, setCanvasWidth] = useState(800);
     const [canvasHeight, setCanvasHeight] = useState(600);
+
+
+    useEffect(() => {
+        console.log("freeTables", freeTables);
+        for (const t of tables) {
+            if (freeTables.includes(t.id)) {
+                t.isActive = true;
+            } else {
+                t.isActive = false;
+            }
+        }
+        console.log("tables", tables);
+    }, [freeTables, tables]);
+
+    console.log("tables", tables);
 
     useEffect(() => {
         const fetchFloorPlanData = async () => {
@@ -63,10 +78,7 @@ const FloorPlan = () => {
         return tableType.chairsTop + tableType.chairsBottom + tableType.chairsLeft + tableType.chairsRight;
     };
 
-    const handleTableClick = (id, totalSeats) => {
-        setSelectedTable(id);
-        console.log(`Selected table: ${id} with ${totalSeats} seats.`);
-    };
+
 
     // Function to render walls
     const renderWalls = () => {
@@ -183,6 +195,7 @@ const FloorPlan = () => {
 
                 {/* Render tables */}
                 {tables.map((table) => (
+
                     <TableWithChairs
                         key={table.id}
                         id={table.id}
@@ -190,7 +203,7 @@ const FloorPlan = () => {
                         y={table.y}
                         tableType={table.type}
                         isAvaible={table.isActive}
-                        onClick={handleTableClick}
+                        onClick={handleTableOnClick}
                         rotation={table.rotation}
                     />
                 ))}

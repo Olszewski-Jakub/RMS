@@ -103,7 +103,7 @@ const TableWithChairs = ({ id, x, y, tableType, isAvaible, onClick, rotation = 0
             y={y}
             width={width}
             height={height}
-            fill={isAvaible ? "#8B4513" : "#36454F"}
+            fill={isAvaible ? "#178b13" : "#36454F"}
             stroke="black"
             strokeWidth="1"
             transform={`rotate(${rotation}, ${tableCenter.x}, ${tableCenter.y})`}
