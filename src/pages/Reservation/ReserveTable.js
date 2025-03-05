@@ -14,6 +14,25 @@ const ReserveTable = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if screen size is mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Initial check
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const formatDateTime = (date, time) => {
     try {
@@ -265,38 +284,57 @@ const ReserveTable = () => {
 
   return (
     <div id="reserve" style={{ 
-      padding: '3rem 2rem',
+      padding: isMobile ? '1.5rem 1rem' : '3rem 2rem',
       maxWidth: '1300px',
       margin: '0 auto',
       display: 'flex', 
       flexDirection: 'column' 
     }}>
-      <PageTitle>Interactive Floor Plan</PageTitle>
+      <PageTitle style={{ fontSize: isMobile ? '1.5rem' : '2rem', margin: isMobile ? '0 0 1rem' : '0 0 1.5rem' }}>
+        Interactive Floor Plan
+      </PageTitle>
       
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      {success && <SuccessMessage>{success}</SuccessMessage>}
+      {error && <ErrorMessage style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{error}</ErrorMessage>}
+      {success && <SuccessMessage style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>{success}</SuccessMessage>}
       
-      <ReserveTableContainer>
-        <FloorPlan 
-          freeTables={freeTables}
-          onTableSelect={handleTableSelect}
-          loading={loading}
-          error={searchPerformed && freeTables.length > 0 && !freeTables.some(table => table.isActive) ? 
-            "No tables available for the selected time" : null}
-        />
-        <DateTimeForm
-          date={date}
-          setDate={setDate}
-          startTime={startTime}
-          setStartTime={setStartTime}
-          endTime={endTime}
-          setEndTime={setEndTime}
-          number={number}
-          setNumber={setNumber}
-          onSearch={handleSearch}
-          loading={loading}
-        />
-      </ReserveTableContainer>
+      {/* Using inline styles to modify the container for mobile devices */}
+      <div style={{ 
+        display: 'flex',
+        flexDirection: isMobile ? 'column-reverse' : 'row',
+        gap: isMobile ? '1.5rem' : '2rem',
+        width: '100%'
+      }}>
+        <div style={{ 
+          width: isMobile ? '100%' : '60%',
+          minHeight: isMobile ? 'auto' : '500px'
+        }}>
+          <FloorPlan 
+            freeTables={freeTables}
+            onTableSelect={handleTableSelect}
+            loading={loading}
+            isMobile={isMobile}
+            error={searchPerformed && freeTables.length > 0 && !freeTables.some(table => table.isActive) ? 
+              "No tables available for the selected time" : null}
+          />
+        </div>
+        <div style={{ 
+          width: isMobile ? '100%' : '40%'
+        }}>
+          <DateTimeForm
+            date={date}
+            setDate={setDate}
+            startTime={startTime}
+            setStartTime={setStartTime}
+            endTime={endTime}
+            setEndTime={setEndTime}
+            number={number}
+            setNumber={setNumber}
+            onSearch={handleSearch}
+            loading={loading}
+            isMobile={isMobile}
+          />
+        </div>
+      </div>
     </div>
   );
 };

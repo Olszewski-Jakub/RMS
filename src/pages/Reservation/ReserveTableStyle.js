@@ -13,6 +13,13 @@ export const ReserveTableContainer = styled.div`
   
   @media (max-width: 992px) {
     flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -23,6 +30,15 @@ export const FloorPlanContainer = styled.div`
   padding: 2rem;
   border-radius: 8px;
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+    flex: 1;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+  }
 `;
 
 // Styled form container
@@ -39,6 +55,24 @@ export const FormContainer = styled.div`
     font-size: 1.5rem;
     font-weight: 600;
   }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    
+    h3 {
+      font-size: 1.2rem;
+    }
+  }
 `;
 
 // Form group for labels and inputs
@@ -49,6 +83,14 @@ export const FormGroup = styled.div`
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+    
+    label {
+      font-size: 0.9rem;
+    }
   }
 `;
 
@@ -66,6 +108,12 @@ export const StyledSelect = styled.select`
     outline: none;
     border-color: white;
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.6rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 4px;
   }
 `;
 
@@ -88,6 +136,12 @@ export const StyledInput = styled.input`
   &::placeholder {
     color: #aaa;
   }
+  
+  @media (max-width: 768px) {
+    padding: 0.6rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 4px;
+  }
 `;
 
 // Time selector container
@@ -97,6 +151,15 @@ export const TimeSelectContainer = styled.div`
   
   select {
     flex: 1;
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    select {
+      width: 100%;
+    }
   }
 `;
 
@@ -132,6 +195,12 @@ export const SearchButton = styled.button`
     transform: none;
     box-shadow: none;
   }
+  
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    min-height: 44px; /* Better touch target */
+  }
 `;
 
 // Table component
@@ -142,6 +211,7 @@ export const Table = styled.div`
   cursor: ${props => props.isActive ? 'pointer' : 'not-allowed'};
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  touch-action: manipulation; /* Improves touch handling */
   
   &:hover {
     transform: ${props => props.isActive ? 'translateY(-2px)' : 'none'};
@@ -156,7 +226,13 @@ export const Table = styled.div`
     transform: translate(-50%, -50%);
     color: white;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: ${props => props.isMobile ? '0.9rem' : '1rem'};
+  }
+  
+  @media (max-width: 768px) {
+    &:hover {
+      transform: none; /* Remove hover effect on mobile */
+    }
   }
 `;
 
@@ -167,6 +243,39 @@ export const Chair = styled.div`
   border-radius: 50%;
   background-color: #b85c38;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+
+// Legend component for the floor plan
+export const Legend = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 5;
+  
+  @media (max-width: 768px) {
+    padding: 8px;
+    right: 5px;
+    top: 5px;
+    font-size: 0.8rem;
+  }
+`;
+
+// Legend item
+export const LegendItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  @media (max-width: 768px) {
+    gap: 5px;
+  }
 `;
 
 // Error message
@@ -185,6 +294,16 @@ export const ErrorMessage = styled.div`
     content: "⚠️";
     margin-right: 0.5rem;
     font-size: 1.2rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    
+    &::before {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -208,6 +327,26 @@ export const PageTitle = styled.h1`
     transform: translateX(-50%);
     border-radius: 2px;
   }
+  
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    
+    &::after {
+      width: 60px;
+      height: 3px;
+      bottom: -8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    
+    &::after {
+      width: 50px;
+    }
+  }
 `;
 
 // Success message
@@ -226,5 +365,15 @@ export const SuccessMessage = styled.div`
     content: "✅";
     margin-right: 0.5rem;
     font-size: 1.2rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    
+    &::before {
+      font-size: 1rem;
+    }
   }
 `;
