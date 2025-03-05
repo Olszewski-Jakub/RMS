@@ -78,7 +78,7 @@ const FloorPlanDesigner = () => {
                     id: uuidv4()
                 }));
 
-                setTables(tables);
+                setTables(tables || []);
             } catch (error) {
                 console.error('Error fetching tables:', error);
             }
@@ -151,7 +151,7 @@ const FloorPlanDesigner = () => {
             const seats = selectedTableType.chairsTop + selectedTableType.chairsBottom + selectedTableType.chairsLeft + selectedTableType.chairsRight;
             console.log("seats: " + seats)
             const tableId = await tableService.create(
-                selectedTableType.chairsTop + selectedTableType.chairsBottom + selectedTableType.chairsLeft + selectedTableType.chairsRight,
+                seats,
                 false,
                 x - selectedTableType.width / 2,
                 y - selectedTableType.height / 2,
@@ -165,6 +165,7 @@ const FloorPlanDesigner = () => {
                 x: x - selectedTableType.width / 2,
                 y: y - selectedTableType.height / 2,
                 type: selectedTableType,
+                isActive:true,
                 rotation: 0
             };
             setTables([...tables, newTable]);

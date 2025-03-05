@@ -123,22 +123,6 @@ const RestaurantDashboard = () => {
         },
     ]);
 
-    useEffect(() => {
-        const updateTables = async () => {
-            try {
-                for (const table of tables) {
-                    await tableService.update(table.id, table);
-                }
-            } catch (error) {
-                console.error('Failed to update tables:', error);
-            }
-        };
-
-        if (tables.length > 0) {
-            updateTables();
-        }
-    }, [tables]);
-
     const handleApproveReservation = async (id) => {
         pendingReservations.find((res) => res.id === id);
         const updatedPending = pendingReservations.filter((res) => res.id !== id);
