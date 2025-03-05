@@ -94,28 +94,6 @@
     transform: scale(0.95);
 }
 
-@media (max-width: 768px) {
-    .main-content-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .mainImg-container {
-        flex: 1 1 100%;
-        margin-bottom: 1rem;
-    }
-    .content{
-        flex: 1 1 100%;
-    }
-    .content h1{
-        font-size: 1.5rem;
-    }
-    .content p{
-        font-size: 1rem;
-    }
-}
-
-
 .openhours-text, .img-container2{
     height: auto;
     width: 50%;
@@ -221,4 +199,126 @@
 .img3-container img{
     border: 2px solid #FF7D05;
     border-radius: 1rem;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .main {
+        padding: 1rem 2vw;
+    }
+
+    .main-content-container, .openhours-container, .aboutus-container {
+        flex-direction: column;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .img-container1 {
+        flex: 1 1 100%;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+
+    .content {
+        flex: 1 1 100%;
+        padding: 1rem;
+    }
+
+    .content h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .content p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Opening Hours Section */
+    .openhours-text, .img-container2 {
+        width: 100%;
+        height: auto;
+    }
+
+    .openhours-text {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        order: 1;
+    }
+
+    .img-container2 {
+        position: relative;
+        height: 300px;
+        order: 2;
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .img-container2 img {
+        position: relative;
+        display: block;
+        width: 80%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .img-container2 img:first-child {
+        left: 0;
+        top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .img-container2 img:last-child {
+        right: 0;
+        top: 0;
+    }
+
+    .openhours-text-top h1 {
+        font-size: 1.3rem;
+    }
+
+    .clock-icon {
+        font-size: 1.5rem;
+    }
+
+    .phone-icon {
+        font-size: 2rem;
+        margin-right: 0.75rem;
+    }
+
+    .phoneNumber {
+        font-size: 1.3rem;
+    }
+
+    /* About Us Section */
+    .aboutus-content-container {
+        padding: 1rem;
+    }
+
+    .aboutus-content-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .aboutus-content-container p {
+        font-size: 0.9rem;
+    }
+
+    .img3-container {
+        padding-bottom: 2rem !important;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .img3-container img {
+        position: static !important;
+        width: 80% !important;
+        max-width: 250px !important;
+        height: auto !important;
+        margin: 0.5rem auto !important;
+        left: 0 !important;
+        top: 0 !important;
+        z-index: 1 !important;
+    }
 }

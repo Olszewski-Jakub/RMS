@@ -9,7 +9,7 @@ const reservationService = {
             people
         });
         return response.data.data;
-    },
+    }, 
     cancel: async (reservationId) => {
         const response = await axiosInstance.post(`/reservation/cancel/${reservationId}`);
         return response.data.data;
