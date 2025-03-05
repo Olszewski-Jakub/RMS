@@ -11,6 +11,8 @@ const authService = {
         const data = response.data.data; 
         cookieManager.set(COOKIE_KEYS.ID_TOKEN, data.idToken, { expires: 1 });
         cookieManager.set(COOKIE_KEYS.REFRESH_TOKEN, data.refreshToken, { expires: 7 });
+
+        console.log("Access token:", data.idToken);
         return data;
     },
     register: async (formData) => {

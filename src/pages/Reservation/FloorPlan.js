@@ -1,143 +1,146 @@
-// FloorPlan.js
-import React, { useState } from "react";
-import TableWithChairs from "./Table/TableWithChairs";
-import { tableTypes } from "./Table/tableTypes";
-const FloorPlan = () => {
-  const [selectedRoom, setSelectedRoom] = useState(null);
+import React from "react";
+import { 
+  FloorPlanContainer, 
+  Table, 
+  Chair,
+  ErrorMessage
+} from "./ReserveTableStyle";
 
-  const handleTableClick = (id, totalSeats) => {
-    setSelectedRoom(id);
-    console.log(`Selected table: ${id} with ${totalSeats} seats.`);
+const FloorPlan = ({ freeTables, onTableSelect, loading, error }) => {
+  const rectangleTable = { width: 120, height: 60 };
+  const squareTable = { width: 60, height: 60 };
+  const longTable = { width: 60, height: 120 };
+
+  const getChairPositions = (tableType, tableX, tableY) => {
+    const positions = [];
+    
+    if (tableType === "rectangle") {
+      for (let i = 0; i < 3; i++) {
+        positions.push({ 
+          x: tableX + 15 + (rectangleTable.width - 30) * i / 2, 
+          y: tableY - 30 
+        });
+      }
+      
+      for (let i = 0; i < 3; i++) {
+        positions.push({ 
+          x: tableX + 15 + (rectangleTable.width - 30) * i / 2, 
+          y: tableY + rectangleTable.height + 10 
+        });
+      }
+      
+      positions.push({ x: tableX - 30, y: tableY + rectangleTable.height / 2 });
+      
+      positions.push({ 
+        x: tableX + rectangleTable.width + 10, 
+        y: tableY + rectangleTable.height / 2 
+      });
+    } else if (tableType === "square") {
+      positions.push({ x: tableX + squareTable.width / 2, y: tableY - 30 }); // top
+      positions.push({ x: tableX + squareTable.width / 2, y: tableY + squareTable.height + 10 }); // bottom
+      positions.push({ x: tableX - 30, y: tableY + squareTable.height / 2 }); // left
+      positions.push({ x: tableX + squareTable.width + 10, y: tableY + squareTable.height / 2 }); // right
+    } else if (tableType === "long") {
+      positions.push({ x: tableX - 30, y: tableY + longTable.height / 4 }); // left top
+      positions.push({ x: tableX - 30, y: tableY + longTable.height * 3 / 4 }); // left bottom
+      positions.push({ x: tableX + longTable.width + 10, y: tableY + longTable.height / 4 }); // right top
+      positions.push({ x: tableX + longTable.width + 10, y: tableY + longTable.height * 3 / 4 }); // right bottom
+      positions.push({ x: tableX + longTable.width / 2, y: tableY - 30 }); // top
+      positions.push({ x: tableX + longTable.width / 2, y: tableY + longTable.height + 10 }); // bottom
+    }
+    
+    return positions;
   };
 
-return (
-    <div >
-        <h2 style={{ padding: "80px 0" }}>Interactive Floor Plan</h2>
-        
-        <svg width="500" height="500" viewBox="0 0 500 500">
-            <rect x="0" y="0" width="100" height="5" fill="#cce6ff" />
-            <rect x="200" y="0" width="100" height="5" fill="#cce6ff" />
-            <rect x="400" y="0" width="100" height="5" fill="#cce6ff" />
-            <rect x="0" y="0" width="5" height="200" fill="#cce6ff" />
-            <rect x="0" y="250" width="5" height="200" fill="#cce6ff" />
-            <rect x="490" y="50" width="5" height="90" fill="#cce6ff" />
-            <rect x="490" y="350" width="5" height="90" fill="#cce6ff" />
+  const tables = [
+    { id: 1, type: "square", x: 50, y: 70 },
+    { id: 2, type: "rectangle", x: 200, y: 70 },
+    { id: 3, type: "long", x: 400, y: 70 },
+    { id: 4, type: "square", x: 50, y: 240 },
+    { id: 5, type: "rectangle", x: 200, y: 240 },
+    { id: 6, type: "rectangle", x: 200, y: 410 },
+    { id: 7, type: "square", x: 50, y: 410 },
+    { id: 8, type: "square", x: 50, y: 580 },
+    { id: 9, type: "rectangle", x: 200, y: 580 },
+    { id: 10, type: "long", x: 400, y: 580 }
+  ];
 
-            <line
-                x1="500"
-                y1="250"
-                x2="460"
-                y2="250"
-                stroke="#000000"
-                strokeWidth="3"
-            />
-            <line
-                x1="500"
-                y1="280"
-                x2="500"
-                y2="250"
-                stroke="#000000"
-                strokeWidth="3"
-            />
-            <path
-                d="M500,280 C480,275 470,265 460,250"
-                fill="transparent"
-                stroke="#000000"
-                strokeWidth="1"
-            />
+  const getTableDimensions = (type) => {
+    switch(type) {
+      case "rectangle": return rectangleTable;
+      case "square": return squareTable;
+      case "long": return longTable;
+      default: return squareTable;
+    }
+  };
 
-            
-            <TableWithChairs
-                x={20}
-                y={40}
-                id={1}
-                tableType={tableTypes.small6}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={20}
-                y={160}
-                id={2}
-                tableType={tableTypes.small6}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={20}
-                y={280}
-                id={3}
-                tableType={tableTypes.small6}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={20}
-                y={400}
-                id={4}
-                tableType={tableTypes.small6}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={180}
-                y={40}
-                id={5}
-                tableType={tableTypes.medium1}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={180}
-                y={160}
-                id={6}
-                tableType={tableTypes.medium1}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={180}
-                y={280}
-                id={7}
-                tableType={tableTypes.medium1}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={180}
-                y={400}
-                id={8}
-                tableType={tableTypes.medium1}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={380}
-                y={40}
-                id={9}
-                tableType={tableTypes.medium2}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-            <TableWithChairs
-                x={380}
-                y={350}
-                id={10}
-                tableType={tableTypes.medium2}
-                isAvaible={true}
-                onClick={handleTableClick}
-            />
-        </svg>
+  return (
+    <FloorPlanContainer>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      
+      <div style={{ position: "relative", height: "750px", width: "100%" }}>
+        {tables.map((table) => {
+          const { id, type, x, y } = table;
+          const { width, height } = getTableDimensions(type);
+          const tableData = freeTables.find(t => t.id === id) || { id, isActive: false };
+          
+          const chairPositions = getChairPositions(type, x, y);
+          
+          return (
+            <React.Fragment key={id}>
+              <Table
+                style={{
+                  position: "absolute",
+                  left: x,
+                  top: y,
+                  width: width,
+                  height: height,
+                }}
+                isActive={tableData.isActive}
+                tableId={id}
+                onClick={() => tableData.isActive && !loading && onTableSelect(id)}
+              />
+              
+              {/* Draw chairs */}
+              {chairPositions.map((position, index) => (
+                <Chair
+                  key={`${id}-chair-${index}`}
+                  style={{
+                    position: "absolute",
+                    left: position.x,
+                    top: position.y,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                />
+              ))}
+            </React.Fragment>
+          );
+        })}
 
-        {selectedRoom && (
-            <div className="info">
-                <h3>{selectedRoom} Details</h3>
-                <p>Information about {selectedRoom}.</p>
-                {/* Add additional info or actions */}
-            </div>
-        )}
-    </div>
-);
+        <div style={{ 
+          position: "absolute",
+          right: "0px",
+          top: "0px",
+          padding: "15px",
+          backgroundColor: "white",
+          borderRadius: "8px",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px"
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "20px", height: "20px", backgroundColor: "#8cb369", borderRadius: "4px" }}></div>
+            <span>Available</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ width: "20px", height: "20px", backgroundColor: "#718096", borderRadius: "4px" }}></div>
+            <span>Reserved</span>
+          </div>
+        </div>
+      </div>
+    </FloorPlanContainer>
+  );
 };
 
 export default FloorPlan;

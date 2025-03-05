@@ -72,7 +72,7 @@ const Menu = () => {
                     {filteredItems.map((item) => (
                         <div key={item.id} className="menu-item">
                             <div className="item-image-container">
-                                <h1>Item Image</h1>
+                                <h1>Menu Image goes here</h1> 
                             </div>
                             <p style={{marginTop: "0.5rem", marginBottom: "0.5rem", fontSize: "1.25rem"}}>{item.name}</p>
                             <div className="menu-item-details-container">
