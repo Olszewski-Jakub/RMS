@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="ci/cd">
+      <change afterPath="$PROJECT_DIR$/src/components/Table/FloorPlan.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner/FloorPlanDesigner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard/FloorPlanDesigner/FloorPlanDesigner.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Table/FloorPlan.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/FloorPlan.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Dashboard/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Table/TableWithChairs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/TableWithChairs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Reservation/ReserveTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Reservation/ReserveTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/floorPlan.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/floorPlan.service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +101,7 @@
       <updated>1738836892770</updated>
       <workItem from="1738836893823" duration="1276000" />
       <workItem from="1741094531759" duration="751000" />
-      <workItem from="1741095286485" duration="27580000" />
+      <workItem from="1741095286485" duration="28320000" />
     </task>
     <task id="LOCAL-00001" summary="ci/cd">
       <option name="closed" value="true" />

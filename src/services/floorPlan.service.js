@@ -2,7 +2,7 @@ import axiosInstance from '../config/apiConfig';
 
 const floorPlanService = {
     get : async () => {
-        const response = await axiosInstance.get(`/floor-plan`);
+        const response = await axiosInstance.get(`/floorPlan`);
         return response.data.data;
     }
 }

@@ -1,0 +1,121 @@
+.floor-plan-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.floor-plan-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.floor-plan-container svg {
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+
+.table-details-panel {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.table-details-panel h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+/* Status indicators */
+.status-available {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.status-unavailable {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Loading and error states */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    margin: 40px auto;
+    max-width: 400px;
+}
+
+.spinner-container {
+    margin-bottom: 20px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 123, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: #007bff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 18px;
+    color: #555;
+    margin: 0;
+    font-weight: 500;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.error-message {
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 5px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .floor-plan-container svg {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .table-details-panel {
+        width: 100%;
+        max-width: 300px;
+    }
+}
