@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
-import TableWithChairs from "./TableWithChairs";
+import TableWithChairs from "./table/TableWithChairs";
 import Wall from "./Wall";
 import Door from "./Door";
 import Window from "./Window";
-import {tableTypes} from "./tableTypes";
+import {tableTypes} from "../../constants/tableTypes";
 import floorPlanService from "../../services/floorPlan.service";
 import "./FloorPlan.css";
 import Legend from "./Legend";
