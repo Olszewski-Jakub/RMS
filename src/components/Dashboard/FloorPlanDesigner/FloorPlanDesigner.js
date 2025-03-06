@@ -674,21 +674,6 @@ const FloorPlanDesigner = ({editMode}) => {
         });
     };
 
-    // Handle table click from TableWithChairs
-    // const handleTableClick = (tableId, seats) => {
-    //     if (currentDrawingMode !== DrawingMode.SELECT) return;
-    //
-    //     const table = tables.find(t => t.id === tableId);
-    //     if (table) {
-    //         showElementDetails(table, 'table', {
-    //             clientX: table.x + table.type.width / 2,
-    //             clientY: table.y + table.type.height / 2,
-    //             stopPropagation: () => {
-    //             }
-    //         });
-    //     }
-    // };
-
     // Render table preview
     const renderTablePreview = () => {
         const table = {
@@ -971,11 +956,26 @@ const FloorPlanDesigner = ({editMode}) => {
                                 rotation={table.rotation || 0}
                                 onClick={(id, seats) => {
                                     if (editMode && currentDrawingMode === DrawingMode.SELECT) {
+                                        // Get the SVG element
+                                        const svg = svgRef.current;
+
+                                        // Calculate the table's center point in SVG coordinates
+                                        const tableCenterX = table.x + table.type.width / 2;
+                                        const tableCenterY = table.y + table.type.height / 2;
+
+                                        // Create an SVG point at the table's center
+                                        const svgPoint = svg.createSVGPoint();
+                                        svgPoint.x = tableCenterX;
+                                        svgPoint.y = tableCenterY;
+
+                                        // Convert SVG coordinates to screen coordinates
+                                        const screenPoint = svgPoint.matrixTransform(svg.getScreenCTM());
+
+                                        // Use the converted screen coordinates for the popup
                                         showElementDetails(table, 'table', {
-                                            clientX: table.x + table.type.width / 2,
-                                            clientY: table.y + table.type.height / 2,
-                                            stopPropagation: () => {
-                                            }
+                                            clientX: screenPoint.x,
+                                            clientY: screenPoint.y,
+                                            stopPropagation: () => {}
                                         });
                                     }
                                 }}
