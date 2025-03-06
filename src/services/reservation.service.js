@@ -33,10 +33,11 @@ const reservationService = {
         const response = await axiosInstance.get(`/reservation/get/${reservationId}`);
         return response.data.data;
     },
-    getFreeTables: async (startTime, endTime) => {
+    getFreeTables: async (startTime, endTime,seats) => {
         const response = await axiosInstance.post(`/reservation/free-tables`, {
             startTime,
-            endTime
+            endTime,
+            seats: parseInt(seats,10)
         });
         return response.data.data;
     },

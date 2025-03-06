@@ -88,6 +88,11 @@ const ReserveTable = () => {
             return false;
         }
 
+        if(!number){
+            setError("Please enter the number of seats");
+            return false;
+        }
+
         // Calculate start and end times in minutes for comparison
         const startHour = parseInt(startTime.hour, 10);
         const startMinute = parseInt(startTime.minute, 10);
@@ -101,6 +106,11 @@ const ReserveTable = () => {
         if (endInMinutes <= startInMinutes) {
             setError("End time must be after start time");
             return false;
+        }
+
+        if (number < 1) {
+            setError("Number of people must be greater than 0");
+            return
         }
 
         return true;
@@ -135,7 +145,7 @@ const ReserveTable = () => {
             console.log("Start Time:", startDateTime);
             console.log("End Time:", endDateTime);
 
-            const response = await reservationService.getFreeTables(startDateTime, endDateTime);
+            const response = await reservationService.getFreeTables(startDateTime, endDateTime, number);
 
             // Validate API response
             if (!response || !Array.isArray(response)) {

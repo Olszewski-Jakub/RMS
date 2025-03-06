@@ -1,9 +1,6 @@
-// src/firebase/config.js
-import { initializeApp } from "firebase/app";
-import {getAuth, GoogleAuthProvider, FacebookAuthProvider} from "firebase/auth";
+import {initializeApp} from "firebase/app";
+import {FacebookAuthProvider, getAuth, GoogleAuthProvider} from "firebase/auth";
 
-// Your web app's Firebase configuration
-// Replace with your actual Firebase config from Firebase Console
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -17,11 +14,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-provider.addScope('email');
+
+const googleProvider = new GoogleAuthProvider();
+googleProvider.addScope('email');
 
 const facebookProvider = new FacebookAuthProvider();
 
-// provider.addScope('profile');
-// provider.addScope('https://www.googleapis.com/auth/user.phonenumbers.read')
-export { auth, provider, facebookProvider};
+export {auth, googleProvider, facebookProvider};

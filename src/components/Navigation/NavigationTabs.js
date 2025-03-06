@@ -18,7 +18,7 @@ const NavigationTabs = ({ currentPage, handleCurrentPage, isMobile }) => {
                         onClick={() => handleCurrentPage(item)}
                     >
                         {item}
-                        {/* Only show indicator if we're on the main routes */}
+                        {}
                         {currentPage === item && window.location.pathname === '/' && (
                             <motion.div
                                 className="nav-indicator"

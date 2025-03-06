@@ -241,7 +241,6 @@
     transform: scale(0.95);
 }
 
-
 .checkout-container {
     width: 350px;
     padding: 1.5rem;
@@ -402,7 +401,6 @@
     transform: translateY(0);
 }
 
-
 .mobile-cart-toggle {
     position: fixed;
     bottom: 0;
@@ -481,7 +479,6 @@
         transform: translateY(0);
     }
 }
-
 
 @media (max-width: 1200px) {
     .menuItems-container {

@@ -1,6 +1,5 @@
 
 
-
 .reservation-container {
     height: 100%;
 }
@@ -144,9 +143,6 @@
     background-color: #dc2626;
     box-shadow: 0 4px 8px rgba(239, 68, 68, 0.2);
 }
-
-
-
 
 @media (max-width: 768px) {
     .reservation-content {

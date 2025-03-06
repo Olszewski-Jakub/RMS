@@ -3,7 +3,7 @@ export const ROUTES = {
   AUTH: "/auth",
   MENU: "/menu",
   LOCATION: "/location",
-  RESERVETABLE: "/reserve-table",
+  RESERVE_TABLE: "/reserve-table",
   PROFILE: "/profile",
   NOT_FOUND: "*",
   ADMIN: "/admin",

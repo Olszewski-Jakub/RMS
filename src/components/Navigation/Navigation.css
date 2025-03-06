@@ -1,4 +1,4 @@
-/* Base Layout */
+
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -12,7 +12,6 @@
     transition: all 0.3s ease;
 }
 
-/* Logo Styles */
 .header-left {
     margin-left: 0.5rem;
     cursor: pointer;
@@ -29,7 +28,6 @@
     font-family: "Lavishly Yours", serif;
 }
 
-/* Navigation Tabs */
 .header-center {
     display: flex;
     justify-content: center;
@@ -72,7 +70,6 @@
     border-radius: 3px;
 }
 
-/* Auth Buttons */
 .header-right {
     display: flex;
     align-items: center;
@@ -102,7 +99,6 @@
     color: white;
 }
 
-/* Profile Buttons */
 .profile-buttons-container {
     display: flex;
     align-items: center;
@@ -132,7 +128,6 @@
     border: 2px solid #FF7D05;
 }
 
-/* Mobile Menu */
 .hamburger-menu {
     background: none;
     border: none;
@@ -224,7 +219,6 @@
     border: 2px solid #FF7D05;
 }
 
-/* Media Queries */
 @media screen and (max-width: 768px) {
     .header-center,
     .header-right {
@@ -246,7 +240,6 @@
     }
 }
 
-/* Scroll behavior */
 .header-container.scrolled {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 0.75rem 2rem;

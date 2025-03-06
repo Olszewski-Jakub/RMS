@@ -1,4 +1,4 @@
-/* Modern Restaurant Website Styles */
+
 :root {
     --primary: #ff7d05;
     --primary-light: #ffebdc;
@@ -17,7 +17,6 @@
     --transition: all 0.3s ease;
 }
 
-/* Main Container */
 .main {
     padding: 4rem 5vw;
     display: flex;
@@ -27,7 +26,6 @@
     background-color: var(--gray-light);
 }
 
-/* Section Containers */
 .main-content-container,
 .openhours-container,
 .aboutus-container {
@@ -53,7 +51,6 @@
     transform: translateY(-5px);
 }
 
-/* Hero Section */
 .img-container1 {
     flex: 1 1 55%;
     padding: 0;
@@ -114,7 +111,6 @@
     font-size: 1.2rem;
 }
 
-/* Opening Hours Section */
 .openhours-container {
     padding: 0;
     overflow: visible;
@@ -249,7 +245,6 @@
     z-index: 3;
 }
 
-/* About Us Section */
 .aboutus-container {
     overflow: visible;
     padding: 0;
@@ -343,7 +338,6 @@
     z-index: 4;
 }
 
-/* Image Slider Styles */
 .image-slider {
     position: relative;
     width: 100%;
@@ -394,7 +388,6 @@
     color: var(--primary);
 }
 
-/* Mobile Responsive Styles */
 @media (max-width: 992px) {
     .main {
         padding: 3rem 4vw;
@@ -453,7 +446,6 @@
         padding: 0.9rem 1.8rem;
     }
 
-    /* Opening Hours Section */
     .openhours-container {
         background: var(--white);
     }
@@ -504,7 +496,6 @@
         font-size: 1.3rem;
     }
 
-    /* About Us Section */
     .aboutus-content-container {
         padding: 2.5rem;
         text-align: center;
