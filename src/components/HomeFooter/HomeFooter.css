@@ -1,4 +1,4 @@
-/* Modern Footer Styles */
+
 :root {
     --primary: #ff7d05;
     --primary-light: #ffebdc;
@@ -193,7 +193,6 @@
     margin-right: auto;
 }
 
-/* Mobile Responsive Styles */
 @media (max-width: 992px) {
     .footer-container {
         padding: 3rem 4vw;

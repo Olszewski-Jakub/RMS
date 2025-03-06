@@ -13,32 +13,28 @@ import tableService from "../../services/table.service";
 import userService from "../../services/user.service";
 import './Dashboard.css';
 import authService from "../../services/auth.service";
+import LoadingIndicator from '../../components/Dashboard/Loading/LoadingIndicator';
 
-const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservation, setTables, setEmployees) => {
-    const location = useLocation();
+
+const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservation, setTables, setEmployees, setLoading) => {
     const [activeTab, setActiveTab] = useState(initialTab);
 
-    // Extract tab from hash on component mount or set default hash if none exists
     useEffect(() => {
         const hash = window.location.hash.replace('#', '');
         if (hash && ['pendingReservations', 'hours', 'tables', 'employees', 'allReservations'].includes(hash)) {
             setActiveTab(hash);
         } else {
-            // Set default hash if no hash is present
             window.location.hash = initialTab;
         }
     }, []);
 
-    // Update route when active tab changes
     const handleTabChange = (newTab) => {
-        // Only update the hash if it's different to avoid unnecessary page jumps
         if (window.location.hash !== `#${newTab}`) {
             window.location.hash = newTab;
         }
         setActiveTab(newTab);
     };
 
-    // Listen for hash changes
     useEffect(() => {
         const handleHashChange = () => {
             const hash = window.location.hash.replace('#', '');
@@ -55,74 +51,80 @@ const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, se
         console.log(`Active tab changed to: ${activeTab}`);
 
         const fetchData = async () => {
-            switch (activeTab) {
-                case 'allReservations':
-                    try {
-                        const allReservationResponse = await reservationService.getAll();
-                        const refactoredReservations = allReservationResponse.map(reservation => {
-                            const start = new Date(reservation.startTime);
-                            const end = new Date(reservation.endTime);
-                            return {
-                                ...reservation,
-                                date: start.toISOString().split('T')[0],
-                                startTime: start.toISOString().split('T')[1].split('.')[0],
-                                endTime: end.toISOString().split('T')[1].split('.')[0],
-                            };
-                        });
-                        setAllReservations(refactoredReservations);
-                    } catch (error) {
-                        console.error('Failed to fetch all reservations:', error);
-                    }
-                    break;
-                case "hours":
-                    try {
-                        const openingHoursReposne = await openingHoursService.getAll();
-                        const hours = [];
-                        for (const h of openingHoursReposne) {
-                            h.isOpen = h.startTime != null && h.endTime != null;
-                            hours.push(h);
+            setLoading(true);
+
+            try {
+                switch (activeTab) {
+                    case 'allReservations':
+                        try {
+                            const allReservationResponse = await reservationService.getAll();
+                            const refactoredReservations = allReservationResponse.map(reservation => {
+                                const start = new Date(reservation.startTime);
+                                const end = new Date(reservation.endTime);
+                                return {
+                                    ...reservation,
+                                    date: start.toISOString().split('T')[0],
+                                    startTime: start.toISOString().split('T')[1].split('.')[0],
+                                    endTime: end.toISOString().split('T')[1].split('.')[0],
+                                };
+                            });
+                            setAllReservations(refactoredReservations);
+                        } catch (error) {
+                            console.error('Failed to fetch all reservations:', error);
                         }
-                        setOpeningHours(hours);
-                    } catch (error) {
-                        console.error('Failed to fetch opening hours:', error);
-                    }
-                    break;
-                case "pendingReservations":
-                    try {
-                        const pendingReservationResponse = await reservationService.getByStatus("pending");
-                        const refactoredReservations = pendingReservationResponse.map(reservation => {
-                            const start = new Date(reservation.startTime);
-                            const end = new Date(reservation.endTime);
-                            return {
-                                ...reservation,
-                                date: start.toISOString().split('T')[0],
-                                startTime: start.toISOString().split('T')[1].split('.')[0],
-                                endTime: end.toISOString().split('T')[1].split('.')[0],
-                            };
-                        });
-                        setPendingReservation(refactoredReservations);
-                    } catch (e) {
-                        console.log(e);
-                    }
-                    break;
-                case "tables":
-                    try {
-                        const tables = await tableService.getAll();
-                        setTables(tables);
-                    } catch (e) {
-                        console.log(e);
-                    }
-                    break;
-                case "employees":
-                    try {
-                        const employees = await userService.getAllPrivilegedUsers();
-                        setEmployees(employees);
-                    } catch (e) {
-                        console.log(e);
-                    }
-                default:
-                    console.log(activeTab);
-                    break;
+                        break;
+                    case "hours":
+                        try {
+                            const openingHoursReposne = await openingHoursService.getAll();
+                            const hours = [];
+                            for (const h of openingHoursReposne) {
+                                h.isOpen = h.startTime != null && h.endTime != null;
+                                hours.push(h);
+                            }
+                            setOpeningHours(hours);
+                        } catch (error) {
+                            console.error('Failed to fetch opening hours:', error);
+                        }
+                        break;
+                    case "pendingReservations":
+                        try {
+                            const pendingReservationResponse = await reservationService.getByStatus("pending");
+                            const refactoredReservations = pendingReservationResponse.map(reservation => {
+                                const start = new Date(reservation.startTime);
+                                const end = new Date(reservation.endTime);
+                                return {
+                                    ...reservation,
+                                    date: start.toISOString().split('T')[0],
+                                    startTime: start.toISOString().split('T')[1].split('.')[0],
+                                    endTime: end.toISOString().split('T')[1].split('.')[0],
+                                };
+                            });
+                            setPendingReservation(refactoredReservations);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                        break;
+                    case "tables":
+                        try {
+                            const tables = await tableService.getAll();
+                            setTables(tables);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                        break;
+                    case "employees":
+                        try {
+                            const employees = await userService.getAllPrivilegedUsers();
+                            setEmployees(employees);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    default:
+                        console.log(activeTab);
+                        break;
+                }
+            } finally {
+                setLoading(false); // Set loading to false after data is fetched
             }
         };
 
@@ -140,7 +142,8 @@ const RestaurantDashboard = () => {
     const [pendingReservations, setPendingReservations] = useState([]);
     const [tables, setTables] = useState([]);
     const [employees, setEmployees] = useState([]);
-    const [activeTab, setActiveTab] = useActiveTab(tab || 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservations, setTables, setEmployees);
+    const [loading, setLoading] = useState(false); // Add loading state
+    const [activeTab, setActiveTab] = useActiveTab(tab || 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservations, setTables, setEmployees, setLoading);
     const [editingHours, setEditingHours] = useState(false);
     const [tablesEditMode, setTablesEditMode] = useState(false);
     const [addEmployee, setAddEmployee] = useState(false);
@@ -160,6 +163,7 @@ const RestaurantDashboard = () => {
     };
 
     const handleApproveReservation = async (id) => {
+        setLoading(true);
         pendingReservations.find((res) => res.id === id);
         const updatedPending = pendingReservations.filter((res) => res.id !== id);
 
@@ -169,6 +173,8 @@ const RestaurantDashboard = () => {
             await reservationService.confirm(id);
         } catch (e) {
             console.log(e);
+        } finally {
+            setLoading(false);
         }
 
         setAllReservations((prevReservations) =>
@@ -179,6 +185,7 @@ const RestaurantDashboard = () => {
     };
 
     const approveAllReservations = async () => {
+        setLoading(true);
         const updatedPending = pendingReservations.filter((res) => res.status !== 'pending');
         setPendingReservations(updatedPending);
 
@@ -189,10 +196,13 @@ const RestaurantDashboard = () => {
             }
         } catch (e) {
             console.log(e);
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     const handleRejectReservation = async (id) => {
+        setLoading(true);
         const updatedPending = pendingReservations.filter((res) => res.id !== id);
         setPendingReservations(updatedPending);
 
@@ -200,6 +210,8 @@ const RestaurantDashboard = () => {
             await reservationService.cancel(id);
         } catch (e) {
             console.log(e);
+        } finally {
+            setLoading(false);
         }
 
         setAllReservations((prevReservations) =>
@@ -234,6 +246,7 @@ const RestaurantDashboard = () => {
     }
 
     const saveHours = async () => {
+        setLoading(true);
         setEditingHours(false);
         try {
             for (const hour of openingHours) {
@@ -245,6 +258,8 @@ const RestaurantDashboard = () => {
             }
         } catch (e) {
             console.log(e);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -381,45 +396,51 @@ const RestaurantDashboard = () => {
                     toggleShowFilters={toggleReservationFilterMode}
                 />
                 <main className="dashboard-content overflow-y-auto p-6">
-                    {activeTab === 'pendingReservations' && (
-                        <PendingReservations
-                            pendingReservations={pendingReservations}
-                            handleApproveReservation={handleApproveReservation}
-                            handleRejectReservation={handleRejectReservation}
-                            getTableName={getTableName}
-                        />
-                    )}
-                    {activeTab === 'hours' && (
-                        <OpeningHours
-                            openingHours={openingHours}
-                            editingHours={editingHours}
-                            handleHoursChange={handleHoursChange}
-                            handleToggleDay={handleToggleDay}
-                            saveHours={saveHours}
-                        />
-                    )}
-                    {activeTab === 'tables' && (
+                    {loading ? (
+                        <LoadingIndicator text={`Loading ${activeTab.replace(/([A-Z])/g, ' $1').trim()}...`}/>
+                    ) : (
                         <>
-                            <FloorPlanDesigner editMode={tablesEditMode}/>
+                            {activeTab === 'pendingReservations' && (
+                                <PendingReservations
+                                    pendingReservations={pendingReservations}
+                                    handleApproveReservation={handleApproveReservation}
+                                    handleRejectReservation={handleRejectReservation}
+                                    getTableName={getTableName}
+                                />
+                            )}
+                            {activeTab === 'hours' && (
+                                <OpeningHours
+                                    openingHours={openingHours}
+                                    editingHours={editingHours}
+                                    handleHoursChange={handleHoursChange}
+                                    handleToggleDay={handleToggleDay}
+                                    saveHours={saveHours}
+                                />
+                            )}
+                            {activeTab === 'tables' && (
+                                <>
+                                    <FloorPlanDesigner editMode={tablesEditMode}/>
+                                </>
+                            )}
+                            {activeTab === 'employees' && (
+                                <EmployeeManagement
+                                    employees={employees}
+                                    handleRemoveEmployee={handleRemoveEmployee}
+                                    createNewEmployee={createNewEmployee}
+                                    updateEmployeeRole={updateEmployeeRole}
+                                    showDialog={addEmployee}
+                                    setShowDialog={setAddEmployee}
+                                />
+                            )}
+                            {activeTab === 'allReservations' && (
+                                <AllReservations
+                                    allReservations={allReservations}
+                                    getTableName={getTableName}
+                                    setFiltersVisible={setReservationFilterMode}
+                                    filtersVisible={reservationFilterMode}
+                                />
+                            )}
                         </>
-                    )}
-                    {activeTab === 'employees' && (
-                        <EmployeeManagement
-                            employees={employees}
-                            handleRemoveEmployee={handleRemoveEmployee}
-                            createNewEmployee={createNewEmployee}
-                            updateEmployeeRole={updateEmployeeRole}
-                            showDialog={addEmployee}
-                            setShowDialog={setAddEmployee}
-                        />
-                    )}
-                    {activeTab === 'allReservations' && (
-                        <AllReservations
-                            allReservations={allReservations}
-                            getTableName={getTableName}
-                            setFiltersVisible={setReservationFilterMode}
-                            filtersVisible={reservationFilterMode}
-                        />
                     )}
                 </main>
             </div>

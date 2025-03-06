@@ -1,11 +1,11 @@
-import React, {createContext, useState, useEffect, useContext} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import COOKIE_KEYS from "../constants/cookieKeys"; // Adjust the path as necessary
 import authService from "../services/auth.service"; // Adjust the path as necessary
 import userService from "../services/user.service";
 import cookieManager from "../utils/cookieManager";
-import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
-import {auth, facebookProvider, provider} from "../config/FirebaseConfig"; // Adjust the path as necessary
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {auth, facebookProvider, googleProvider} from "../config/FirebaseConfig"; // Adjust the path as necessary
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
@@ -48,13 +48,10 @@ export const AuthProvider = ({children}) => {
     };
 
     const loginWithGoogle = async () => {
-        signInWithPopup(auth, provider)
+        signInWithPopup(auth, googleProvider)
             .then((result) => {
-                // Retrieve the signed-in user.
                 const user = result.user;
-                // Get the ID token for the user.
                 user.getIdToken().then((idToken) => {
-                    // Now you have the ID token to send to your backend.
                     sendGoogleToken(idToken);
                     console.log("ID Token:", idToken);
                 }).catch((error) => {
@@ -62,7 +59,6 @@ export const AuthProvider = ({children}) => {
                 });
             })
             .catch((error) => {
-                // Handle Errors here.
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 const email = error.customData.email;
@@ -80,20 +76,14 @@ export const AuthProvider = ({children}) => {
     const loginWithFacebook = async () => {
         signInWithPopup(auth, facebookProvider)
             .then((result) => {
-                // Retrieve the signed-in user.
                 const user = result.user;
-                // Get the ID token for the user.
                 user.getIdToken().then((idToken) => {
-                    // Now you have the ID token to send to your backend.
                     sendGoogleToken(idToken);
-                    console.log("ID Token:", idToken);
-
                 }).catch((error) => {
                     console.error("Error getting ID token:", error);
                 });
             })
             .catch((error) => {
-                // Handle Errors here.
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 const email = error.customData.email;

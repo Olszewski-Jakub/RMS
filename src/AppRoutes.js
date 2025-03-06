@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 
 import HashNavigationWrapper from "./components/Navigation/HashNavigationWrapper";
 import Auth from "./pages/Authentication/Auth";
 import NotFound from "./pages/NotFound/NotFound";
-import Layout from "./components/Layout";
-import { ROUTES } from "./constants/routes";
+import Layout from "./components/Layout/Layout";
+import {ROUTES} from "./constants/routes";
 import Profile from "./pages/Profile/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import RestaurantDashboard from "./pages/Dashboard/Dashboard";
@@ -35,7 +35,7 @@ function AppRoutes() {
                     element={<Navigate to="/#Location" replace />}
                 />
                 <Route
-                    path={ROUTES.RESERVETABLE}
+                    path={ROUTES.RESERVE_TABLE}
                     element={<Navigate to="/#Reservation" replace />}
                 />
 

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./HomeMain.css"; // Use our new modernized styles
-import { FaCalendarAlt, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-import { LuClock3 } from "react-icons/lu";
-import { BiSolidPhoneCall } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants/routes.js";
+import {FaCalendarAlt} from "react-icons/fa";
+import {LuClock3} from "react-icons/lu";
+import {BiSolidPhoneCall} from "react-icons/bi";
+import {useNavigate} from "react-router-dom";
+import {ROUTES} from "../../constants/routes.js";
 import image2 from "../../assets/image2.jpg";
 import image22 from "../../assets/image22.jpg";
 import image3 from "../../assets/image3.jpg";
@@ -37,7 +37,7 @@ const HomeMain = () => {
     }, []);
 
     const goToReservation = () => {
-        navigate(ROUTES.RESERVETABLE);
+        navigate(ROUTES.RESERVE_TABLE);
     };
 
     return (

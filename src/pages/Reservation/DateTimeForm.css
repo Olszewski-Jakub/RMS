@@ -1,4 +1,4 @@
-/* Modern Reservation Form Styles */
+
 .reservation-form {
   background-color: white;
   border-radius: 12px;
@@ -78,7 +78,6 @@
   color: #aaa;
 }
 
-/* Number input specific styles */
 input[type="number"].input-field {
   -moz-appearance: textfield;
 }
@@ -89,14 +88,12 @@ input[type="number"].input-field::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Time selector container */
 .time-select-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
 }
 
-/* Select styling */
 .select-field {
   padding: 0.875rem 1rem;
   border: 1px solid #e1e1e1;
@@ -123,7 +120,6 @@ input[type="number"].input-field::-webkit-inner-spin-button {
   background-color: #fff;
 }
 
-/* Search button */
 .search-button {
   width: 100%;
   padding: 1rem;
@@ -181,7 +177,6 @@ input[type="number"].input-field::-webkit-inner-spin-button {
   display: none;
 }
 
-/* Helper text */
 .helper-text {
   margin-top: 1.5rem;
   font-size: 0.9rem;
@@ -190,13 +185,11 @@ input[type="number"].input-field::-webkit-inner-spin-button {
   line-height: 1.4;
 }
 
-/* Focus styles for better accessibility */
 :focus {
   outline: 2px solid rgba(232, 150, 42, 0.5);
   outline-offset: 2px;
 }
 
-/* React DatePicker Custom Styling */
 .react-datepicker-wrapper {
   width: 100%;
 }
@@ -247,7 +240,6 @@ input[type="number"].input-field::-webkit-inner-spin-button {
   top: 12px;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .reservation-form {
     padding: 1.5rem;

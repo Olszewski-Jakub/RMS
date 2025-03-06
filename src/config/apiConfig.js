@@ -2,10 +2,9 @@ import axios from 'axios';
 import authService from '../services/auth.service';
 import cookieManager from "../utils/cookieManager";
 import COOKIE_KEYS from "../constants/cookieKeys";
-const apiConfig = {
 
+const apiConfig = {
     baseURL: "https://api-d4o6tbc5fq-uc.a.run.app"
-//        baseURL: "http://127.0.0.1:5001/restaurant-management-sy-1a0cd/us-central1/api"
 };
 
 const axiosInstance = axios.create({
