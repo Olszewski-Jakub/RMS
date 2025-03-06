@@ -10,6 +10,7 @@ export default function Auth() {
     const navigate = useNavigate();
     const [loginForm, setLoginForm] = useState(true);
     const { isLoggedIn, login, register, loginWithGoogle,loginWithFacebook, error } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -84,24 +85,25 @@ export default function Auth() {
     };
 
     const handleGoogleAuth = async () => {
+        if (loading) return; // Prevent multiple clicks
         setFormError("");
+        setLoading(true);
+
         try {
             const result = await loginWithGoogle();
-            if (!result?.success && !error) {
-                setFormError("Google authentication failed. Please try again.");
-            }
         } catch (error) {
             setFormError("Google authentication failed. Please try again.");
+
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleFacebookAuth = async () => {
         setFormError("");
+        setLoading(true);
         try {
             const result = await loginWithFacebook();
-            if (!result?.success && !error) {
-                setFormError("Facebook authentication failed. Please try again.");
-            }
         } catch (error) {
             setFormError("Facebook authentication failed. Please try again.");
         }
@@ -133,11 +135,12 @@ export default function Auth() {
                         className="provider-button google"
                         onClick={handleGoogleAuth}
                         type="button"
+                        disabled={loading}
                     >
-                        <FaGoogle /> <span>Continue with Google</span>
+                        <FaGoogle /> <span>{loading ? "Signing in..." : "Continue with Google"}</span>
                     </button>
                     <button className="provider-button facebook" type="button" onClick={handleFacebookAuth}>
-                        <FaFacebook /> <span>Continue with Facebook</span>
+                        <FaFacebook /> <span>{loading ? "Signing in..." : "Continue with Facebook"}</span>
                     </button>
                 </div>
 

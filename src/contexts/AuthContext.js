@@ -87,6 +87,7 @@ export const AuthProvider = ({children}) => {
                     // Now you have the ID token to send to your backend.
                     sendGoogleToken(idToken);
                     console.log("ID Token:", idToken);
+
                 }).catch((error) => {
                     console.error("Error getting ID token:", error);
                 });
@@ -112,6 +113,8 @@ export const AuthProvider = ({children}) => {
             const response = await authService.google(tokenId);
             console.log("Google login response:", response);
             setIsLoggedIn(true);
+            const userResponse = userService.userDetails();
+            cookieManager.set(COOKIE_KEYS.USER, userResponse.privileges, {expires: 1})
         } catch (error) {
             console.error("Google login error:", error);
         }
