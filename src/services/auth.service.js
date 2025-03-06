@@ -57,6 +57,15 @@ const authService = {
     deleteEmployee: async (uid) => {
         const response = await axiosInstance.delete(`/auth/deleteEmployee/${uid}`);
         return response.data.data;
+    },
+    google: async (idToken) => {
+        const response = await axiosInstance.post(`/auth/google`, {
+            idToken
+        });
+        const data = response.data.data;
+        cookieManager.set(COOKIE_KEYS.ID_TOKEN, data.idToken, {expires: 1});
+        cookieManager.set(COOKIE_KEYS.REFRESH_TOKEN, data.refreshToken, {expires: 7});
+        return data;
     }
 };
 
