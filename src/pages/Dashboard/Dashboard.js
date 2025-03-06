@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useLocation, useParams} from 'react-router-dom';
 import Sidebar from '../../components/Dashboard/Sidebar/Sidebar';
 import Header from '../../components/Dashboard/Header/Header';
 import PendingReservations from '../../components/Dashboard/PendingReservations/PendingReservations';
@@ -14,7 +15,41 @@ import './Dashboard.css';
 import authService from "../../services/auth.service";
 
 const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservation, setTables, setEmployees) => {
+    const location = useLocation();
     const [activeTab, setActiveTab] = useState(initialTab);
+
+    // Extract tab from hash on component mount or set default hash if none exists
+    useEffect(() => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && ['pendingReservations', 'hours', 'tables', 'employees', 'allReservations'].includes(hash)) {
+            setActiveTab(hash);
+        } else {
+            // Set default hash if no hash is present
+            window.location.hash = initialTab;
+        }
+    }, []);
+
+    // Update route when active tab changes
+    const handleTabChange = (newTab) => {
+        // Only update the hash if it's different to avoid unnecessary page jumps
+        if (window.location.hash !== `#${newTab}`) {
+            window.location.hash = newTab;
+        }
+        setActiveTab(newTab);
+    };
+
+    // Listen for hash changes
+    useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && hash !== activeTab) {
+                setActiveTab(hash);
+            }
+        };
+
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, [activeTab]);
 
     useEffect(() => {
         console.log(`Active tab changed to: ${activeTab}`);
@@ -94,21 +129,30 @@ const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, se
         fetchData();
     }, [activeTab, setAllReservations]);
 
-    return [activeTab, setActiveTab];
+    return [activeTab, handleTabChange];
 };
 
 const RestaurantDashboard = () => {
+    const { tab } = useParams();
+    const location = useLocation();
     const [allReservations, setAllReservations] = useState([]);
     const [openingHours, setOpeningHours] = useState([]);
     const [pendingReservations, setPendingReservations] = useState([]);
     const [tables, setTables] = useState([]);
     const [employees, setEmployees] = useState([]);
-    const [activeTab, setActiveTab] = useActiveTab('pendingReservations', setAllReservations, setOpeningHours, setPendingReservations, setTables, setEmployees);
+    const [activeTab, setActiveTab] = useActiveTab(tab || 'pendingReservations', setAllReservations, setOpeningHours, setPendingReservations, setTables, setEmployees);
     const [editingHours, setEditingHours] = useState(false);
     const [tablesEditMode, setTablesEditMode] = useState(false);
     const [addEmployee, setAddEmployee] = useState(false);
     const [reservationFilterMode, setReservationFilterMode] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+    // Set default route on initial load if no tab is specified
+    useEffect(() => {
+        if (!tab && location.pathname === '/dashboard') {
+            setActiveTab('pendingReservations');
+        }
+    }, [location, tab]);
 
     // Listen for sidebar collapse state changes
     const handleSidebarToggle = (isCollapsed) => {

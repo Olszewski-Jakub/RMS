@@ -1,32 +1,25 @@
+import React from "react";
+import { motion } from "framer-motion";
+
 const AuthButtons = ({ handleLoginClick, handleSignUpClick, isMobile }) => (
     <div className={isMobile ? "mobile-header-right" : "header-right"}>
-        <button
+        <motion.button
             onClick={handleLoginClick}
             className={`login-btn auth-btn ${isMobile ? "mobile-auth-btn" : ""}`}
-            style={{ 
-                color: "#FF7D05", 
-                border: "1px solid #FF7D05", 
-                marginRight: isMobile ? "0" : "1rem", 
-                marginBottom: isMobile ? "0.5rem" : "0",
-                backgroundColor: "white", 
-                width: isMobile ? "100%" : "auto" 
-            }}
+            whileHover={{ scale: 1.05, boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.1)" }}
+            whileTap={{ scale: 0.95 }}
         >
             Log In
-        </button>
+        </motion.button>
 
-        <button
+        <motion.button
             onClick={handleSignUpClick}
             className={`signup-btn auth-btn ${isMobile ? "mobile-auth-btn" : ""}`}
-            style={{ 
-                color: "white", 
-                border: "none", 
-                backgroundColor: "#FF7D05",
-                width: isMobile ? "100%" : "auto"
-            }}
+            whileHover={{ scale: 1.05, boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.1)" }}
+            whileTap={{ scale: 0.95 }}
         >
             Sign Up
-        </button>
+        </motion.button>
     </div>
 );
 

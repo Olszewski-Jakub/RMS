@@ -70,7 +70,7 @@
 
 @media (max-width: 768px) {
   .dashboard-header {
-    padding-left: 60px; 
+    padding-left: 60px;
 
   }
 }
@@ -139,12 +139,12 @@
   min-height: 200px;
 }
 
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
+/*html, body, #root {*/
+/*  height: 100%;*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*  overflow: hidden;*/
+/*}*/
 
 @media (max-width: 768px) {
   .dashboard-content {

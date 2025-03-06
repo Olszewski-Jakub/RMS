@@ -110,7 +110,6 @@ const ReserveTable = () => {
         console.log("Search button clicked!");
 
         setSuccess(null);
-        setSearchPerformed(true);
 
         try {
             setLoading(true);

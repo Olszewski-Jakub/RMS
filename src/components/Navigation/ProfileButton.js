@@ -1,44 +1,57 @@
-import { FaUserCircle } from "react-icons/fa";
+import React from "react";
+import { FaUserCircle, FaRegChartBar } from "react-icons/fa";
+import { motion } from "framer-motion";
 import cookieManager from "../../utils/cookieManager";
 import COOKIE_KEYS from "../../constants/cookieKeys";
-const ProfileButton = ({ handleProfileClick, handleDashboardOnClick }) => {
-    const user = cookieManager.get(COOKIE_KEYS.USER)
-    console.log(user)
-    return (
 
-        <div>
-            <button
-                onClick={handleProfileClick}
-                className="login-btn auth-btn"
-                style={{
-                    color: "#FF7D05",
-                    border: "1px solid #FF7D05",
-                    marginRight: "1rem",
-                    backgroundColor: "white",
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "0.5rem 1rem",
-                }}
-            >
-                <FaUserCircle style={{ marginRight: "0.5rem" }} /> Profile
-            </button>
+const ProfileButton = ({ handleProfileClick, handleDashboardOnClick, isMobile }) => {
+    const user = cookieManager.get(COOKIE_KEYS.USER);
+    const isAdmin = ["owner", "employee"].includes(user);
 
-            {["owner", "employee"].includes(user) && (
-                <button
-                    onClick={handleDashboardOnClick}
-                    className="login-btn auth-btn"
-                    style={{
-                        color: "#FF7D05",
-                        border: "1px solid #FF7D05",
-                        marginRight: "1rem",
-                        backgroundColor: "white",
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "0.5rem 1rem",
-                    }}
+    if (isMobile) {
+        return (
+            <div className="mobile-profile-buttons">
+                <motion.button
+                    onClick={handleProfileClick}
+                    className="mobile-profile-btn"
+                    whileTap={{ scale: 0.95 }}
                 >
-                    <FaUserCircle style={{ marginRight: "0.5rem" }} /> Dashboard
-                </button>
+                    <FaUserCircle /> Profile
+                </motion.button>
+
+                {isAdmin && (
+                    <motion.button
+                        onClick={handleDashboardOnClick}
+                        className="mobile-dashboard-btn"
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <FaRegChartBar /> Dashboard
+                    </motion.button>
+                )}
+            </div>
+        );
+    }
+
+    return (
+        <div className="profile-buttons-container">
+            <motion.button
+                onClick={handleProfileClick}
+                className="profile-btn"
+                whileHover={{ scale: 1.05, boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.1)" }}
+                whileTap={{ scale: 0.95 }}
+            >
+                <FaUserCircle /> Profile
+            </motion.button>
+
+            {isAdmin && (
+                <motion.button
+                    onClick={handleDashboardOnClick}
+                    className="dashboard-btn"
+                    whileHover={{ scale: 1.05, boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.1)" }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    <FaRegChartBar /> Dashboard
+                </motion.button>
             )}
         </div>
     );
