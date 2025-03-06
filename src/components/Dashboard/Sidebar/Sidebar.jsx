@@ -39,7 +39,7 @@ const Sidebar = ({activeTab, setActiveTab, pendingReservations, onToggle}) => {
 
     return (
         <>
-            {/* Mobile toggle button (only visible on small screens) */}
+            {}
             <button
                 className="sidebar-toggle"
                 onClick={toggleSidebar}
@@ -141,7 +141,7 @@ const Sidebar = ({activeTab, setActiveTab, pendingReservations, onToggle}) => {
                 </div>
             </div>
 
-            {/* Overlay for mobile (closes sidebar when clicking outside) */}
+            {}
             {!collapsed && window.innerWidth <= 768 && (
                 <div className="sidebar-overlay" onClick={toggleSidebar}></div>
             )}

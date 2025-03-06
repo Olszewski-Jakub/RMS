@@ -57,7 +57,7 @@ const DoorComponent = ({
                 onMouseDown={(e) => editMode && startDragElement(door, e, 'door')}
                 transform={`rotate(${rotation}, ${centerX}, ${centerY})`}
             />
-            {/* Resize handle for door */}
+            {}
             {editMode && (
                 <rect
                     x={door.x + door.width - 10}

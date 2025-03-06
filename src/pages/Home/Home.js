@@ -6,7 +6,7 @@ import HomeFooter from "../../components/HomeFooter/HomeFooter.jsx";
 export default function Home(){
     return(
         <div className="home-container">
-            {/*<HomeHeader />*/}
+            {}
             <HomeMain />
             <HomeFooter />
         </div>

@@ -92,7 +92,7 @@ const FloorPlanCanvas = ({
             }}
             style={{ border: '1px solid #ccc' }}
         >
-            {/* Walls */}
+            {}
             {walls.map(wall => (
                 <WallComponent
                     key={wall.id}
@@ -104,7 +104,7 @@ const FloorPlanCanvas = ({
                 />
             ))}
 
-            {/* Tables */}
+            {}
             {tables.map(table => (
                 <TableComponent
                     key={table.id}
@@ -121,7 +121,7 @@ const FloorPlanCanvas = ({
                 />
             ))}
 
-            {/* Doors */}
+            {}
             {doors.map(door => (
                 <DoorComponent
                     key={door.id}
@@ -133,7 +133,7 @@ const FloorPlanCanvas = ({
                 />
             ))}
 
-            {/* Windows */}
+            {}
             {windows.map(window => (
                 <WindowComponent
                     key={window.id}
@@ -145,7 +145,7 @@ const FloorPlanCanvas = ({
                 />
             ))}
 
-            {/* Temporary wall line while drawing */}
+            {}
             {startPoint && currentDrawingMode === DrawingMode.WALL && (
                 <line
                     id="temp-wall"

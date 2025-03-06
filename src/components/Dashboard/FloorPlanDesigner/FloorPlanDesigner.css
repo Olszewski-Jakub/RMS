@@ -211,8 +211,6 @@
     transition: all 0.2s ease-in-out;
 }
 
-/* Add these styles to your FloorPlanDesigner.css file */
-
 .element-details {
     position: absolute;
     background-color: white;
@@ -337,9 +335,7 @@
     color: #333;
 }
 
-/* Add these styles to your FloorPlanDesigner.css file */
 
-/* Table animations */
 @keyframes tableAppear {
     0% {
         opacity: 0;
@@ -362,7 +358,6 @@
     transform-origin: center;
 }
 
-/* Wall animations */
 @keyframes wallDraw {
     from {
         stroke-dashoffset: 1000;
@@ -379,7 +374,6 @@
     animation: wallDraw 0.5s ease-out forwards;
 }
 
-/* Door and window animations */
 @keyframes elementAppear {
     0% {
         opacity: 0;
@@ -396,7 +390,6 @@
     animation: elementAppear 0.4s ease-out forwards;
 }
 
-/* Resize animation */
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -413,7 +406,6 @@
     animation: pulse 1s infinite;
 }
 
-/* Drag animation enhancements */
 .table-container {
     transition: transform 0.2s ease-out;
 }
@@ -422,9 +414,7 @@
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
 }
 
-/* Add these styles to your FloorPlanDesigner.css file */
 
-/* Control Panel Styling */
 .controls {
     background: #ffffff;
     border-radius: 8px;
@@ -435,9 +425,9 @@
     margin-right: 20px;
     border: 1px solid #e0e0e0;
     overflow: hidden;
-    /*position: absolute;*/
+
     top: 15px;
-    right: 15px; /* Positioned to the right to avoid sidebar */
+    right: 15px;
     z-index: 1000;
 }
 
@@ -556,7 +546,6 @@
     height: 28px;
 }
 
-/* Tool Icons (using emoji as placeholders, replace with actual icons) */
 .select-icon::before {
     content: "🔍";
     font-size: 22px;
@@ -629,11 +618,10 @@
     background-color: #fcfcfc;
 }
 
-/* Toggle Controls Button */
 .toggle-controls-button {
     position: absolute;
     top: 15px;
-    right: 15px; /* Positioned to the right to match the panel */
+    right: 15px;
     z-index: 99;
     padding: 10px 15px;
     background-color: #4a90e2;

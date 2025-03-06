@@ -1,5 +1,5 @@
 import React from 'react';
-import TableWithChairs from '../../../FloorPlan/table/TableWithChairs';
+import TableWithChairs from '../../../FloorPlan/components/TableWithChairs';
 import { tableTypes } from '../../../../constants/tableTypes';
 
 const TablePreview = ({ selectedTableType }) => {

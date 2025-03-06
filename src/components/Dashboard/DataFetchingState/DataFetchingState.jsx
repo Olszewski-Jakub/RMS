@@ -1,6 +1,6 @@
 // DataFetchingState.jsx
 import React from 'react';
-import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
+import LoadingIndicator from '../Loading/LoadingIndicator';
 import './DataFetchingState.css';
 
 const DataFetchingState = ({

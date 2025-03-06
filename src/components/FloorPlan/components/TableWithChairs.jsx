@@ -120,14 +120,14 @@ const TableWithChairs = ({
                 transition: isDragging ? 'none' : 'all 0.2s ease'
             }}
         >
-            {/* SVG Filters and patterns */}
+            {}
             <defs>
-                {/* Shadow filter */}
+                {}
                 <filter id={`shadow-${id}`} x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="3" stdDeviation={isDragging ? 6 : 3} floodOpacity="0.25" />
                 </filter>
 
-                {/* Selection glow filter */}
+                {}
                 <filter id={`selection-glow-${id}`} x="-30%" y="-30%" width="160%" height="160%">
                     <feGaussianBlur stdDeviation="3" result="blur" />
                     <feFlood floodColor={selectionColor} floodOpacity="0.7" result="color" />
@@ -138,14 +138,14 @@ const TableWithChairs = ({
                     </feMerge>
                 </filter>
 
-                {/* Wood grain pattern for chairs */}
+                {}
                 <pattern id={patternId} patternUnits="userSpaceOnUse" width="20" height="20" patternTransform="rotate(45)">
                     <rect width="20" height="20" fill={isAvailable ? activeChairColor : inactiveChairColor} />
                     <rect width="1" height="20" fill="rgba(0,0,0,0.1)" x="0" y="0" />
                     <rect width="1" height="20" fill="rgba(255,255,255,0.05)" x="10" y="0" />
                 </pattern>
 
-                {/* FloorPlan surface pattern */}
+                {}
                 <pattern id={tablePatternId} patternUnits="userSpaceOnUse" width="40" height="40" patternTransform="rotate(20)">
                     <rect width="40" height="40" fill={isAvailable ? activeTableColor : inactiveTableColor} />
                     <line x1="0" y1="0" x2="40" y2="40" stroke="rgba(0,0,0,0.05)" strokeWidth="1" />
@@ -153,9 +153,9 @@ const TableWithChairs = ({
                 </pattern>
             </defs>
 
-            {/* Group for entire table and chairs with rotation applied */}
+            {}
             <g transform={`rotate(${rotation}, ${tableCenter.x}, ${tableCenter.y})`}>
-                {/* Selection indicator */}
+                {}
                 {isSelected && !isRound && (
                     <rect
                         x={x - 8}
@@ -185,10 +185,10 @@ const TableWithChairs = ({
                     />
                 )}
 
-                {/* FloorPlan */}
+                {}
                 {isRound ? (
                     <>
-                        {/* FloorPlan shadow */}
+                        {}
                         <ellipse
                             cx={tableCenter.x}
                             cy={tableCenter.y + 2}
@@ -198,7 +198,7 @@ const TableWithChairs = ({
                             opacity="0.5"
                         />
 
-                        {/* FloorPlan base/legs */}
+                        {}
                         <circle
                             cx={tableCenter.x}
                             cy={tableCenter.y + (height / 4)}
@@ -207,7 +207,7 @@ const TableWithChairs = ({
                             opacity="0.8"
                         />
 
-                        {/* FloorPlan surface with pattern */}
+                        {}
                         <circle
                             cx={tableCenter.x}
                             cy={tableCenter.y}
@@ -222,7 +222,7 @@ const TableWithChairs = ({
                             }}
                         />
 
-                        {/* FloorPlan edge */}
+                        {}
                         <circle
                             cx={tableCenter.x}
                             cy={tableCenter.y}
@@ -235,7 +235,7 @@ const TableWithChairs = ({
                     </>
                 ) : (
                     <>
-                        {/* FloorPlan shadow */}
+                        {}
                         <rect
                             x={x + 3}
                             y={y + 3}
@@ -247,11 +247,11 @@ const TableWithChairs = ({
                             opacity="0.5"
                         />
 
-                        {/* FloorPlan legs */}
+                        {}
                         <rect x={x + 10} y={y + 10} width={8} height={height - 20} fill={isAvailable ? "#5e3816" : "#5a5a5a"} />
                         <rect x={x + width - 18} y={y + 10} width={8} height={height - 20} fill={isAvailable ? "#5e3816" : "#5a5a5a"} />
 
-                        {/* FloorPlan surface with pattern */}
+                        {}
                         <rect
                             x={x}
                             y={y}
@@ -269,7 +269,7 @@ const TableWithChairs = ({
                             }}
                         />
 
-                        {/* FloorPlan edge highlight */}
+                        {}
                         <rect
                             x={x + 2}
                             y={y + 2}
@@ -284,7 +284,7 @@ const TableWithChairs = ({
                     </>
                 )}
 
-                {/* Place chairs according to calculated positions */}
+                {}
                 {chairPositions.map((chair, idx) => (
                     <Chair
                         key={`chair-${idx}`}
@@ -296,7 +296,7 @@ const TableWithChairs = ({
                 ))}
             </g>
 
-            {/* FloorPlan ID text with improved visibility */}
+            {}
             <g>
                 <text
                     x={tableCenter.x}

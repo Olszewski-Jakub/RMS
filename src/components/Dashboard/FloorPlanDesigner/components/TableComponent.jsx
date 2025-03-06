@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TableWithChairs from '../../../FloorPlan/table/TableWithChairs';
+import TableWithChairs from '../../../FloorPlan/components/TableWithChairs';
 
 const TableComponent = ({
                             table,

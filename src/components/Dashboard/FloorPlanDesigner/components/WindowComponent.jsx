@@ -30,7 +30,7 @@ const WindowComponent = ({
             >
                 W#{window.intId}
             </text>
-            {/* Resize handle for window */}
+            {}
             {editMode && (
                 <rect
                     x={window.x + window.width - 10}

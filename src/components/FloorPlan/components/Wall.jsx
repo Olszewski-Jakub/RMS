@@ -30,7 +30,7 @@ const Wall = ({
     return (
         <g onClick={handleClick}>
             <defs>
-                {/* Wall texture pattern */}
+                {}
                 <pattern id={`wall-pattern-${id}`} patternUnits="userSpaceOnUse" width="20" height="20" patternTransform="rotate(45)">
                     <rect width="20" height="20" fill={color} />
                     <rect width="10" height="20" fill={`${color}ee`} />
@@ -38,13 +38,13 @@ const Wall = ({
                     <line x1="10" y1="0" x2="10" y2="20" stroke="#444" strokeWidth="0.5" strokeOpacity="0.1" />
                 </pattern>
 
-                {/* Shadow filter */}
+                {}
                 <filter id={`wall-shadow-${id}`} x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="1" dy="1" stdDeviation="1" floodOpacity="0.3" />
                 </filter>
             </defs>
 
-            {/* Selection highlight if selected */}
+            {}
             {isSelected && (
                 <rect
                     x={-selectionThickness / 2}
@@ -60,7 +60,7 @@ const Wall = ({
                 />
             )}
 
-            {/* Wall body */}
+            {}
             <rect
                 x={-thickness / 2}
                 y={-thickness / 2}
@@ -74,7 +74,7 @@ const Wall = ({
                 style={{ cursor: 'pointer' }}
             />
 
-            {/* Wall edges for better visual definition */}
+            {}
             <line
                 x1={x1}
                 y1={y1}

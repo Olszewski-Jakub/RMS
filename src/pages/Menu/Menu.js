@@ -129,13 +129,13 @@ const Menu = () => {
           padding: "0 1rem",
           position: "relative",
         }}>
-        {/* Main Menu Container */}
+        {}
         <div
           className='menu-container'
           style={{
             width: !isMobile && cart.length > 0 ? "calc(100% - 350px)" : "100%",
           }}>
-          {/* Search Bar */}
+          {}
           <div className='sticky-searchbar'>
             <div className='searchbar-container'>
               <div className='search-input-wrapper'>
@@ -151,7 +151,7 @@ const Menu = () => {
             </div>
           </div>
 
-          {/* Category Filter */}
+          {}
           <div
             style={{
               display: "flex",
@@ -183,16 +183,16 @@ const Menu = () => {
             ))}
           </div>
 
-          {/* Menu Title */}
+          {}
           <h2 className='menu-section-title'>Our Menu</h2>
 
-          {/* Menu Items Grid */}
+          {}
           <div className='menuItems-container'>
             {filteredItems.length > 0 ? (
               filteredItems.map(item => (
                 <div key={item.id} className='menu-item'>
                   <div className='item-image-container'>
-                    {/* Replace with actual image */}
+                    {}
                     <img
                       src={item.image}
                       alt={item.name}
@@ -243,7 +243,7 @@ const Menu = () => {
           </div>
         </div>
 
-        {/* Desktop Cart */}
+        {}
         {!isMobile && cart.length > 0 && (
           <div className='checkout-container'>
             <div className='checkout-header-container'>
@@ -282,7 +282,7 @@ const Menu = () => {
           </div>
         )}
 
-        {/* Mobile Cart Toggle Button */}
+        {}
         {isMobile && cart.length > 0 && (
           <div className='mobile-cart-toggle' onClick={toggleMobileCart}>
             <div className='mobile-cart-info'>
@@ -295,7 +295,7 @@ const Menu = () => {
           </div>
         )}
 
-        {/* Mobile Cart Slide-up */}
+        {}
         {isMobile && showMobileCart && (
           <div
             className='mobile-cart-visible'

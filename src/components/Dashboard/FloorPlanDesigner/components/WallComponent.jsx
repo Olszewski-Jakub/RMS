@@ -25,7 +25,7 @@ const WallComponent = ({
             >
                 #{wall.intId}
             </text>
-            {/* Resize handle for wall */}
+            {}
             {editMode && (
                 <circle
                     cx={wall.x2}

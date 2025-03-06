@@ -14,7 +14,7 @@ const Chair = ({ cx, cy, color = '#b5651d', rotation = 0 }) => {
 
   return (
       <g transform={`rotate(${rotation}, ${cx}, ${cy})`}>
-        {/* Chair back */}
+        {}
         <rect
             x={seatX}
             y={seatY - backHeight}
@@ -27,7 +27,7 @@ const Chair = ({ cx, cy, color = '#b5651d', rotation = 0 }) => {
             strokeWidth={0.5}
         />
 
-        {/* Chair seat */}
+        {}
         <rect
             x={seatX}
             y={seatY}
@@ -40,11 +40,11 @@ const Chair = ({ cx, cy, color = '#b5651d', rotation = 0 }) => {
             strokeWidth={0.5}
         />
 
-        {/* Chair legs */}
+        {}
         <rect x={seatX + 2} y={seatY + seatDepth} width={2} height={legHeight} fill="#5e3816" />
         <rect x={seatX + seatWidth - 4} y={seatY + seatDepth} width={2} height={legHeight} fill="#5e3816" />
 
-        {/* Chair shadow */}
+        {}
         <ellipse
             cx={cx}
             cy={cy + legHeight + 1}

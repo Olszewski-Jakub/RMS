@@ -54,19 +54,19 @@ const Door = ({
             onClick={handleClick}
         >
             <defs>
-                {/* Door texture pattern */}
+                {}
                 <pattern id={`door-pattern-${id}`} patternUnits="userSpaceOnUse" width="30" height="30">
                     <rect width="30" height="30" fill={doorColor} />
                     <rect x="5" y="5" width="20" height="20" fill={`${doorColor}aa`} stroke={doorBorder} strokeWidth="0.5" />
                 </pattern>
 
-                {/* Shadow filter */}
+                {}
                 <filter id={`door-shadow-${id}`} x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="1" dy="1" stdDeviation="1" floodOpacity="0.3" />
                 </filter>
             </defs>
 
-            {/* Wall cutout (door frame) */}
+            {}
             <rect
                 x={centerX - wallThickness / 2}
                 y={centerY - width}
@@ -77,7 +77,7 @@ const Door = ({
                 strokeWidth="0.75"
             />
 
-            {/* Door swing arc (only shown when door is open) */}
+            {}
             {isOpen && doorType === 'hinged' && (
                 <path
                     d={getDoorSwingPath()}
@@ -89,7 +89,7 @@ const Door = ({
                 />
             )}
 
-            {/* Selection indicator */}
+            {}
             {isSelected && (
                 <rect
                     x={centerX - wallThickness / 2 - 2}
@@ -104,10 +104,10 @@ const Door = ({
                 />
             )}
 
-            {/* Door panel - different based on type and open/closed state */}
+            {}
             {doorType === 'hinged' && (
                 <>
-                    {/* Door in closed position */}
+                    {}
                     {!isOpen && (
                         <rect
                             x={centerX - wallThickness / 2}
@@ -121,7 +121,7 @@ const Door = ({
                         />
                     )}
 
-                    {/* Door in open position */}
+                    {}
                     {isOpen && (
                         <rect
                             x={centerX}
@@ -136,7 +136,7 @@ const Door = ({
                         />
                     )}
 
-                    {/* Door handle */}
+                    {}
                     <circle
                         cx={centerX + (wallThickness / 2) - 4}
                         cy={centerY - width + 30}
@@ -149,10 +149,10 @@ const Door = ({
                 </>
             )}
 
-            {/* Sliding door */}
+            {}
             {doorType === 'sliding' && (
                 <>
-                    {/* Track */}
+                    {}
                     <line
                         x1={centerX - wallThickness / 2}
                         y1={centerY - width - 4}
@@ -162,7 +162,7 @@ const Door = ({
                         strokeWidth="2"
                     />
 
-                    {/* Door panel */}
+                    {}
                     <rect
                         x={centerX - wallThickness / 2 + (isOpen ? width * (openPercentage / 100) - width : 0)}
                         y={centerY - width}
@@ -174,7 +174,7 @@ const Door = ({
                         filter={`url(#door-shadow-${id})`}
                     />
 
-                    {/* Door handle */}
+                    {}
                     <rect
                         x={centerX - wallThickness / 2 + (isOpen ? width * (openPercentage / 100) - width : 0) + wallThickness - 4}
                         y={centerY - width + 40}
@@ -189,10 +189,10 @@ const Door = ({
                 </>
             )}
 
-            {/* Double door */}
+            {}
             {doorType === 'double' && (
                 <>
-                    {/* Left door */}
+                    {}
                     <rect
                         x={centerX - wallThickness / 2}
                         y={centerY - width}
@@ -205,7 +205,7 @@ const Door = ({
                         filter={`url(#door-shadow-${id})`}
                     />
 
-                    {/* Right door */}
+                    {}
                     <rect
                         x={centerX}
                         y={centerY - width}
@@ -218,7 +218,7 @@ const Door = ({
                         filter={`url(#door-shadow-${id})`}
                     />
 
-                    {/* Door handles */}
+                    {}
                     <circle
                         cx={centerX - 2}
                         cy={centerY - width + 40}
@@ -238,7 +238,7 @@ const Door = ({
                 </>
             )}
 
-            {/* Door label */}
+            {}
             <text
                 x={centerX}
                 y={centerY - width / 2}

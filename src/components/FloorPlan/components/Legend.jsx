@@ -7,12 +7,12 @@ const LegendContainer = styled.div`
     position: absolute;
     bottom: 10px;
     left: 50%;
-    transform: translateX(-50%); /* Center horizontally */
-    background-color: rgba(255, 255, 255, 0.5); /* Very transparent background */
+    transform: translateX(-50%); 
+    background-color: rgba(255, 255, 255, 0.5); 
     border-radius: 20px;
     padding: 4px 12px;
     display: flex;
-    flex-direction: row; /* Horizontal layout */
+    flex-direction: row; 
     align-items: center;
     gap: 12px;
     border: 1px solid rgba(234, 234, 234, 0.3);

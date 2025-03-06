@@ -15,7 +15,7 @@ function AppRoutes() {
     return (
         <Router>
             <Routes>
-                {/* Main route with HashNavigationWrapper */}
+                {}
                 <Route
                     path={ROUTES.HOME}
                     element={
@@ -25,7 +25,7 @@ function AppRoutes() {
                     }
                 />
 
-                {/* Redirect legacy routes to hash-based navigation */}
+                {}
                 <Route
                     path={ROUTES.MENU}
                     element={<Navigate to="/#Menu" replace />}
@@ -39,7 +39,7 @@ function AppRoutes() {
                     element={<Navigate to="/#Reservation" replace />}
                 />
 
-                {/* Non-hash based routes remain the same */}
+                {}
                 <Route
                     path={ROUTES.PROFILE}
                     element={
@@ -49,15 +49,15 @@ function AppRoutes() {
                     }
                 />
 
-                {/* Auth Route */}
+                {}
                 <Route path={ROUTES.AUTH} element={<Auth />} />
                 <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
-                {/* Admin Dashboard */}
+                {}
                 <Route path={ROUTES.ADMIN} element={<ProtectedRoute roles={['owner', 'employee']} />}>
                     <Route index element={<RestaurantDashboard />} />
                 </Route>
 
-                {/* Redirect unknown routes to 404 page */}
+                {}
                 <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
             </Routes>
         </Router>
