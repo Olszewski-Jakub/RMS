@@ -66,6 +66,14 @@ const authService = {
         cookieManager.set(COOKIE_KEYS.ID_TOKEN, data.idToken, {expires: 1});
         cookieManager.set(COOKIE_KEYS.REFRESH_TOKEN, data.refreshToken, {expires: 7});
         return data;
+    },
+    forgotPassword: async (email) => {
+        await axiosInstance.post(`/auth/forgotPassword`, {
+            email
+        });
+    },
+    deleteAccount: async () => {
+        await axiosInstance.delete(`/auth/deleteAccount`);
     }
 };
 

@@ -371,3 +371,179 @@
 .auth-card {
     animation: fadeIn 0.4s ease-out;
 }
+
+/* Add these styles to your Auth.css file */
+
+.back-to-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    color: #bdbdbd;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.back-to-login svg {
+    margin-right: 8px;
+    font-size: 0.85rem;
+}
+
+.back-to-login:hover {
+    color: var(--primary);
+}
+
+.reset-success {
+    text-align: center;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.reset-instructions {
+    color: #bdbdbd;
+    margin: 1.5rem 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 1.2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Disable button styles */
+.auth-button:disabled {
+    background-color: rgba(255, 125, 5, 0.5);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.reset-success strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Add these styles to your Auth.css file for the Country Code Selector */
+
+.phone-input-container {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.country-code-selector {
+    position: relative;
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.country-code-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 125, 5, 0.3);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.country-code-display:hover {
+    background-color: rgba(255, 125, 5, 0.1);
+    border-color: var(--primary);
+}
+
+.country-code-icon {
+    color: #bdbdbd;
+    margin-right: 8px;
+    font-size: 0.85rem;
+}
+
+.dropdown-icon {
+    color: #bdbdbd;
+    font-size: 0.7rem;
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+}
+
+.country-code-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 150px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: rgba(34, 34, 34, 0.98);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 125, 5, 0.3);
+    z-index: 100;
+    box-shadow: var(--shadow-medium);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.country-code-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.country-code-option:hover {
+    background-color: rgba(255, 125, 5, 0.2);
+}
+
+.country-code {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.country-name {
+    color: #bdbdbd;
+    font-size: 0.8rem;
+}
+
+.phone-input-group {
+    position: relative;
+    flex-grow: 1;
+}
+
+.phone-input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #bdbdbd;
+}
+
+.phone-input-group input {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 2.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 125, 5, 0.3);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.phone-input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: rgba(255, 125, 5, 0.1);
+    box-shadow: 0 0 0 2px rgba(255, 125, 5, 0.2);
+}
+
+/* For mobile screens, adjust the phone input layout */
+@media only screen and (max-width: 480px) {
+    .phone-input-container {
+        flex-direction: column;
+    }
+
+    .country-code-selector {
+        width: 100%;
+    }
+}

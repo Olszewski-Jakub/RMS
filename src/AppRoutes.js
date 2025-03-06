@@ -9,6 +9,7 @@ import { ROUTES } from "./constants/routes";
 import Profile from "./pages/Profile/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import RestaurantDashboard from "./pages/Dashboard/Dashboard";
+import ForgotPassword from "./pages/Authentication/ForgotPassword";
 
 function AppRoutes() {
     return (
@@ -50,7 +51,7 @@ function AppRoutes() {
 
                 {/* Auth Route */}
                 <Route path={ROUTES.AUTH} element={<Auth />} />
-
+                <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
                 {/* Admin Dashboard */}
                 <Route path={ROUTES.ADMIN} element={<ProtectedRoute roles={['owner', 'employee']} />}>
                     <Route index element={<RestaurantDashboard />} />

@@ -1,16 +1,19 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 import {ROUTES} from "../../constants/routes.js";
 import AuthBackground from "../../assets/auth-background.jpg";
-import { FaHome, FaGoogle, FaFacebook, FaApple, FaEnvelope, FaLock, FaUser, FaPhone } from "react-icons/fa";
+import { FaHome, FaGoogle, FaFacebook, FaApple, FaEnvelope, FaLock, FaUser, FaPhone, FaChevronDown, FaGlobe } from "react-icons/fa";
 import {AuthContext} from "../../contexts/AuthContext";
+import { countryCodes } from "../../utils/countryCodeData";
 
 export default function Auth() {
     const navigate = useNavigate();
     const [loginForm, setLoginForm] = useState(true);
-    const { isLoggedIn, login, register, loginWithGoogle,loginWithFacebook, error } = useContext(AuthContext);
+    const { isLoggedIn, login, register, loginWithGoogle, loginWithFacebook, error } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
+    const [showCountryCodeDropdown, setShowCountryCodeDropdown] = useState(false);
+    const countryCodeRef = useRef(null);
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -33,6 +36,18 @@ export default function Auth() {
         if (error) {
             setFormError(error);
         }
+
+        // Close dropdown when clicking outside
+        const handleClickOutside = (event) => {
+            if (countryCodeRef.current && !countryCodeRef.current.contains(event.target)) {
+                setShowCountryCodeDropdown(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
     }, [isLoggedIn, navigate, error]);
 
     const showLogin = () => {
@@ -57,6 +72,18 @@ export default function Auth() {
 
         // Clear errors when user types
         if (formError) setFormError("");
+    };
+
+    const handleCountryCodeSelect = (code) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            countryCode: code,
+        }));
+        setShowCountryCodeDropdown(false);
+    };
+
+    const toggleCountryCodeDropdown = () => {
+        setShowCountryCodeDropdown(!showCountryCodeDropdown);
     };
 
     const handleRegister = async (e) => {
@@ -93,7 +120,6 @@ export default function Auth() {
             const result = await loginWithGoogle();
         } catch (error) {
             setFormError("Google authentication failed. Please try again.");
-
         } finally {
             setLoading(false);
         }
@@ -106,6 +132,8 @@ export default function Auth() {
             const result = await loginWithFacebook();
         } catch (error) {
             setFormError("Facebook authentication failed. Please try again.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -176,7 +204,7 @@ export default function Auth() {
                                 />
                             </div>
                             <div className="forgot-password">
-                                <a href="#">Forgot Password?</a>
+                                <a href={ROUTES.FORGOT_PASSWORD}>Forgot Password?</a>
                             </div>
                             <button type="submit" className="auth-button">Sign In</button>
                             <p className="auth-switch">
@@ -244,16 +272,43 @@ export default function Auth() {
                                     required
                                 />
                             </div>
-                            <div className="input-group">
-                                <FaPhone className="input-icon" />
-                                <input
-                                    type="text"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
-                                    placeholder="Phone Number"
-                                    onChange={handleChange}
-                                    required
-                                />
+                            <div className="phone-input-container">
+                                <div ref={countryCodeRef} className="country-code-selector">
+                                    <div
+                                        className="country-code-display"
+                                        onClick={toggleCountryCodeDropdown}
+                                    >
+                                        <FaGlobe className="country-code-icon" />
+                                        <span>{formData.countryCode}</span>
+                                        <FaChevronDown className="dropdown-icon" />
+                                    </div>
+
+                                    {showCountryCodeDropdown && (
+                                        <div className="country-code-dropdown">
+                                            {countryCodes.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="country-code-option"
+                                                    onClick={() => handleCountryCodeSelect(item.code)}
+                                                >
+                                                    <span className="country-code">{item.code}</span>
+                                                    <span className="country-name">{item.country}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="phone-input-group">
+                                    <FaPhone className="phone-input-icon" />
+                                    <input
+                                        type="tel"
+                                        name="phoneNumber"
+                                        value={formData.phoneNumber}
+                                        placeholder="Phone Number"
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
                             </div>
                             <button type="submit" className="auth-button">Register</button>
                             <p className="auth-switch">
