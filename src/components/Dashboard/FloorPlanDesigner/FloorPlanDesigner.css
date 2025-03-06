@@ -1,0 +1,212 @@
+.edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.edit-button:hover {
+    background-color: #45a049;
+}
+
+.resize-canvas-controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.resize-canvas-controls input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+}
+
+.resize-canvas-controls label {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.resize-canvas-controls button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.resize-canvas-controls button:hover {
+    background-color: #45a049;
+}
+
+.floor-plan-designer {
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+.controls {
+    width: 350px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.controls button {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.controls button.active,
+.controls button:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.controls select {
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.element-details {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.element-details button {
+    margin: 5px;
+    padding: 5px 10px;
+}
+
+.table-id {
+    font-size: 12px;
+    fill: white;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.resize-handle {
+    fill: white;
+    stroke: black;
+    stroke-width: 1;
+    cursor: nwse-resize;
+}
+
+.door {
+    fill: #8B4513;
+    stroke: #663300;
+    stroke-width: 2;
+}
+
+.door-arc {
+    fill: none;
+    stroke: #663300;
+    stroke-width: 2;
+}
+
+.window {
+    fill: #ADD8E6;
+    stroke: #4682B4;
+    stroke-width: 2;
+    opacity: 0.7;
+}
+
+.wall {
+    stroke: #333;
+    stroke-width: 8;
+    stroke-linecap: square;
+}
+
+.table-preview {
+    margin-top: 10px;
+    border: 1px dashed #999;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table-preview-svg {
+    background-color: white;
+    margin-top: 5px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.controls button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #f0f2f5;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.controls button:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.controls button.active {
+    background-color: #3b82f6;
+    color: white;
+    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+}
+
+.controls select {
+    padding: 10px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background-color: white;
+    color: #4b5563;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    outline: none;
+    min-width: 150px;
+}
+
+.controls select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.controls button, .controls select {
+    transition: all 0.2s ease-in-out;
+}

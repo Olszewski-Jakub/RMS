@@ -1,7 +1,15 @@
+import React from "react";
+import { motion } from "framer-motion";
+
 const Logo = () => (
-    <div className="header-left">
-        <h1 className="logo">R<span style={{ color: "#FF7D05", fontFamily: "Lavishly Yours" }}>M</span>S</h1>
-    </div>
+    <motion.div
+        className="header-left"
+        whileHover={{ scale: 1.05 }}
+    >
+        <h1 className="logo">
+            R<span className="logo-highlight">M</span>S
+        </h1>
+    </motion.div>
 );
 
-export default Logo
+export default Logo;

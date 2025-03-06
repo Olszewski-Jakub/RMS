@@ -18,11 +18,11 @@ const openingHoursService = {
         return response.data.data;
     },
     update: async (id, startTime, endTime, day) => {
-        const response = await axiosInstance.patch(`/openingHours/${id}`, {
+        const response = await axiosInstance.put(`/openingHours/${id}`, {
             startTime,
             endTime,
             day
-        });
+        },);
         return response.data.data;
     },
     delete: async (id) => {

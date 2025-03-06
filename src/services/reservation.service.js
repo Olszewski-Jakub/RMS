@@ -39,6 +39,14 @@ const reservationService = {
             endTime
         });
         return response.data.data;
+    },
+    getAll: async () => {
+        const response = await axiosInstance.get(`/reservation/all`);
+        return response.data.data;
+    },
+    getByStatus: async (status) => {
+        const response = await axiosInstance.get(`/reservation/${status}`)
+        return response.data.data;
     }
 };
 

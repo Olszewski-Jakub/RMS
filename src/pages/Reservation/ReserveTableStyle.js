@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-// Main container for the reservation section
 export const ReserveTableContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -20,24 +19,6 @@ export const ReserveTableContainer = styled.div`
     gap: 1rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-// Floor plan container
-export const FloorPlanContainer = styled.div`
-  flex: 3;
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
-  
-  @media (max-width: 768px) {
-    padding: 1rem;
-    flex: 1;
-  }
-  
-  @media (max-width: 480px) {
-    padding: 0.75rem;
   }
 `;
 
@@ -112,7 +93,9 @@ export const StyledSelect = styled.select`
   
   @media (max-width: 768px) {
     padding: 0.6rem;
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px; 
+
+
     border-radius: 4px;
   }
 `;
@@ -139,7 +122,9 @@ export const StyledInput = styled.input`
   
   @media (max-width: 768px) {
     padding: 0.6rem;
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px; 
+
+
     border-radius: 4px;
   }
 `;
@@ -199,11 +184,13 @@ export const SearchButton = styled.button`
   @media (max-width: 768px) {
     padding: 0.8rem;
     font-size: 0.9rem;
-    min-height: 44px; /* Better touch target */
+    min-height: 44px; 
+
+
   }
 `;
 
-// Table component
+// FloorPlan component
 export const Table = styled.div`
   position: relative;
   background-color: ${props => props.isActive ? '#8cb369' : '#718096'};
@@ -211,7 +198,9 @@ export const Table = styled.div`
   cursor: ${props => props.isActive ? 'pointer' : 'not-allowed'};
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  touch-action: manipulation; /* Improves touch handling */
+  touch-action: manipulation; 
+
+
   
   &:hover {
     transform: ${props => props.isActive ? 'translateY(-2px)' : 'none'};
@@ -231,50 +220,10 @@ export const Table = styled.div`
   
   @media (max-width: 768px) {
     &:hover {
-      transform: none; /* Remove hover effect on mobile */
+      transform: none; 
+
+
     }
-  }
-`;
-
-// Chair component
-export const Chair = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #b85c38;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-`;
-
-// Legend component for the floor plan
-export const Legend = styled.div`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 10px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 5;
-  
-  @media (max-width: 768px) {
-    padding: 8px;
-    right: 5px;
-    top: 5px;
-    font-size: 0.8rem;
-  }
-`;
-
-// Legend item
-export const LegendItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  
-  @media (max-width: 768px) {
-    gap: 5px;
   }
 `;
 

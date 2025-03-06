@@ -1,62 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
+import React, { useState, useEffect, useCallback } from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
 const ImageSlider = ({ imageUrls }) => {
     const [imageIndex, setImageIndex] = useState(0);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
-    const nextImage = () => {
-        setImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
-    };
+    const nextImage = useCallback(() => {
+        if (!isTransitioning) {
+            setIsTransitioning(true);
+            setImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
+            setTimeout(() => setIsTransitioning(false), 500);
+        }
+    }, [imageUrls.length, isTransitioning]);
 
-    const prevImage = () => {
-        setImageIndex((prevIndex) => (prevIndex - 1 + imageUrls.length) % imageUrls.length);
-    };
+    const prevImage = useCallback(() => {
+        if (!isTransitioning) {
+            setIsTransitioning(true);
+            setImageIndex((prevIndex) => (prevIndex - 1 + imageUrls.length) % imageUrls.length);
+            setTimeout(() => setIsTransitioning(false), 500);
+        }
+    }, [imageUrls.length, isTransitioning]);
 
-    
+    // Auto-advance the slider
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextImage();
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [nextImage]);
+
     return (
-        <div className="image-slider" style={{ position: "relative", width: "100%", height: "400px" }}>
+        <div className="image-slider">
             <img
                 src={imageUrls[imageIndex]}
                 alt={`Slide ${imageIndex}`}
                 style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover", 
-                    borderRadius: "10px"
+                    transform: isTransitioning ? 'scale(1.05)' : 'scale(1)',
                 }}
             />
+            <div className="slider-indicators">
+                {imageUrls.map((_, index) => (
+                    <button
+                        key={index}
+                        className={`slider-indicator ${index === imageIndex ? 'active' : ''}`}
+                        onClick={() => {
+                            if (!isTransitioning) {
+                                setIsTransitioning(true);
+                                setImageIndex(index);
+                                setTimeout(() => setIsTransitioning(false), 500);
+                            }
+                        }}
+                        aria-label={`Go to slide ${index + 1}`}
+                        style={{
+                            width: index === imageIndex ? '20px' : '10px',
+                            height: '10px',
+                            borderRadius: '5px',
+                            backgroundColor: index === imageIndex ? '#FF7D05' : 'rgba(255, 255, 255, 0.7)',
+                            border: 'none',
+                            margin: '0 5px',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer',
+                        }}
+                    />
+                ))}
+            </div>
             <button
                 onClick={prevImage}
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "10px",
-                    transform: "translateY(-50%)",
-                    background: "transparent",
-                    border: "none",
-                    fontSize: "2rem",
-                    color: "#FF7D05",
-                    cursor: "pointer"
-                }}
+                className="slider-nav-button prev"
+                aria-label="Previous slide"
             >
-                <FaArrowCircleLeft />
+                <FaChevronLeft />
             </button>
             <button
                 onClick={nextImage}
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    right: "10px",
-                    transform: "translateY(-50%)",
-                    background: "transparent",
-                    border: "none",
-                    fontSize: "2rem",
-                    color: "#FF7D05",
-                    cursor: "pointer"
-                }}
+                className="slider-nav-button next"
+                aria-label="Next slide"
             >
-                <FaArrowCircleRight />
+                <FaChevronRight />
             </button>
         </div>
     );
