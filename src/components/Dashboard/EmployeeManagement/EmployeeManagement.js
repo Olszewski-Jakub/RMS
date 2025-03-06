@@ -1,9 +1,96 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
+import {MoreVertical, Edit, Trash2, UserCog, Plus} from 'lucide-react';
 import './EmployeeManagement.css';
 
-const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee, updateEmployeeRole }) => {
-    const [showDialog, setShowDialog] = useState(false);
-    const [showActionsMenu, setShowActionsMenu] = useState(null);
+// Action Menu Component
+const ActionMenu = ({employee, onChangeRole, onDeleteUser}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef(null);
+    const buttonRef = useRef(null);
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target) &&
+                buttonRef.current &&
+                !buttonRef.current.contains(event.target)
+            ) {
+                setIsOpen(false);
+            }
+        };
+
+        // Add event listener when menu is open
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        // Cleanup the event listener
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
+
+    const handleChangeRole = () => {
+        onChangeRole(employee);
+        setIsOpen(false);
+    };
+
+    const handleDeleteUser = () => {
+        onDeleteUser(employee.uid);
+        setIsOpen(false);
+    };
+
+    return (
+        <div className="actions-wrapper">
+            <button
+                ref={buttonRef}
+                className="action-button dots-button"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(!isOpen);
+                }}
+            >
+                <span className="dots-icon">⋮</span>
+            </button>
+
+            {isOpen && (
+                <div
+                    ref={menuRef}
+                    className="action-menu"
+                >
+                    <ul className="action-list">
+                        <li
+                            className="action-item change-role"
+                            onClick={handleChangeRole}
+                        >
+                            <UserCog className="action-icon"/>
+                            Change Role
+                        </li>
+                        <li
+                            className="action-item delete-user"
+                            onClick={handleDeleteUser}
+                        >
+                            <Trash2 className="action-icon"/>
+                            Delete User
+                        </li>
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
+};
+
+// Main Employee Management Component
+const EmployeeManagement = ({
+                                employees,
+                                handleRemoveEmployee,
+                                createNewEmployee,
+                                updateEmployeeRole,
+                                showDialog,
+                                setShowDialog
+                            }) => {
     const [showRoleModal, setShowRoleModal] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [selectedRole, setSelectedRole] = useState('employee');
@@ -14,34 +101,13 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
         password: '',
         confirmPassword: '',
         phoneNumber: '',
-        role: 'employee' // Default role
+        role: 'employee'
     });
     const [formErrors, setFormErrors] = useState({});
     const dialogRef = useRef(null);
 
-    // Handle clicks outside of action menu to close it
-    useEffect(() => {
-        function handleClickOutside(event) {
-            // Close dropdown menu when clicking outside
-            if (showActionsMenu !== null &&
-                !event.target.closest('.dots-button') &&
-                !event.target.closest('.dropdown-menu')) {
-                setShowActionsMenu(null);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [showActionsMenu]);
-
-    const handleAddEmployeeClick = () => {
-        setShowDialog(true);
-    };
-
     const handleEmployeeInputChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewEmployee({
             ...newEmployee,
             [name]: value
@@ -78,6 +144,8 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
 
         return errors;
     };
+
+
 
     const handleAddEmployee = (e) => {
         e.preventDefault();
@@ -120,7 +188,6 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
         setSelectedEmployee(employee);
         setSelectedRole(employee.privileges || employee.role);
         setShowRoleModal(true);
-        setShowActionsMenu(null);
     };
 
     const handleRoleChange = (e) => {
@@ -150,7 +217,7 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
     };
 
     return (
-        <div className="employee-management">
+        <div className="employee-dashboard">
             {/* Employee List */}
             <div className="employee-table-container">
                 <table className="employee-table">
@@ -161,152 +228,147 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Role</th>
-                        <th>Actions</th>
+                        <th><span className="sr-only">Actions</span></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {employees.map(employee => (
-                        <tr key={employee.uid}>
-                            <td>{employee.uid}</td>
-                            <td>{employee.firstName} {employee.lastName}</td>
-                            <td>{employee.email}</td>
-                            <td>{employee.phoneNumber}</td>
-                            <td>{employee.privileges || employee.role}</td>
-                            <td className="actions-cell">
-                                <div className="dropdown">
-                                    <button
-                                        className="dots-button"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setShowActionsMenu(showActionsMenu === employee.uid ? null : employee.uid);
-                                        }}
-                                    >
-                                        ⋮
-                                    </button>
-
-                                    {showActionsMenu === employee.uid && (
-                                        <div className="dropdown-menu">
-                                            <ul>
-                                                <li onClick={() => openRoleModal(employee)}>
-                                                    Change Role
-                                                </li>
-                                                <li className="delete-option" onClick={() => {
-                                                    handleRemoveEmployee(employee.uid);
-                                                    setShowActionsMenu(null);
-                                                }}>
-                                                    Delete User
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )}
+                    {employees.length === 0 ? (
+                        <tr>
+                            <td colSpan="6" className="empty-state">
+                                <div className="empty-content">
+                                    <div className="empty-icon">👥</div>
+                                    <p>No employees found</p>
                                 </div>
                             </td>
                         </tr>
-                    ))}
-                    {employees.length === 0 && (
-                        <tr>
-                            <td colSpan="6" className="no-data">
-                                No employees found
-                            </td>
-                        </tr>
+                    ) : (
+                        employees.map(employee => (
+                            <tr key={employee.uid}>
+                                <td className="id-cell" data-label="ID">
+                                    {employee.uid}
+                                </td>
+                                <td className="name-cell" data-label="Name">
+                                    {employee.firstName} {employee.lastName}
+                                </td>
+                                <td className="email-cell" data-label="Email">
+                                    {employee.email}
+                                </td>
+                                <td className="phone-cell" data-label="Phone">
+                                    {employee.phoneNumber}
+                                </td>
+                                <td className="role-cell" data-label="Role">
+                                    <span className={`role-badge ${employee.privileges || employee.role}`}>
+                                      {employee.privileges || employee.role}
+                                    </span>
+                                </td>
+                                <td className="actions-cell">
+                                    <ActionMenu
+                                        employee={employee}
+                                        onChangeRole={openRoleModal}
+                                        onDeleteUser={handleRemoveEmployee}
+                                    />
+                                </td>
+                            </tr>
+                        ))
                     )}
                     </tbody>
                 </table>
             </div>
 
-            {/* Add Employee Button */}
-            <div className="add-button-container">
-                <button
-                    className="add-button"
-                    onClick={handleAddEmployeeClick}
-                >
-                    Add New Employee
-                </button>
-            </div>
-
             {/* Modal Dialog for New Employee */}
             {showDialog && (
-                <div className="modal-overlay">
-                    <div className="modal-dialog" ref={dialogRef}>
+                <div className="modal-backdrop">
+                    <div className="modal-container" ref={dialogRef}>
                         <div className="modal-header">
-                            <h3>Add New User</h3>
-                            <button className="close-button" onClick={closeDialog}>×</button>
+                            <h3 className="modal-title">Add New Employee</h3>
+                            <button className="modal-close" onClick={closeDialog}>×</button>
                         </div>
-                        <div className="modal-body">
-                            <form onSubmit={handleAddEmployee}>
+                        <div className="modal-content">
+                            <form onSubmit={handleAddEmployee} className="employee-form">
                                 <div className="form-grid">
-                                    <div className="form-group">
-                                        <label>First Name</label>
+                                    <div className="form-field">
+                                        <label className="field-label">First Name</label>
                                         <input
                                             type="text"
                                             name="firstName"
+                                            className={`field-input ${formErrors.firstName ? 'error' : ''}`}
                                             value={newEmployee.firstName}
                                             onChange={handleEmployeeInputChange}
                                         />
-                                        {formErrors.firstName && <div className="error-message">{formErrors.firstName}</div>}
+                                        {formErrors.firstName &&
+                                            <div className="field-error">{formErrors.firstName}</div>}
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Last Name</label>
+                                    <div className="form-field">
+                                        <label className="field-label">Last Name</label>
                                         <input
                                             type="text"
                                             name="lastName"
+                                            className={`field-input ${formErrors.lastName ? 'error' : ''}`}
                                             value={newEmployee.lastName}
                                             onChange={handleEmployeeInputChange}
                                         />
-                                        {formErrors.lastName && <div className="error-message">{formErrors.lastName}</div>}
+                                        {formErrors.lastName &&
+                                            <div className="field-error">{formErrors.lastName}</div>}
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Email</label>
+                                    <div className="form-field">
+                                        <label className="field-label">Email</label>
                                         <input
                                             type="email"
                                             name="email"
+                                            className={`field-input ${formErrors.email ? 'error' : ''}`}
                                             value={newEmployee.email}
                                             onChange={handleEmployeeInputChange}
                                         />
-                                        {formErrors.email && <div className="error-message">{formErrors.email}</div>}
+                                        {formErrors.email && <div className="field-error">{formErrors.email}</div>}
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Phone</label>
+                                    <div className="form-field">
+                                        <label className="field-label">Phone</label>
                                         <input
                                             type="tel"
                                             name="phoneNumber"
                                             placeholder="+1 2345678901"
+                                            className={`field-input ${formErrors.phone ? 'error' : ''}`}
                                             value={newEmployee.phoneNumber || ''}
                                             onChange={handleEmployeeInputChange}
                                         />
-                                        <small className="help-text">Include country code (e.g., +1 for US)</small>
-                                        {formErrors.phone && <div className="error-message">{formErrors.phone}</div>}
+                                        <small className="field-help">Include country code (e.g., +1 for US)</small>
+                                        {formErrors.phone && <div className="field-error">{formErrors.phone}</div>}
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Password</label>
+                                    <div className="form-field">
+                                        <label className="field-label">Password</label>
                                         <input
                                             type="password"
                                             name="password"
+                                            className={`field-input ${formErrors.password ? 'error' : ''}`}
                                             value={newEmployee.password}
                                             onChange={handleEmployeeInputChange}
                                         />
-                                        {formErrors.password && <div className="error-message">{formErrors.password}</div>}
+                                        {formErrors.password &&
+                                            <div className="field-error">{formErrors.password}</div>}
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Confirm Password</label>
+                                    <div className="form-field">
+                                        <label className="field-label">Confirm Password</label>
                                         <input
                                             type="password"
                                             name="confirmPassword"
+                                            className={`field-input ${formErrors.confirmPassword ? 'error' : ''}`}
                                             value={newEmployee.confirmPassword}
                                             onChange={handleEmployeeInputChange}
                                         />
-                                        {formErrors.confirmPassword && <div className="error-message">{formErrors.confirmPassword}</div>}
+                                        {formErrors.confirmPassword &&
+                                            <div className="field-error">{formErrors.confirmPassword}</div>}
                                     </div>
 
-                                    <div className="form-group">
-                                        <label>Role</label>
+                                    <div className="form-field">
+                                        <label className="field-label">Role</label>
                                         <select
                                             name="role"
+                                            className="field-select"
                                             value={newEmployee.role}
                                             onChange={handleEmployeeInputChange}
                                         >
@@ -319,16 +381,16 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
                                 <div className="form-actions">
                                     <button
                                         type="button"
-                                        className="cancel-button"
+                                        className="cancel-action"
                                         onClick={closeDialog}
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        className="submit-button"
+                                        className="submit-action"
                                     >
-                                        Add User
+                                        Add Employee
                                     </button>
                                 </div>
                             </form>
@@ -339,21 +401,24 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
 
             {/* Role Change Modal */}
             {showRoleModal && (
-                <div className="modal-overlay">
-                    <div className="modal-dialog role-modal">
+                <div className="modal-backdrop">
+                    <div className="modal-container role-modal">
                         <div className="modal-header">
-                            <h3>Change User Role</h3>
-                            <button className="close-button" onClick={() => setShowRoleModal(false)}>×</button>
+                            <h3 className="modal-title">Change User Role</h3>
+                            <button className="modal-close" onClick={() => setShowRoleModal(false)}>×</button>
                         </div>
-                        <div className="modal-body">
-                            <p>Change role for {selectedEmployee?.firstName} {selectedEmployee?.lastName}</p>
+                        <div className="modal-content">
+                            <p className="employee-name">
+                                Changing role
+                                for <strong>{selectedEmployee?.firstName} {selectedEmployee?.lastName}</strong>
+                            </p>
 
-                            <div className="form-group">
-                                <label>Select Role</label>
+                            <div className="form-field">
+                                <label className="field-label">Select Role</label>
                                 <select
+                                    className="field-select"
                                     value={selectedRole}
                                     onChange={handleRoleChange}
-                                    className="role-select"
                                 >
                                     <option value="employee">Employee</option>
                                     <option value="owner">Owner</option>
@@ -363,14 +428,14 @@ const EmployeeManagement = ({ employees, handleRemoveEmployee, createNewEmployee
                             <div className="form-actions">
                                 <button
                                     type="button"
-                                    className="cancel-button"
+                                    className="cancel-action"
                                     onClick={() => setShowRoleModal(false)}
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="button"
-                                    className="submit-button"
+                                    className="submit-action"
                                     onClick={saveRoleChange}
                                 >
                                     Save Changes

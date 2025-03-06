@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from "react";
 import {ReserveTableContainer, PageTitle, ErrorMessage, SuccessMessage} from "./ReserveTableStyle";
-// import FloorPlan from "./FloorPlan";
 import DateTimeForm from "./DateTimeForm";
 import reservationService from "../../services/reservation.service";
-
-import FloorPlan from "../../components/Table/FloorPlan";
+import FloorPlan from "../../components/FloorPlan/FloorPlan";
+import ReservationModal from "../../components/Reservation/ReservationModal";
 
 const ReserveTable = () => {
     const [date, setDate] = useState(null);
@@ -15,8 +14,11 @@ const ReserveTable = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
-    const [searchPerformed, setSearchPerformed] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+
+    // State for modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTableId, setSelectedTableId] = useState(null);
 
     // Check if screen size is mobile
     useEffect(() => {
@@ -143,40 +145,8 @@ const ReserveTable = () => {
                 setLoading(false);
                 return;
             }
-
             const availableTables = response;
-            console.log("Available tables from API:", availableTables);
-
-            // Create a map of all tables with their initial isActive status set to false
-            const allTables = Array.from({length: 10}, (_, index) => ({
-                id: index + 1,
-                isActive: false
-            }));
-
-            // Check if available tables have the expected structure
-            const hasValidStructure = availableTables.every(table =>
-                table && typeof table === 'object' && 'id' in table
-            );
-
-            if (!hasValidStructure) {
-                console.error("Available tables have unexpected structure:", availableTables);
-                setError("Received invalid table data from the server. Please try again");
-                setLoading(false);
-                return;
-            }
-
-            // Update isActive to true only for tables that are in the availableTables response
-            const updatedTables = allTables.map(table => {
-                const availableTable = availableTables.find(t => t.id === table.id);
-                return {
-                    ...table,
-                    ...(availableTable || {}),
-                    isActive: availableTables.some(t => t.id === table.id)
-                };
-            });
-
-            console.log("Updated Tables with availability:", updatedTables);
-            setFreeTables(updatedTables);
+            setFreeTables(availableTables);
 
             if (availableTables.length === 0) {
                 setError("No tables available for the selected time. Please try another time");
@@ -197,7 +167,30 @@ const ReserveTable = () => {
         }
     };
 
-    const handleTableSelect = async (tableId) => {
+    // Handle table selection - now opens the modal instead of immediate reservation
+    const handleTableSelect = (tableId) => {
+        console.log("FloorPlan selected:", tableId);
+
+        // Only proceed if we have valid reservation data
+        if (!validateInputs()) {
+            console.error("Invalid reservation data. Please check your inputs and try again");
+            return;
+        }
+
+        // Only allow selection of available tables
+        const selectedTable = freeTables.find(table => table.id.toString() === tableId);
+        if (!selectedTable || !selectedTable.isActive) {
+            console.error(`Table ${tableId} is not available for reservation`);
+            return;
+        }
+
+
+        setSelectedTableId(tableId);
+        setIsModalOpen(true);
+    };
+
+    // Process the actual reservation
+    const handleConfirmReservation = async (tableId) => {
         try {
             setLoading(true);
             setError(null);
@@ -206,6 +199,7 @@ const ReserveTable = () => {
             // Validate inputs
             if (!validateInputs()) {
                 setLoading(false);
+                setIsModalOpen(false);
                 return;
             }
 
@@ -216,6 +210,7 @@ const ReserveTable = () => {
             if (!startDateTime || !endDateTime) {
                 setError("Invalid date or time format. Please try again");
                 setLoading(false);
+                setIsModalOpen(false);
                 return;
             }
 
@@ -226,11 +221,13 @@ const ReserveTable = () => {
                 if (isNaN(peopleCount) || peopleCount < 1) {
                     setError("Please enter a valid number of people");
                     setLoading(false);
+                    setIsModalOpen(false);
                     return;
                 }
             } catch (err) {
                 setError("Please enter a valid number of people");
                 setLoading(false);
+                setIsModalOpen(false);
                 return;
             }
 
@@ -242,7 +239,7 @@ const ReserveTable = () => {
             });
 
             await reservationService.create(
-                tableId,
+                parseInt(tableId, 10),
                 startDateTime,
                 endDateTime,
                 peopleCount
@@ -256,11 +253,17 @@ const ReserveTable = () => {
             setFreeTables(updatedTables);
             console.log(`Table ${tableId} is now set to inactive.`);
 
+            // Close the modal
+            setIsModalOpen(false);
+
             // Show success message
             setSuccess(`Reservation confirmed for Table ${tableId} on ${date.toLocaleDateString()} at ${startTime.hour}:${startTime.minute} ${startTime.ampm} for ${peopleCount} ${peopleCount > 1 ? 'people' : 'person'}`);
 
         } catch (err) {
             console.error('Error creating reservation:', err);
+
+            // Close the modal
+            setIsModalOpen(false);
 
             // Provide more specific error messages based on the error
             if (err.response) {
@@ -284,6 +287,11 @@ const ReserveTable = () => {
         }
     };
 
+    // Close modal handler
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div id="reserve" style={{
             padding: isMobile ? '1.5rem 1rem' : '3rem 2rem',
@@ -299,7 +307,6 @@ const ReserveTable = () => {
             {error && <ErrorMessage style={{fontSize: isMobile ? '0.9rem' : '1rem'}}>{error}</ErrorMessage>}
             {success && <SuccessMessage style={{fontSize: isMobile ? '0.9rem' : '1rem'}}>{success}</SuccessMessage>}
 
-            {/* Using inline styles to modify the container for mobile devices */}
             <div style={{
                 display: 'flex',
                 flexDirection: isMobile ? 'column-reverse' : 'row',
@@ -307,7 +314,10 @@ const ReserveTable = () => {
                 width: '100%'
             }}>
                 <ReserveTableContainer>
-                    <FloorPlan freeTables={freeTables}/>
+                    <FloorPlan
+                        freeTables={freeTables}
+                        onTableSelect={handleTableSelect}
+                    />
                 </ReserveTableContainer>
                 <div style={{
                     width: isMobile ? '100%' : '40%'
@@ -327,6 +337,21 @@ const ReserveTable = () => {
                     />
                 </div>
             </div>
+
+            {
+
+            }
+            <ReservationModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                tableId={selectedTableId}
+                date={date}
+                startTime={startTime}
+                endTime={endTime}
+                people={number}
+                onConfirm={handleConfirmReservation}
+                loading={loading}
+            />
         </div>
     );
 };

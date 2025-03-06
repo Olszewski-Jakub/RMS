@@ -109,7 +109,6 @@ h3{
     padding: 0.75rem;
 }
 
-/* Responsive styles */
 @media screen and (max-width: 768px) {
     .header-center, 
     .header-right {

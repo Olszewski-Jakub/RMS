@@ -105,7 +105,15 @@ const RestaurantDashboard = () => {
     const [employees, setEmployees] = useState([]);
     const [activeTab, setActiveTab] = useActiveTab('pendingReservations', setAllReservations, setOpeningHours, setPendingReservations, setTables, setEmployees);
     const [editingHours, setEditingHours] = useState(false);
+    const [tablesEditMode, setTablesEditMode] = useState(false);
+    const [addEmployee, setAddEmployee] = useState(false);
+    const [reservationFilterMode, setReservationFilterMode] = useState(false);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
+    // Listen for sidebar collapse state changes
+    const handleSidebarToggle = (isCollapsed) => {
+        setSidebarCollapsed(isCollapsed);
+    };
 
     const handleApproveReservation = async (id) => {
         pendingReservations.find((res) => res.id === id);
@@ -125,6 +133,20 @@ const RestaurantDashboard = () => {
             )
         );
     };
+
+    const approveAllReservations = async () => {
+        const updatedPending = pendingReservations.filter((res) => res.status !== 'pending');
+        setPendingReservations(updatedPending);
+
+        try {
+            for (const res of pendingReservations) {
+                await handleApproveReservation(res.id);
+                await new Promise(resolve => setTimeout(resolve, 2000)); // 2 seconds delay
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const handleRejectReservation = async (id) => {
         const updatedPending = pendingReservations.filter((res) => res.id !== id);
@@ -159,9 +181,13 @@ const RestaurantDashboard = () => {
         );
     };
 
-    const toggleEditMode = () => {
+    const toggleHoursEditMode = () => {
         setEditingHours(!editingHours);
     };
+
+    const toggleTablesEditMode = () => {
+        setTablesEditMode(!tablesEditMode);
+    }
 
     const saveHours = async () => {
         setEditingHours(false);
@@ -224,12 +250,34 @@ const RestaurantDashboard = () => {
         return table ? table.name : 'Unassigned';
     };
 
+    const toggleAddEmployee = () => {
+        setAddEmployee(!addEmployee);
+    }
+
+    const toggleReservationFilterMode = () => {
+        setReservationFilterMode(!reservationFilterMode);
+    }
+
     return (
         <div className="flex h-screen bg-gray-100">
-            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} pendingReservations={pendingReservations}/>
-            <div className="flex-1 flex flex-col overflow-hidden">
-                <Header activeTab={activeTab} editingHours={editingHours} toggleEditMode={toggleEditMode}/>
-                <main className="flex-1 overflow-y-auto p-6">
+            <Sidebar
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                pendingReservations={pendingReservations}
+                onToggle={handleSidebarToggle}
+            />
+            <div className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+                <Header
+                    activeTab={activeTab}
+                    editingHours={editingHours}
+                    toggleHoursEditMode={toggleHoursEditMode}
+                    tablesEditMode={tablesEditMode}
+                    toggleTablesEditMode={toggleTablesEditMode}
+                    approveAllReservations={approveAllReservations}
+                    toggleAddEmployee={toggleAddEmployee}
+                    toggleShowFilters={toggleReservationFilterMode}
+                />
+                <main className="dashboard-content overflow-y-auto p-6">
                     {activeTab === 'pendingReservations' && (
                         <PendingReservations
                             pendingReservations={pendingReservations}
@@ -249,7 +297,7 @@ const RestaurantDashboard = () => {
                     )}
                     {activeTab === 'tables' && (
                         <>
-                            <FloorPlanDesigner tableList={tables}/>
+                            <FloorPlanDesigner editMode={tablesEditMode}/>
                         </>
                     )}
                     {activeTab === 'employees' && (
@@ -258,12 +306,16 @@ const RestaurantDashboard = () => {
                             handleRemoveEmployee={handleRemoveEmployee}
                             createNewEmployee={createNewEmployee}
                             updateEmployeeRole={updateEmployeeRole}
+                            showDialog={addEmployee}
+                            setShowDialog={setAddEmployee}
                         />
                     )}
                     {activeTab === 'allReservations' && (
                         <AllReservations
                             allReservations={allReservations}
                             getTableName={getTableName}
+                            setFiltersVisible={setReservationFilterMode}
+                            filtersVisible={reservationFilterMode}
                         />
                     )}
                 </main>

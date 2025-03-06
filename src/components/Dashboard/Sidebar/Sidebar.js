@@ -1,75 +1,151 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cookieManager from "../../../utils/cookieManager";
 import cookieKeys from "../../../constants/cookieKeys";
+import "./Sidebar.css";
 
-const Sidebar = ({activeTab, setActiveTab, pendingReservations}) => {
+const Sidebar = ({activeTab, setActiveTab, pendingReservations, onToggle}) => {
+    const [collapsed, setCollapsed] = useState(false);
+
+    // Check screen size on mount and when window resizes
+    useEffect(() => {
+        const checkScreenSize = () => {
+            if (window.innerWidth <= 768) {
+                setCollapsed(true);
+            } else {
+                setCollapsed(false);
+            }
+        };
+
+        // Initial check
+        checkScreenSize();
+
+        // Add event listener
+        window.addEventListener('resize', checkScreenSize);
+
+        // Cleanup
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
+    // Notify parent component when sidebar state changes
+    useEffect(() => {
+        if (onToggle) {
+            onToggle(collapsed);
+        }
+    }, [collapsed, onToggle]);
+
+    const toggleSidebar = () => {
+        setCollapsed(!collapsed);
+    };
+
     return (
-        <div className="w-64 bg-indigo-800 text-white">
-            <div className="p-4 bg-indigo-900">
-                <h1 className="text-xl font-bold">Restaurant Dashboard</h1>
-            </div>
-            <nav className="mt-6">
-                <button
-                    className={`sidebar-button ${activeTab === 'pendingReservations' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('pendingReservations')}
-                >
-                    <span className="mr-3">📋</span>
-                    <span>Pending Reservations</span>
-                    {pendingReservations.length > 0 && (
-                        <span
-                            className="ml-auto bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-              {pendingReservations.length}
-            </span>
+        <>
+            {/* Mobile toggle button (only visible on small screens) */}
+            <button
+                className="sidebar-toggle"
+                onClick={toggleSidebar}
+            >
+                {collapsed ? '☰' : '✕'}
+            </button>
+
+            <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
+                <div className="sidebar-header">
+                    {
+                        !collapsed && (
+                            <h1 className="sidebar-title">
+                                {collapsed ? '' : 'Dashboard'}
+                            </h1>
+                        )
+                    }
+
+                    <button
+                        className="sidebar-collapse-btn"
+                        onClick={toggleSidebar}
+                    >
+                        {collapsed ? '→' : '←'}
+                    </button>
+                </div>
+                <nav className="sidebar-nav">
+                    <button
+                        className={`nav-button ${activeTab === 'pendingReservations' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('pendingReservations')}
+                        title="Pending Reservations"
+                    >
+                        <span className="nav-icon">📋</span>
+                        {!collapsed && (
+                            <span className="nav-text">Pending Reservations</span>
+                        )}
+                        {pendingReservations.length > 0 && (
+                            <span className="notification-badge">
+                                {pendingReservations.length}
+                            </span>
+                        )}
+                    </button>
+
+                    {cookieManager.get(cookieKeys.USER) === 'owner' && (
+                        <>
+                            <button
+                                className={`nav-button ${activeTab === 'hours' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('hours')}
+                                title="Opening Hours"
+                            >
+                                <span className="nav-icon">🕒</span>
+                                {!collapsed && (
+                                    <span className="nav-text">Opening Hours</span>
+                                )}
+                            </button>
+
+                            <button
+                                className={`nav-button ${activeTab === 'tables' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('tables')}
+                                title="Tables Management"
+                            >
+                                <span className="nav-icon">🪑</span>
+                                {!collapsed && (
+                                    <span className="nav-text">Tables Management</span>
+                                )}
+                            </button>
+
+                            <button
+                                className={`nav-button ${activeTab === 'employees' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('employees')}
+                                title="Employees"
+                            >
+                                <span className="nav-icon">👥</span>
+                                {!collapsed && (
+                                    <span className="nav-text">Employees</span>
+                                )}
+                            </button>
+                        </>
                     )}
-                </button>
-                {cookieManager.get(cookieKeys.USER) === 'owner' && (
-                    <>
-                        <button
-                            className={`sidebar-button ${activeTab === 'hours' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('hours')}
-                        >
-                            <span className="mr-3">🕒</span>
-                            <span>Opening Hours</span>
-                        </button>
 
-                        <button
-                            className={`sidebar-button ${activeTab === 'tables' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('tables')}
-                        >
-                            <span className="mr-3">🪑</span>
-                            <span>Tables Management</span>
-                        </button>
-                        <button
-                            className={`sidebar-button ${activeTab === 'employees' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('employees')}
-                        >
-                            <span className="mr-3">👥</span>
-                            <span>Employees</span>
-                        </button>
-                    </>
+                    <button
+                        className={`nav-button ${activeTab === 'allReservations' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('allReservations')}
+                        title="All Reservations"
+                    >
+                        <span className="nav-icon">📅</span>
+                        {!collapsed && (
+                            <span className="nav-text">All Reservations</span>
+                        )}
+                    </button>
+                </nav>
 
-                )}
-
-
-                <button
-                    className={`sidebar-button ${activeTab === 'allReservations' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('allReservations')}
-                >
-                    <span className="mr-3">📅</span>
-                    <span>All Reservations</span>
-                </button>
-            </nav>
-
-            <div className="absolute bottom-0 w-64 bg-indigo-900 p-4">
-                <div className="flex items-center">
-                    <div className="w-8 h-8 bg-indigo-500 rounded-full mr-3"></div>
-                    <div>
-                        <p className="font-medium">Restaurant Manager</p>
-                        <p className="text-indigo-300 text-sm">Admin</p>
-                    </div>
+                <div className={`user-profile ${collapsed ? 'collapsed' : ''}`}>
+                    <div className="profile-avatar"></div>
+                    {!collapsed && (
+                        <div className="profile-info">
+                            <p className="profile-name">Restaurant Manager</p>
+                            <p className="profile-role">Admin</p>
+                        </div>
+                    )}
                 </div>
             </div>
-        </div>
+
+            {/* Overlay for mobile (closes sidebar when clicking outside) */}
+            {!collapsed && window.innerWidth <= 768 && (
+                <div className="sidebar-overlay" onClick={toggleSidebar}></div>
+            )}
+        </>
     );
 };
 

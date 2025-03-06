@@ -31,7 +31,7 @@ const Navigation = () => {
         setMenuOpen(false);
     };
 
-    const hadndleDashboardClick = () => navigate(ROUTES.ADMIN)
+    const handleDashboardClick = () => navigate(ROUTES.ADMIN)
 
     const handleCurrentPage = (page) => {
         setCurrentPage(page);
@@ -126,7 +126,7 @@ const Navigation = () => {
                     />
 
                     {isLoggedIn ?
-                        <ProfileButton handleProfileClick={handleProfileClick} isMobile={false} /> :
+                        <ProfileButton handleProfileClick={handleProfileClick} handleDashboardOnClick={handleDashboardClick} isMobile={false} /> :
                         <AuthButtons
                             handleLoginClick={handleLoginClick}
                             handleSignUpClick={handleSignUpClick}

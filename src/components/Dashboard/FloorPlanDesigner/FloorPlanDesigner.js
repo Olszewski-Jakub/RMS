@@ -1,9 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-// Existing components
-import Chair from '../../Table/Chair';
-import {tableTypes} from '../../Table/tableTypes';
+// Import the TableWithChairs component instead of Chair
+import TableWithChairs from '../../FloorPlan/TableWithChairs';
+import {tableTypes} from '../../FloorPlan/tableTypes';
 
 import tableService from "../../../services/table.service";
 import wallsService from "../../../services/walls.service";
@@ -29,9 +29,8 @@ const DrawingMode = {
     RESIZE: 'resize'
 };
 
-const FloorPlanDesigner = () => {
+const FloorPlanDesigner = ({editMode}) => {
     // State management
-    const [editMode, setEditMode] = useState(false);
     const [tables, setTables] = useState([]);
     const [walls, setWalls] = useState(sampleFloorPlan.walls || []);
     const [doors, setDoors] = useState(sampleFloorPlan.doors || []);
@@ -47,14 +46,9 @@ const FloorPlanDesigner = () => {
     const [resizeElement, setResizeElement] = useState(null);
     const [resizeStartPoint, setResizeStartPoint] = useState(null);
 
-    // Canvas resize states
-    const [canvasWidth, setCanvasWidth] = useState(800);
-    const [canvasHeight, setCanvasHeight] = useState(600);
-    const [showResizeControls, setShowResizeControls] = useState(false);
-
     // SVG reference and dimensions
     const svgRef = useRef(null);
-    const [svgDimensions, setSvgDimensions] = useState({width: canvasWidth, height: canvasHeight});
+    const [svgDimensions] = useState({width: 800, height: 600});
 
     // Get cursor position relative to SVG
     const getCursorPosition = (event) => {
@@ -73,7 +67,7 @@ const FloorPlanDesigner = () => {
 
                 const tables = data.map(table => ({
                     ...table,
-                    type: tableTypes[table.type] || null,
+                    type: Object.values(tableTypes).find(t => t.name === table.type) || null,
                     intId: table.id,
                     id: uuidv4()
                 }));
@@ -174,6 +168,37 @@ const FloorPlanDesigner = () => {
         }
     };
 
+    // Improved start drag function
+    const startDragElement = (element, event, type) => {
+        if (currentDrawingMode !== DrawingMode.SELECT) return;
+
+        event.stopPropagation();
+        setIsDragging(true);
+
+        const {x, y} = getCursorPosition(event);
+
+        // Calculate offset from the cursor to the element origin
+        let offsetX, offsetY;
+
+        if (type === 'wall') {
+            offsetX = x - element.x1;
+            offsetY = y - element.y1;
+        } else {
+            offsetX = x - element.x;
+            offsetY = y - element.y;
+        }
+
+        // Set the dragged item with all necessary info
+        setDraggedItem({
+            ...element,
+            type,
+            offsetX,
+            offsetY,
+            initialX: element.x,  // Store initial position for reference
+            initialY: element.y
+        });
+    };
+
     const dragElement = (event) => {
         if (isResizing && resizeElement) {
             handleResize(event);
@@ -186,19 +211,26 @@ const FloorPlanDesigner = () => {
 
         switch (draggedItem.type) {
             case 'table':
+                // Simply update the table position directly, letting the SVG handle the rotation
+                // This is the key fix - we don't need special calculations for rotated tables
+                // because the SVG transform handles it for us
+                const newX = x - draggedItem.offsetX;
+                const newY = y - draggedItem.offsetY;
+
                 const updatedTables = tables.map(table =>
                     table.id === draggedItem.id
-                        ? {...table, x: x - draggedItem.offsetX, y: y - draggedItem.offsetY}
+                        ? {...table, x: newX, y: newY}
                         : table
                 );
+
                 setTables(updatedTables);
                 break;
+
             case 'wall':
                 const updatedWalls = walls.map(wall => {
                     if (wall.id === draggedItem.id) {
                         const newX1 = x - draggedItem.offsetX;
                         const newY1 = y - draggedItem.offsetY;
-
                         const dx = wall.x2 - wall.x1;
                         const dy = wall.y2 - wall.y1;
 
@@ -214,6 +246,7 @@ const FloorPlanDesigner = () => {
                 });
                 setWalls(updatedWalls);
                 break;
+
             case 'door':
                 const updatedDoors = doors.map(door =>
                     door.id === draggedItem.id
@@ -222,6 +255,7 @@ const FloorPlanDesigner = () => {
                 );
                 setDoors(updatedDoors);
                 break;
+
             case 'window':
                 const updatedWindows = windows.map(window =>
                     window.id === draggedItem.id
@@ -230,30 +264,13 @@ const FloorPlanDesigner = () => {
                 );
                 setWindows(updatedWindows);
                 break;
+
             default:
                 break;
         }
     };
 
-    const startDragElement = (element, event, type) => {
-        if (currentDrawingMode !== DrawingMode.SELECT) return;
-
-        event.stopPropagation();
-        setIsDragging(true);
-
-        const {x, y} = getCursorPosition(event);
-
-        const offsetX = type === 'wall' ? x - element.x1 : x - element.x;
-        const offsetY = type === 'wall' ? y - element.y1 : y - element.y;
-
-        setDraggedItem({
-            ...element,
-            type,
-            offsetX,
-            offsetY
-        });
-    };
-
+// Improved stop dragging function
     const stopDragging = async () => {
         if (isResizing && resizeElement) {
             switch (resizeElement.type) {
@@ -320,7 +337,7 @@ const FloorPlanDesigner = () => {
                     tableService.update(
                         updatedTable.intId,
                         seats,
-                        false,
+                        updatedTable.isActive,
                         updatedTable.x,
                         updatedTable.y,
                         updatedTable.rotation,
@@ -657,185 +674,61 @@ const FloorPlanDesigner = () => {
         });
     };
 
+    // Handle table click from TableWithChairs
+    // const handleTableClick = (tableId, seats) => {
+    //     if (currentDrawingMode !== DrawingMode.SELECT) return;
+    //
+    //     const table = tables.find(t => t.id === tableId);
+    //     if (table) {
+    //         showElementDetails(table, 'table', {
+    //             clientX: table.x + table.type.width / 2,
+    //             clientY: table.y + table.type.height / 2,
+    //             stopPropagation: () => {
+    //             }
+    //         });
+    //     }
+    // };
+
     // Render table preview
     const renderTablePreview = () => {
         const table = {
+            id: "preview",
             x: 10,
             y: 10,
-            type: selectedTableType,
+            tableType: selectedTableType,
             rotation: 0
         };
 
         const previewWidth = 180;
         const previewHeight = 150;
         const scale = Math.min(
-            (previewWidth - 20) / table.type.width,
-            (previewHeight - 20) / table.type.height
+            (previewWidth - 20) / table.tableType.width,
+            (previewHeight - 20) / table.tableType.height
         ) * 0.5;
 
         const centerX = previewWidth / 2;
         const centerY = previewHeight / 2;
-        const tableX = centerX - (table.type.width * scale) / 2;
-        const tableY = centerY - (table.type.height * scale) / 2;
+        const tableX = centerX - (table.tableType.width * scale) / 2;
+        const tableY = centerY - (table.tableType.height * scale) / 2;
 
         return (
             <div className="table-preview">
                 <div>Preview: {Object.keys(tableTypes).find(key => tableTypes[key] === selectedTableType)}</div>
                 <svg width={previewWidth} height={previewHeight} className="table-preview-svg">
-                    <rect
-                        x={tableX}
-                        y={tableY}
-                        width={table.type.width * scale}
-                        height={table.type.height * scale}
-                        fill="#8B4513"
-                        stroke="black"
-                    />
-
-                    {Array.from({length: table.type.chairsTop}, (_, i) => (
-                        <circle
-                            key={`top-${i}`}
-                            cx={tableX + (15 + i * 30) * scale}
-                            cy={tableY - 15 * scale}
-                            r={8 * scale}
-                            fill="#999"
-                            stroke="#666"
+                    <g transform={`scale(${scale})`}>
+                        <TableWithChairs
+                            id={table.intId}
+                            x={tableX / scale}
+                            y={tableY / scale}
+                            tableType={table.tableType}
+                            isAvailable={true}
+                            rotation={table.rotation}
+                            onClick={() => {
+                            }}
                         />
-                    ))}
-
-                    {Array.from({length: table.type.chairsBottom}, (_, i) => (
-                        <circle
-                            key={`bottom-${i}`}
-                            cx={tableX + (15 + i * 30) * scale}
-                            cy={tableY + table.type.height * scale + 15 * scale}
-                            r={8 * scale}
-                            fill="#999"
-                            stroke="#666"
-                        />
-                    ))}
-
-                    {Array.from({length: table.type.chairsLeft}, (_, i) => (
-                        <circle
-                            key={`left-${i}`}
-                            cx={tableX - 15 * scale}
-                            cy={tableY + (15 + i * 30) * scale}
-                            r={8 * scale}
-                            fill="#999"
-                            stroke="#666"
-                        />
-                    ))}
-
-                    {Array.from({length: table.type.chairsRight}, (_, i) => (
-                        <circle
-                            key={`right-${i}`}
-                            cx={tableX + table.type.width * scale + 15 * scale}
-                            cy={tableY + (15 + i * 30) * scale}
-                            r={8 * scale}
-                            fill="#999"
-                            stroke="#666"
-                        />
-                    ))}
+                    </g>
                 </svg>
             </div>
-        );
-    };
-
-    // Render chairs with rotation
-    const renderChairs = (table) => {
-        const chairPositions = {
-            0: {
-                top: Array.from({length: table.type.chairsTop}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y - 20
-                })),
-                bottom: Array.from({length: table.type.chairsBottom}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y + table.type.height + 20
-                })),
-                left: Array.from({length: table.type.chairsLeft}, (_, i) => ({
-                    cx: table.x - 20,
-                    cy: table.y + 15 + i * 30
-                })),
-                right: Array.from({length: table.type.chairsRight}, (_, i) => ({
-                    cx: table.x + table.type.width + 20,
-                    cy: table.y + 15 + i * 30
-                }))
-            },
-            90: {
-                top: Array.from({length: table.type.chairsRight}, (_, i) => ({
-                    cx: table.x + table.type.height + 20,
-                    cy: table.y + 15 + i * 30
-                })),
-                bottom: Array.from({length: table.type.chairsLeft}, (_, i) => ({
-                    cx: table.x - 20,
-                    cy: table.y + 15 + i * 30
-                })),
-                left: Array.from({length: table.type.chairsBottom}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y + table.type.width + 20
-                })),
-                right: Array.from({length: table.type.chairsTop}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y - 20
-                }))
-            },
-            180: {
-                top: Array.from({length: table.type.chairsBottom}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y + table.type.height + 20
-                })),
-                bottom: Array.from({length: table.type.chairsTop}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y - 20
-                })),
-                left: Array.from({length: table.type.chairsRight}, (_, i) => ({
-                    cx: table.x + table.type.width + 20,
-                    cy: table.y + 15 + i * 30
-                })),
-                right: Array.from({length: table.type.chairsLeft}, (_, i) => ({
-                    cx: table.x - 20,
-                    cy: table.y + 15 + i * 30
-                }))
-            },
-            270: {
-                top: Array.from({length: table.type.chairsLeft}, (_, i) => ({
-                    cx: table.x - 20,
-                    cy: table.y + 15 + i * 30
-                })),
-                bottom: Array.from({length: table.type.chairsRight}, (_, i) => ({
-                    cx: table.x + table.type.width + 20,
-                    cy: table.y + 15 + i * 30
-                })),
-                left: Array.from({length: table.type.chairsTop}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y - 20
-                })),
-                right: Array.from({length: table.type.chairsBottom}, (_, i) => ({
-                    cx: table.x + 15 + i * 30,
-                    cy: table.y + table.type.height + 20
-                }))
-            }
-        };
-
-        const chairs = chairPositions[table.rotation] || chairPositions[0];
-
-        return (
-            <>
-                {chairs.top && chairs.top.map((chair, i) => (
-                    <Chair key={`top-${i}`} cx={chair.cx} cy={chair.cy} color={table.isActive ? "#b5651d" : "#808080"}/>
-                ))}
-                {chairs.bottom && chairs.bottom.map((chair, i) => (
-                    <Chair key={`bottom-${i}`} cx={chair.cx} cy={chair.cy}
-                           color={table.isActive ? "#b5651d" : "#808080"}/>
-                ))}
-                {chairs.left && chairs.left.map((chair, i) => (
-                    <Chair key={`left-${i}`} cx={chair.cx} cy={chair.cy}
-                           color={table.isActive ? "#b5651d" : "#808080"}/>
-                ))}
-                {chairs.right && chairs.right.map((chair, i) => (
-                    <Chair key={`right-${i}`} cx={chair.cx} cy={chair.cy}
-                           color={table.isActive ? "#b5651d" : "#808080"}/>
-                ))}
-            </>
         );
     };
 
@@ -893,68 +786,19 @@ const FloorPlanDesigner = () => {
         return floorPlanData;
     };
 
-    // Handle canvas resize
-    const handleCanvasResize = () => {
-        // Update SVG dimensions
-        setSvgDimensions({
-            width: canvasWidth,
-            height: canvasHeight
-        });
-
-        // Close resize controls
-        setShowResizeControls(false);
-    };
-
     return (
         <div>
-            <button
-                className="edit-button"
-                onClick={() => setEditMode(!editMode)}
-            >
-                {editMode ? "View Mode" : "Edit Mode"}
-            </button>
-
-            {editMode ?
-                <div style={{position: 'absolute', top: '10px', right: '150px', zIndex: 100}}>
-                    <button
-                        className="edit-button"
-                        onClick={() => setShowResizeControls(!showResizeControls)}
-                    >
-                        Resize Canvas
-                    </button>
-                </div> : null
-            }
-            {/* Canvas Resize Controls */}
-            {showResizeControls && (
-                <div className="resize-canvas-controls">
-                    <div>
-                        <label htmlFor="canvas-width">Width:</label>
-                        <input
-                            id="canvas-width"
-                            type="number"
-                            min="200"
-                            max="2000"
-                            value={canvasWidth}
-                            onChange={(e) => setCanvasWidth(parseInt(e.target.value) || 800)}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="canvas-height">Height:</label>
-                        <input
-                            id="canvas-height"
-                            type="number"
-                            min="200"
-                            max="2000"
-                            value={canvasHeight}
-                            onChange={(e) => setCanvasHeight(parseInt(e.target.value) || 600)}
-                        />
-                    </div>
-                    <button onClick={handleCanvasResize}>Apply</button>
-                </div>
-            )}
+            {/*<button*/}
+            {/*    className="edit-button"*/}
+            {/*    onClick={() => setEditMode(!editMode)}*/}
+            {/*>*/}
+            {/*    {editMode ? "View Mode" : "Edit Mode"}*/}
+            {/*</button>*/}
 
             <div className="floor-plan-designer">
                 {editMode && (
+
+                    /* JSX Component - Your Original Code with Styling Applied */
                     <div className="controls">
                         <button
                             onClick={() => setCurrentDrawingMode(DrawingMode.SELECT)}
@@ -973,11 +817,10 @@ const FloorPlanDesigner = () => {
                             onChange={(e) => setSelectedTableType(tableTypes[e.target.value])}
                         >
                             {Object.keys(tableTypes).map(key => (
-                                <option key={key} value={key}>{key}</option>
+                                <option key={key} value={key}>{tableTypes[key].name}</option>
                             ))}
                         </select>
-
-                        {/* Table Preview Display */}
+                        {/* FloorPlan Preview Display */}
                         {currentDrawingMode === DrawingMode.TABLE && renderTablePreview()}
 
                         <button
@@ -986,9 +829,8 @@ const FloorPlanDesigner = () => {
                         >
                             Add Wall
                         </button>
-                        <button
-                            onClick={() => setCurrentDrawingMode(DrawingMode.DOOR)}
-                            className={currentDrawingMode === DrawingMode.DOOR ? 'active' : ''}
+                        <button onClick={() => setCurrentDrawingMode(DrawingMode.DOOR)}
+                                className={currentDrawingMode === DrawingMode.DOOR ? 'active' : ''}
                         >
                             Add Door
                         </button>
@@ -998,9 +840,6 @@ const FloorPlanDesigner = () => {
                         >
                             Add Window
                         </button>
-                        {/*<button onClick={saveFloorPlan}>*/}
-                        {/*    Save Floor Plan*/}
-                        {/*</button>*/}
                     </div>
                 )}
 
@@ -1098,30 +937,51 @@ const FloorPlanDesigner = () => {
                         </g>
                     ))}
 
+                    {/* Replace the tables section in your SVG with this code */}
+
                     {/* Tables */}
                     {tables.map(table => (
-                        <g key={table.id}>
-                            <rect
+                        <g
+                            key={table.id}
+                            onMouseDown={(e) => {
+                                if (editMode && currentDrawingMode === DrawingMode.SELECT) {
+                                    e.stopPropagation();
+                                    startDragElement(table, e, 'table');
+                                }
+                            }}
+                            onClick={(e) => {
+                                if (editMode && currentDrawingMode === DrawingMode.SELECT) {
+                                    e.stopPropagation();
+                                    showElementDetails(table, 'table', e);
+                                }
+                            }}
+                            className="table-container"
+                            style={{
+                                pointerEvents: editMode ? 'all' : 'none',
+                                // Turn off all CSS transitions during dragging for immediate updates
+                                transition: isDragging ? 'none' : 'all 0.2s',
+                            }}
+                        >
+                            <TableWithChairs
+                                id={table.intId}
                                 x={table.x}
                                 y={table.y}
-                                width={table.type.width}
-                                height={table.type.height}
-                                {...table.isActive ? {fill: "#8B4513"} : {fill: "#808080"}}
-                                stroke="black"
-                                transform={`rotate(${table.rotation || 0}, ${table.x + table.type.width / 2}, ${table.y + table.type.height / 2})`}
-                                onClick={(e) => editMode && showElementDetails(table, 'table', e)}
-                                onMouseDown={(e) => editMode && startDragElement(table, e, 'table')}
+                                tableType={table.type}
+                                isAvailable={table.isActive}
+                                rotation={table.rotation || 0}
+                                onClick={(id, seats) => {
+                                    if (editMode && currentDrawingMode === DrawingMode.SELECT) {
+                                        showElementDetails(table, 'table', {
+                                            clientX: table.x + table.type.width / 2,
+                                            clientY: table.y + table.type.height / 2,
+                                            stopPropagation: () => {
+                                            }
+                                        });
+                                    }
+                                }}
+                                isMobile={window.innerWidth <= 768}
+                                isDragging={isDragging && draggedItem && draggedItem.id === table.id}
                             />
-
-                            {renderChairs(table)}
-
-                            <text
-                                x={table.x + table.type.width / 2}
-                                y={table.y + table.type.height / 2}
-                                className="table-id"
-                            >
-                                #{table.intId}
-                            </text>
                         </g>
                     ))}
 

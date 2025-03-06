@@ -1,83 +1,88 @@
 import React from 'react';
-
+import './OpeningHours.css'
 const OpeningHours = ({openingHours, editingHours, handleHoursChange, handleToggleDay, saveHours}) => {
-  console.log(openingHours)
   return (
-    <div className="bg-white p-4 rounded shadow">
-      <table className="w-full">
-        <thead>
-        <tr className="border-b">
-          <th className="text-left py-2">Day</th>
-          <th className="text-left py-2">Status</th>
-          <th className="text-left py-2">Opening Time</th>
-          <th className="text-left py-2">Closing Time</th>
-        </tr>
-        </thead>
-        <tbody>
-
-
-        {Array.isArray(openingHours) &&
-          openingHours.map((hours) => (
-            <tr key={hours.day} className="border-b">
-              <td className="py-2 capitalize">{hours.day}</td>
-              <td className="py-2">
-                {editingHours ? (
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      className="mr-2"
-                      checked={hours.isOpen}
-                      onChange={() => handleToggleDay(hours.dayId)}
-                    />
-                    <span>{hours.isOpen ? 'Open' : 'Closed'}</span>
-                  </div>
-                ) : (
-                  <span className={hours.isOpen ? 'text-green-600' : 'text-red-600'}>
-                        {hours.isOpen ? 'Open' : 'Closed'}
-                      </span>
-                )}
-              </td>
-              <td className="py-2">
-                {editingHours ? (
-                  <input
-                    type="time"
-                    className="border p-1 rounded"
-                    value={hours.startTime}
-                    disabled={!hours.isOpen}
-                    onChange={(e) => handleHoursChange(hours.dayId, 'startTime', e.target.value)}
-                  />
-                ) : (
-                  <span>{hours.startTime}</span>
-                )}
-              </td>
-              <td className="py-2">
-                {editingHours ? (
-                  <input
-                    type="time"
-                    className="border p-1 rounded"
-                    value={hours.endTime}
-                    disabled={!hours.isOpen}
-                    onChange={(e) => handleHoursChange(hours.dayId, 'endTime', e.target.value)}
-                  />
-                ) : (
-                  <span>{hours.endTime}</span>
-                )}
-              </td>
+      <div className="hours-container">
+          <div className="hours-table-container">
+          <table className="hours-table">
+            <thead>
+            <tr>
+              <th>Day</th>
+              <th>Status</th>
+              <th>Opening Time</th>
+              <th>Closing Time</th>
             </tr>
-          ))}
+            </thead>
+            <tbody>
+            {Array.isArray(openingHours) && openingHours.map((hours) => (
+                <tr key={hours.day}>
+                  <td className="day-cell">
+                    <span className="day-name">{hours.day}</span>
+                  </td>
+                  <td>
+                    {editingHours ? (
+                        <div className="status-toggle">
+                          <label className="toggle-switch">
+                            <input
+                                type="checkbox"
+                                checked={hours.isOpen}
+                                onChange={() => handleToggleDay(hours.dayId)}
+                            />
+                            <span className="toggle-slider"></span>
+                          </label>
+                          <span className="toggle-label">{hours.isOpen ? 'Open' : 'Closed'}</span>
+                        </div>
+                    ) : (
+                        <span className={`status-indicator ${hours.isOpen ? 'status-open' : 'status-closed'}`}>
+                      {hours.isOpen ? 'Open' : 'Closed'}
+                    </span>
+                    )}
+                  </td>
+                  <td>
+                    {editingHours ? (
+                        <div className="time-input-wrapper">
+                          <input
+                              type="time"
+                              className={`time-input ${!hours.isOpen ? 'disabled' : ''}`}
+                              value={hours.startTime}
+                              disabled={!hours.isOpen}
+                              onChange={(e) => handleHoursChange(hours.dayId, 'startTime', e.target.value)}
+                          />
+                        </div>
+                    ) : (
+                        <span className="time-display">{hours.startTime}</span>
+                    )}
+                  </td>
+                  <td>
+                    {editingHours ? (
+                        <div className="time-input-wrapper">
+                          <input
+                              type="time"
+                              className={`time-input ${!hours.isOpen ? 'disabled' : ''}`}
+                              value={hours.endTime}
+                              disabled={!hours.isOpen}
+                              onChange={(e) => handleHoursChange(hours.dayId, 'endTime', e.target.value)}
+                          />
+                        </div>
+                    ) : (
+                        <span className="time-display">{hours.endTime}</span>
+                    )}
+                  </td>
+                </tr>
+            ))}
+            </tbody>
+          </table>
+        </div>
 
-
-        </tbody>
-      </table>
-      {editingHours && (
-        <button
-          className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded"
-          onClick={saveHours}
-        >
-          Save Hours
-        </button>
-      )}
-    </div>
+        {editingHours && (
+            <div className="save-button-container">
+              <button className="save-button" onClick={saveHours}>
+                <span className="save-icon">💾</span>
+                <span>Save Hours</span>
+              </button>
+            </div>
+        )}
+      </div>
   );
 };
 
