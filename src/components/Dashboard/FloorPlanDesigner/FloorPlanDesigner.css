@@ -1,0 +1,646 @@
+.edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.edit-button:hover {
+    background-color: #45a049;
+}
+
+.resize-canvas-controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.resize-canvas-controls input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+}
+
+.resize-canvas-controls label {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.resize-canvas-controls button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.resize-canvas-controls button:hover {
+    background-color: #45a049;
+}
+
+.floor-plan-designer {
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+.controls {
+    width: 350px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.controls button {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.controls button.active,
+.controls button:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.controls select {
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.element-details {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.element-details button {
+    margin: 5px;
+    padding: 5px 10px;
+}
+
+.table-id {
+    font-size: 12px;
+    fill: white;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.resize-handle {
+    fill: white;
+    stroke: black;
+    stroke-width: 1;
+    cursor: nwse-resize;
+}
+
+.door {
+    fill: #8B4513;
+    stroke: #663300;
+    stroke-width: 2;
+}
+
+.door-arc {
+    fill: none;
+    stroke: #663300;
+    stroke-width: 2;
+}
+
+.window {
+    fill: #ADD8E6;
+    stroke: #4682B4;
+    stroke-width: 2;
+    opacity: 0.7;
+}
+
+.wall {
+    stroke: #333;
+    stroke-width: 8;
+    stroke-linecap: square;
+}
+
+.table-preview {
+    margin-top: 10px;
+    border: 1px dashed #999;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table-preview-svg {
+    background-color: white;
+    margin-top: 5px;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.controls button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #f0f2f5;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.controls button:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.controls button.active {
+    background-color: #3b82f6;
+    color: white;
+    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.3);
+}
+
+.controls select {
+    padding: 10px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background-color: white;
+    color: #4b5563;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    outline: none;
+    min-width: 150px;
+}
+
+.controls select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.controls button, .controls select {
+    transition: all 0.2s ease-in-out;
+}
+
+.element-details {
+    position: absolute;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 250px;
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeIn 0.2s ease-out;
+    border: 1px solid #e0e0e0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.element-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f7f9;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.element-details-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.element-details-content {
+    padding: 15px;
+}
+
+.element-details-content p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.element-details-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.action-button {
+    flex: 1 0 calc(50% - 8px);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    color: white;
+}
+
+.button-icon {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.rotate-button {
+    background-color: #4a90e2;
+}
+
+.rotate-button:hover {
+    background-color: #3a7bc8;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+.activate-button {
+    background-color: #2ecc71;
+}
+
+.activate-button:hover {
+    background-color: #27ae60;
+}
+
+.deactivate-button {
+    background-color: #f39c12;
+}
+
+.deactivate-button:hover {
+    background-color: #e67e22;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+
+@keyframes tableAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    60% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.table-new-animation {
+    animation: tableAppear 0.5s ease-out forwards;
+    transform-origin: center;
+}
+
+@keyframes wallDraw {
+    from {
+        stroke-dashoffset: 1000;
+        opacity: 0.5;
+    }
+    to {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+.wall-new-animation {
+    stroke-dasharray: 1000;
+    animation: wallDraw 0.5s ease-out forwards;
+}
+
+@keyframes elementAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.door-new-animation,
+.window-new-animation {
+    animation: elementAppear 0.4s ease-out forwards;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.resize-handle:hover {
+    animation: pulse 1s infinite;
+}
+
+.table-container {
+    transition: transform 0.2s ease-out;
+}
+
+.dragging {
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+}
+
+
+.controls {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 0;
+    margin-bottom: 15px;
+    margin-right: 20px;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+}
+
+.controls-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f7f9;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.controls-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+.controls-section {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.controls-section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 10px 0;
+    color: #666;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tool-button {
+    flex: 1 0 calc(33.333% - 8px);
+    min-width: 50px;
+    height: 60px;
+    border: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.select-button {
+    flex: 1 0 calc(100% - 8px);
+    height: 70px;
+    margin-bottom: 8px;
+    background-color: #f2f7ff;
+    border-color: #c0d7f7;
+}
+
+.tool-button:hover {
+    background-color: #f0f0f0;
+    border-color: #d0d0d0;
+}
+
+.tool-button.active {
+    background-color: #e8f0fe;
+    border-color: #4a90e2;
+    color: #4a90e2;
+}
+
+.select-button.active {
+    background-color: #d6e6ff;
+    border-color: #4a90e2;
+}
+
+.tool-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.select-button .tool-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.select-icon::before {
+    content: "🔍";
+    font-size: 22px;
+}
+
+.table-icon::before {
+    content: "🍽️";
+    font-size: 18px;
+}
+
+.wall-icon::before {
+    content: "🧱";
+    font-size: 18px;
+}
+
+.door-icon::before {
+    content: "🚪";
+    font-size: 18px;
+}
+
+.window-icon::before {
+    content: "🪟";
+    font-size: 18px;
+}
+
+.tool-button span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.select-button span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.table-select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.preview-container {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.tool-help {
+    font-size: 13px;
+    color: #666;
+    background-color: #f5f7f9;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+.tool-help p {
+    margin: 0;
+}
+
+.controls-footer {
+    background-color: #fcfcfc;
+}
+
+.toggle-controls-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 99;
+    padding: 10px 15px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.toggle-controls-button:hover {
+    background-color: #357abd;
+}
+
+.toggle-controls-button::before {
+    content: "🛠️";
+    font-size: 16px;
+}
