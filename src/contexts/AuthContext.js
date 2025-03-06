@@ -5,7 +5,7 @@ import authService from "../services/auth.service"; // Adjust the path as necess
 import userService from "../services/user.service";
 import cookieManager from "../utils/cookieManager";
 import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
-import {auth, facebookProvider, provider} from "./FirebaseConfig"; // Adjust the path as necessary
+import {auth, facebookProvider, provider} from "../config/FirebaseConfig"; // Adjust the path as necessary
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
