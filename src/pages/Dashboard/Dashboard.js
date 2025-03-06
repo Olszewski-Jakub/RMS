@@ -133,7 +133,7 @@ const useActiveTab = (initialTab = 'pendingReservations', setAllReservations, se
 };
 
 const RestaurantDashboard = () => {
-    const { tab } = useParams();
+    const {tab} = useParams();
     const location = useLocation();
     const [allReservations, setAllReservations] = useState([]);
     const [openingHours, setOpeningHours] = useState([]);
@@ -301,6 +301,65 @@ const RestaurantDashboard = () => {
     const toggleReservationFilterMode = () => {
         setReservationFilterMode(!reservationFilterMode);
     }
+
+    const [messageData, setMessageData] = useState(null);
+
+    useEffect(() => {
+        // Establish the WebSocket connection
+        const ws = new WebSocket('wss://rms.bushive.app'); // Replace with your WebSocket URL
+
+        ws.onopen = () => {
+            console.log('WebSocket connected');
+        };
+
+        ws.onmessage = (event) => {
+            // Parse the incoming message
+            const parsedMessage = JSON.parse(event.data);
+
+            // Extract the 'data' field from the message and store it in the state
+            if (parsedMessage && parsedMessage.data) {
+                console.log('Received message:', parsedMessage.data);
+
+                switch (activeTab) {
+                    case 'pendingReservations':
+                        // Check if ID is in pending reservations
+                        const id = parsedMessage.data.id;
+                        const reservation = pendingReservations.find((res) => res.id === id);
+                        console.log(parsedMessage.data);
+                        if (!reservation) {
+                            const startTime = new Date(parsedMessage.data.startTime * 1000);
+                            const endTime = new Date(parsedMessage.data.endTime * 1000);
+                            const newReservation = {
+                                ...parsedMessage.data,
+                                startTime: startTime.toISOString().split('T')[1].split('.')[0], // Extract time part
+                                endTime: endTime.toISOString().split('T')[0], // Extract date part
+                                date: startTime.toISOString().split('T')[0] // Extract date part
+                            };
+                            setPendingReservations((prevReservations) => {
+                                const reservationMap = new Map(prevReservations.map(res => [res.id, res]));
+                                reservationMap.set(id, newReservation);
+                                return Array.from(reservationMap.values());
+                            });
+                        }
+                        break;
+                }
+
+            }
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket Error: ', error);
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket disconnected');
+        };
+
+        // Cleanup WebSocket connection when the component is unmounted
+        return () => {
+            ws.close();
+        };
+    }, []);
 
     return (
         <div className="flex h-screen bg-gray-100">

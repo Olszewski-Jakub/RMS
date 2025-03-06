@@ -113,7 +113,7 @@ const AllReservations = ({allReservations, filtersVisible, setFiltersVisible}) =
     return (
         <div className="app-container">
             {/* Main content area */}
-            <div style={{width: '100%'}}>          {/* Results count */}
+            <div className="main-content-ar">          {/* Results count */}
                 <div className="results-count">
                     Showing {filteredReservations.length} of {allReservations.length} reservations
                 </div>
