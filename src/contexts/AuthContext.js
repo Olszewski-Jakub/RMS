@@ -120,8 +120,25 @@ export const AuthProvider = ({children}) => {
         }
     };
 
+    const resetPassword = async (email) => {
+        try {
+            await authService.forgotPassword(email);
+        } catch (error) {
+            console.error("Password reset error:", error);
+        }
+    };
+
+    const deleteAccount = async () => {
+        try {
+            await authService.deleteAccount();
+            setIsLoggedIn(false);
+        } catch (error) {
+            console.error("Account deletion error:", error);
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{isLoggedIn, login, register, logout, loginWithGoogle,loginWithFacebook, sendGoogleToken}}>
+        <AuthContext.Provider value={{isLoggedIn, login, register, logout, loginWithGoogle,loginWithFacebook, sendGoogleToken,resetPassword, deleteAccount}}>
             {children}
         </AuthContext.Provider>
     );
