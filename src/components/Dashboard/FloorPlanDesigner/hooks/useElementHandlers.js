@@ -20,7 +20,7 @@ export const useElementHandlers = (tables, setTables, walls, setWalls, doors, se
     const [deactivatingTables, setDeactivatingTables] = useState([]);
 
     // Table methods
-    const addTable = async (event, currentDrawingMode, selectedTableType) => {
+    const addTable = async (event, currentDrawingMode, selectedTableType,tableNum) => {
         if (currentDrawingMode !== DrawingMode.TABLE) return;
 
         const { x, y } = getCursorPosition(event);
@@ -35,7 +35,8 @@ export const useElementHandlers = (tables, setTables, walls, setWalls, doors, se
                 x - selectedTableType.width / 2,
                 y - selectedTableType.height / 2,
                 0,
-                selectedTableType.name
+                selectedTableType.name,
+                tableNum
             );
 
             const newTable = {
@@ -46,6 +47,7 @@ export const useElementHandlers = (tables, setTables, walls, setWalls, doors, se
                 type: selectedTableType,
                 isActive: true,
                 rotation: 0,
+                tabeleNum: tableNum,
                 isNew: true // Mark as new for animation
             };
             setTables([...tables, newTable]);

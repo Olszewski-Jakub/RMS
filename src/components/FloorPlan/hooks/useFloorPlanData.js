@@ -37,6 +37,7 @@ export const useFloorPlanData = (freeTables = []) => {
 
                 // Process tables
                 const tablesData = plan.tables;
+                console.log("tablesData", tablesData);
                 const formattedTables = tablesData.map(table => ({
                     id: table.id.toString(),
                     x: table.x,
@@ -44,6 +45,7 @@ export const useFloorPlanData = (freeTables = []) => {
                     rotation: table.rotation || 0,
                     type: Object.values(tableTypes).find(t => t.name === table.type) || tableTypes.medium1,
                     isActive: table.isActive !== undefined ? table.isActive : true,
+                    tableNum: table.tabeleNum,
                     seats: table.seats
                 }));
                 setTables(formattedTables);

@@ -80,6 +80,7 @@ const FloorCanvas = ({
     // Render tables
     const renderTables = () => {
         return tables.map((table) => (
+            console.log(table),
             <TableWithChairs
                 key={table.id}
                 id={table.id}
@@ -87,6 +88,7 @@ const FloorCanvas = ({
                 y={table.y}
                 tableType={table.type}
                 isAvailable={table.isActive}
+                label={table.tableNum}
                 onClick={onTableClick}
                 rotation={table.rotation}
                 isSelected={selectedTable === table.id}

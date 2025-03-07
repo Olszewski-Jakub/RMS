@@ -1,14 +1,15 @@
 import axiosInstance from '../config/apiConfig';
 
 const tableService = {
-    create : async (seats, nextToWindow, x, y, rotation,type) => {
+    create : async (seats, nextToWindow, x, y, rotation,type, tableNum) => {
         const response = await axiosInstance.post(`/table`, {
             seats,
             nextToWindow,
             x,
             y,
             rotation,
-            type
+            type,
+            tableNum: parseInt(tableNum,10)
         });
         return response.data.data;
     },
@@ -23,14 +24,15 @@ const tableService = {
         return response.data.data;
     },
 
-    update : async (id, seats, nextToWindow, x, y, rotation,type) => {
+    update : async (id, seats, nextToWindow, x, y, rotation,type, tableNum) => {
         const response = await axiosInstance.put(`/table/${id}`, {
             seats,
             nextToWindow,
             x,
             y,
             rotation,
-            type
+            type,
+            tableNum: parseInt(tableNum,10)
         });
         return response.data.data;
     },

@@ -8,6 +8,7 @@ const TableWithChairs = ({
                              y,
                              tableType,
                              isAvailable,
+                             label,
                              onClick,
                              rotation = 0,
                              isMobile = false,
@@ -308,7 +309,7 @@ const TableWithChairs = ({
                     fontSize={isMobile ? "1rem" : "1.2rem"}
                     pointerEvents="none"
                 >
-                    {id}
+                    {label}
                 </text>
                 <text
                     x={tableCenter.x}
@@ -320,7 +321,7 @@ const TableWithChairs = ({
                     fontSize={isMobile ? "1rem" : "1.2rem"}
                     pointerEvents="none"
                 >
-                    {id}
+                    {label}
                 </text>
             </g>
         </g>
@@ -341,6 +342,7 @@ TableWithChairs.propTypes = {
         chairsRight: PropTypes.number.isRequired,
         isRound: PropTypes.bool
     }).isRequired,
+    label: PropTypes.string,
     onClick: PropTypes.func,
     rotation: PropTypes.number,
     isMobile: PropTypes.bool,
