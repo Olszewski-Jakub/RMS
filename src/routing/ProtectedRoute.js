@@ -1,5 +1,4 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import {useAuth} from "../contexts/AuthContext";
 import cookieManager from "../utils/cookieManager";
 import cookieKeys from "../constants/cookieKeys";
 const ProtectedRoute = ({ roles }) => {

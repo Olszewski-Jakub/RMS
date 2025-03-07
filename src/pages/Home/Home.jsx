@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Home.css";
 import HomeMain from "../../components/HomeMain/HomeMain.jsx";
 import HomeFooter from "../../components/HomeFooter/HomeFooter.jsx";

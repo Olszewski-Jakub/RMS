@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./Menu.css";
 import menuItems from "../../constants/MenuItems.js";
 import { FaRegClock, FaSearch, FaShoppingCart, FaChevronUp, FaChevronDown } from "react-icons/fa";
-import { IoFastFoodOutline, IoFlameOutline } from "react-icons/io5";
+import { IoFlameOutline } from "react-icons/io5";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 

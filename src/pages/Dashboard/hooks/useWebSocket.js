@@ -51,6 +51,8 @@ export const useWebSocket = (url, activeTab, pendingReservations, setPendingRese
                             });
                         }
                         break;
+                    default:
+                        break;
                 }
             }
         };

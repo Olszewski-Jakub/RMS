@@ -16,7 +16,6 @@ export const useFloorPlanData = (freeTables = []) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Update available tables when freeTables prop changes
     useEffect(() => {
         const freeTableIds = freeTables.map(table => table.id.toString());
         const updatedTables = tables.map(t => ({

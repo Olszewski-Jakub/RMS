@@ -1,17 +1,16 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import COOKIE_KEYS from "../constants/cookieKeys"; // Adjust the path as necessary
-import authService from "../services/auth.service"; // Adjust the path as necessary
+import COOKIE_KEYS from "../constants/cookieKeys"; 
+import authService from "../services/auth.service"; 
 import userService from "../services/user.service";
 import cookieManager from "../utils/cookieManager";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
-import {auth, facebookProvider, googleProvider} from "../config/FirebaseConfig"; // Adjust the path as necessary
+import {auth, facebookProvider, googleProvider} from "../config/FirebaseConfig"; 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
-
+    
     useEffect(() => {
         const idToken = cookieManager.get(COOKIE_KEYS.ID_TOKEN);
         setIsLoggedIn(!!idToken);

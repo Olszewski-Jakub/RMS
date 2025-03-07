@@ -512,6 +512,7 @@ export const useElementHandlers = (tables, setTables, walls, setWalls, doors, se
                 );
                 setWindows(updatedWindows);
                 break;
+            default: break;
         }
 
         setResizeStartPoint(currentPoint);
@@ -606,6 +607,7 @@ export const useElementHandlers = (tables, setTables, walls, setWalls, doors, se
                 });
                 setWindows(updatedWindows);
                 break;
+            default: break;
         }
         setSelectedElement(null);
         setElementDetailsPosition(null);
@@ -629,6 +631,7 @@ export const useElementHandlers = (tables, setTables, walls, setWalls, doors, se
                 windowService.delete(element.intId);
                 setWindows(windows.filter(window => window.id !== element.id));
                 break;
+            default: break;
         }
         setSelectedElement(null);
         setElementDetailsPosition(null);

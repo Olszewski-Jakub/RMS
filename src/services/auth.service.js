@@ -5,7 +5,7 @@ import axiosInstance from '../config/apiConfig';
 
 const authService = {
     login: async (email, password) => {
-        const response = await axios.post("https://api-d4o6tbc5fq-uc.a.run.app" + `/auth/login`, {
+        const response = await axios.post(`https://api-d4o6tbc5fq-uc.a.run.app/auth/login`, {
             email,
             password
         });
@@ -21,7 +21,7 @@ const authService = {
             phoneNumber: code + formData.phoneNumber,
         };
 
-        const response = await axios.post("https://api-d4o6tbc5fq-uc.a.run.app" + `/auth/register`, updatedFormData);
+        const response = await axios.post(`https://api-d4o6tbc5fq-uc.a.run.app/auth/register`, updatedFormData);
         const data = response.data.data;
         return data;
     },
@@ -36,7 +36,7 @@ const authService = {
             throw new Error('No refresh token available');
         }
 
-        const response = await axios.post("https://api-d4o6tbc5fq-uc.a.run.app" + `/auth/refreshToken`, {
+        const response = await axios.post(`https://api-d4o6tbc5fq-uc.a.run.app/auth/refreshToken`, {
             refreshToken: refreshToken
         });
 

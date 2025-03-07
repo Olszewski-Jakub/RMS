@@ -80,7 +80,6 @@ const FloorCanvas = ({
     // Render tables
     const renderTables = () => {
         return tables.map((table) => (
-            console.log(table),
             <TableWithChairs
                 key={table.id}
                 id={table.id}
