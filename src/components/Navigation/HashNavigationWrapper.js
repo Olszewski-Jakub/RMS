@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Home from '../../pages/Home/Home';
 import Menu from '../../pages/Menu/Menu';
 import Location from '../../pages/Location/Location';
 import ReserveTable from '../../pages/Reservation/ReserveTable';
 
-// This component acts as a wrapper for the main content
-// It renders different views based on the hash while staying on the same route
 const HashNavigationWrapper = () => {
     const [activeView, setActiveView] = useState('Home');
     const location = useLocation();
-    const navigate = useNavigate();
 
-    // Update the active view based on hash changes
     useEffect(() => {
         const hash = location.hash.replace('#', '');
 
