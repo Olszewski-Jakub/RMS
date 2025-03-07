@@ -28,6 +28,15 @@ const FloorPlanCanvas = ({
                              showElementDetails,
                              startResize
                          }) => {
+    // Helper function for getting cursor position
+    function getCursorPosition(event) {
+        const svg = svgRef.current;
+        const point = svg.createSVGPoint();
+        point.x = event.clientX;
+        point.y = event.clientY;
+        return point.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
     return (
         <svg
             ref={svgRef}
@@ -41,6 +50,7 @@ const FloorPlanCanvas = ({
 
                 switch (currentDrawingMode) {
                     case DrawingMode.TABLE:
+                        // This will now trigger the modal instead of directly adding a table
                         addTable(e);
                         break;
                     case DrawingMode.DOOR:
@@ -92,7 +102,7 @@ const FloorPlanCanvas = ({
             }}
             style={{ border: '1px solid #ccc' }}
         >
-            {}
+            {/* Walls */}
             {walls.map(wall => (
                 <WallComponent
                     key={wall.id}
@@ -104,7 +114,7 @@ const FloorPlanCanvas = ({
                 />
             ))}
 
-            {}
+            {/* Tables */}
             {tables.map(table => (
                 <TableComponent
                     key={table.id}
@@ -117,11 +127,10 @@ const FloorPlanCanvas = ({
                     startDragElement={startDragElement}
                     svgRef={svgRef}
                     isNew={table.isNew}
-
                 />
             ))}
 
-            {}
+            {/* Doors */}
             {doors.map(door => (
                 <DoorComponent
                     key={door.id}
@@ -133,7 +142,7 @@ const FloorPlanCanvas = ({
                 />
             ))}
 
-            {}
+            {/* Windows */}
             {windows.map(window => (
                 <WindowComponent
                     key={window.id}
@@ -145,7 +154,7 @@ const FloorPlanCanvas = ({
                 />
             ))}
 
-            {}
+            {/* Temporary wall preview */}
             {startPoint && currentDrawingMode === DrawingMode.WALL && (
                 <line
                     id="temp-wall"
@@ -160,15 +169,6 @@ const FloorPlanCanvas = ({
             )}
         </svg>
     );
-
-    // Helper function for getting cursor position
-    function getCursorPosition(event) {
-        const svg = svgRef.current;
-        const point = svg.createSVGPoint();
-        point.x = event.clientX;
-        point.y = event.clientY;
-        return point.matrixTransform(svg.getScreenCTM().inverse());
-    }
 };
 
 export default FloorPlanCanvas;

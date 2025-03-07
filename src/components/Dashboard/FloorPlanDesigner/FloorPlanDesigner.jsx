@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ControlPanel from './components/ControlPanel';
 import ElementDetails from './components/ElementDetails';
+import TableNumberModal from './components/TableNumberModal'; // Import the new component
 import {tableTypes} from '../../../constants/tableTypes';
 import {DrawingMode} from '../../../constants/drawingModes';
 import FloorPlanCanvas from './components/FloorPlanCanvas';
@@ -26,6 +27,11 @@ const FloorPlanDesigner = ({ editMode }) => {
     // Drawing mode and table type selection
     const [currentDrawingMode, setCurrentDrawingMode] = useState(DrawingMode.SELECT);
     const [selectedTableType, setSelectedTableType] = useState(tableTypes.medium1);
+
+    // State for the table number modal
+    const [showTableModal, setShowTableModal] = useState(false);
+    const [tableModalPosition, setTableModalPosition] = useState({ x: 0, y: 0 });
+    const [pendingTableEvent, setPendingTableEvent] = useState(null);
 
     // Use custom hooks to manage state and logic
     const {svgRef, svgDimensions, getCursorPosition, handleBackgroundClick} = useCanvasUtils();
@@ -71,9 +77,40 @@ const FloorPlanDesigner = ({ editMode }) => {
         getCursorPosition
     );
 
+    // Modified handler for adding a table
+    const handleAddTable = (event) => {
+        if (currentDrawingMode !== DrawingMode.TABLE) return;
 
-// Event handler functions that bind current drawing mode and selected table type
-    const handleAddTable = (event) => addTable(event, currentDrawingMode, selectedTableType);
+        // Save the event for later use when modal is confirmed
+        setPendingTableEvent(event);
+
+        // Show the modal at the click position
+        setTableModalPosition({
+            x: event.clientX,
+            y: event.clientY
+        });
+        setShowTableModal(true);
+    };
+
+    // Handler for modal confirmation
+    const handleTableModalConfirm = (tableNum) => {
+        if (pendingTableEvent && tableNum) {
+            // Call the addTable function with the saved event, current drawing mode, selected table type, and the table number
+            addTable(pendingTableEvent, currentDrawingMode, selectedTableType, tableNum);
+        }
+
+        // Reset the modal state
+        setShowTableModal(false);
+        setPendingTableEvent(null);
+    };
+
+    // Handler for modal cancellation
+    const handleTableModalCancel = () => {
+        setShowTableModal(false);
+        setPendingTableEvent(null);
+    };
+
+    // Other event handler functions that bind current drawing mode and selected table type
     const handleStartDrawWall = (event) => startDrawWall(event, currentDrawingMode);
     const handleEndDrawWall = (event) => endDrawWall(event, currentDrawingMode);
     const handleAddDoor = (event) => addDoor(event, currentDrawingMode);
@@ -111,7 +148,7 @@ const FloorPlanDesigner = ({ editMode }) => {
                     startPoint={startPoint}
                     isDragging={isDragging}
                     draggedItem={draggedItem}
-                    addTable={handleAddTable}
+                    addTable={handleAddTable} // Use the modified handler
                     addDoor={handleAddDoor}
                     addWindow={handleAddWindow}
                     startDrawWall={handleStartDrawWall}
@@ -138,6 +175,15 @@ const FloorPlanDesigner = ({ editMode }) => {
                             setSelectedElement(null);
                             setElementDetailsPosition(null);
                         }}
+                    />
+                )}
+
+                {/* Render the table number modal when showTableModal is true */}
+                {showTableModal && (
+                    <TableNumberModal
+                        position={tableModalPosition}
+                        onConfirm={handleTableModalConfirm}
+                        onCancel={handleTableModalCancel}
                     />
                 )}
             </div>

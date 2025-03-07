@@ -100,6 +100,7 @@ const TableComponent = ({
                 tableType={table.type}
                 isAvailable={table.isActive}
                 rotation={table.rotation || 0}
+                label={table.tabeleNum}
                 onClick={(id, seats) => {
                     if (editMode && currentDrawingMode === 'select') {
                         // Get the SVG element

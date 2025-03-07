@@ -45,6 +45,7 @@ export const useFloorPlanData = () => {
             }));
 
             setTables(tables || []);
+            console.log("tables", tables);
         } catch (error) {
             console.error('Error fetching tables:', error);
         }
