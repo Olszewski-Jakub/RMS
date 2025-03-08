@@ -28,8 +28,8 @@ export default function Profile() {
   return (
     <div className="profile-layout">
       {/* Sidebar Navigation */}
-      <nav className="sidebar">
-        <div className="sidebar-header">
+      <nav className="sidebar-profile">
+        <div className="sidebar-header-profile">
           <h2>My Profile</h2>
         </div>
         <ul className="sidebar-menu">

@@ -7,7 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="hto fix" />
+    <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="hto fix">
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/Profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="removal-of-unsed-packages" />
+        <entry key="$PROJECT_DIR$" value="profile-page" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,7 +67,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "profile-page",
+    "git-widget-placeholder": "profile-page-resolve-conflicts",
     "last_opened_file_path": "/Users/jakubolszewski/Developer/RMS/RMS",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -122,7 +125,7 @@
       <workItem from="1741345120573" duration="128000" />
       <workItem from="1741346535384" duration="9697000" />
       <workItem from="1741387240139" duration="859000" />
-      <workItem from="1741437318879" duration="1158000" />
+      <workItem from="1741437318879" duration="1473000" />
     </task>
     <task id="LOCAL-00001" summary="ci/cd">
       <option name="closed" value="true" />
@@ -303,7 +306,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="profile-page-resolve-conflicts" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
