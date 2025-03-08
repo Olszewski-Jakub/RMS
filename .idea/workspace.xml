@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="hto fix" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="CSS File" />
+        <option value="JSX File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="removal-of-unsed-packages" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Olszewski-Jakub&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Olszewski-Jakub/RMS.git&quot;,
+    &quot;accountId&quot;: &quot;0b618a94-2208-4e61-9ea0-82fd6da5cc42&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2sfBkYvrZ28e7z1UkOdkRjgJ7uw" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.Dashboard.js.executor": "Run",
+    "Node.js.FloorPlanDesigner.js.executor": "Run",
+    "Node.js.TablesManagement.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "profile-page",
+    "last_opened_file_path": "/Users/jakubolszewski/Developer/RMS/RMS",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.run .executor": "Run",
+    "npm.start.executor": "Run",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Users/jakubolszewski/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/routing" />
+      <recent name="$PROJECT_DIR$/src/components/Authentication" />
+      <recent name="$PROJECT_DIR$/src/components/FloorPlan" />
+      <recent name="$PROJECT_DIR$/src/components/FloorPlan/componenets" />
+      <recent name="$PROJECT_DIR$/src/constants" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="run " type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.25659.40" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="" />
+      <created>1738836892770</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738836892770</updated>
+      <workItem from="1738836893823" duration="1276000" />
+      <workItem from="1741094531759" duration="751000" />
+      <workItem from="1741095286485" duration="30786000" />
+      <workItem from="1741263413742" duration="18763000" />
+      <workItem from="1741291573818" duration="14222000" />
+      <workItem from="1741344773581" duration="4000" />
+      <workItem from="1741345120573" duration="128000" />
+      <workItem from="1741346535384" duration="9697000" />
+      <workItem from="1741387240139" duration="859000" />
+      <workItem from="1741437318879" duration="1158000" />
+    </task>
+    <task id="LOCAL-00001" summary="ci/cd">
+      <option name="closed" value="true" />
+      <created>1738837045422</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738837045422</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added rendering for floor plan on reservation screen">
+      <option name="closed" value="true" />
+      <created>1741189664807</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741189664807</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added employee managment">
+      <option name="closed" value="true" />
+      <created>1741201556596</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741201556596</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added permission based anv">
+      <option name="closed" value="true" />
+      <created>1741201735670</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741201735670</updated>
+    </task>
+    <task id="LOCAL-00005" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1741203289190</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741203289190</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Resolve conflicts and improved UI">
+      <option name="closed" value="true" />
+      <created>1741220235734</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741220235734</updated>
+    </task>
+    <task id="LOCAL-00007" summary="UI improvements">
+      <option name="closed" value="true" />
+      <created>1741223145499</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1741223145499</updated>
+    </task>
+    <task id="LOCAL-00008" summary="UI improvements">
+      <option name="closed" value="true" />
+      <created>1741225415330</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741225415330</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added auth providers">
+      <option name="closed" value="true" />
+      <created>1741272455841</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1741272455841</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added auth providers">
+      <option name="closed" value="true" />
+      <created>1741273291792</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1741273291792</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added auth providers">
+      <option name="closed" value="true" />
+      <created>1741273669540</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1741273669540</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added auth providers">
+      <option name="closed" value="true" />
+      <created>1741278764826</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1741278764826</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Fixed table details">
+      <option name="closed" value="true" />
+      <created>1741279726317</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1741279726317</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Websocket support for pedning reservations and fixed scrolling on all reservations">
+      <option name="closed" value="true" />
+      <created>1741296237362</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1741296237362</updated>
+    </task>
+    <task id="LOCAL-00015" summary="loading state dashboard">
+      <option name="closed" value="true" />
+      <created>1741297708598</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1741297708598</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Improved UI">
+      <option name="closed" value="true" />
+      <created>1741301063190</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1741301063190</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Dashboard refactor">
+      <option name="closed" value="true" />
+      <created>1741303822166</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1741303822166</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Auth refactor">
+      <option name="closed" value="true" />
+      <created>1741305310565</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1741305310565</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added customisable table number">
+      <option name="closed" value="true" />
+      <created>1741363998645</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1741363998645</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added customisable table number">
+      <option name="closed" value="true" />
+      <created>1741365533000</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1741365533000</updated>
+    </task>
+    <task id="LOCAL-00021" summary="hto fix">
+      <option name="closed" value="true" />
+      <created>1741438468537</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1741438468537</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="ci/cd" />
+    <MESSAGE value="Added rendering for floor plan on reservation screen" />
+    <MESSAGE value="Added employee managment" />
+    <MESSAGE value="Added permission based anv" />
+    <MESSAGE value="WIP" />
+    <MESSAGE value="Resolve conflicts and improved UI" />
+    <MESSAGE value="UI improvements" />
+    <MESSAGE value="added auth providers" />
+    <MESSAGE value="Fixed table details" />
+    <MESSAGE value="Websocket support for pedning reservations and fixed scrolling on all reservations" />
+    <MESSAGE value="loading state dashboard" />
+    <MESSAGE value="Improved UI" />
+    <MESSAGE value="Dashboard refactor" />
+    <MESSAGE value="Auth refactor" />
+    <MESSAGE value="Removed unused packages" />
+    <MESSAGE value="Removed unused packages" />
+    <MESSAGE value="hto fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="hto fix" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/Profile/components/MyAccount.jsx</url>
+          <line>34</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
