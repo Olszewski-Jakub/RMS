@@ -9,7 +9,7 @@ const PendingReservations = ({ pendingReservations, handleApproveReservation, ha
               <p className="empty-text">No pending reservations</p>
             </div>
         ) : (
-            <div className="reservation-grid">
+            <div className="reservation-grid-dashboard">
               {pendingReservations.map(reservation => (
                   <div key={reservation.id} className="reservation-card">
                     <div className="reservation-content">

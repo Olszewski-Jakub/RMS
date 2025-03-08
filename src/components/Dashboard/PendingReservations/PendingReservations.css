@@ -28,7 +28,7 @@
     font-weight: 500;
 }
 
-.reservation-grid {
+.reservation-grid-dashboard {
     display: grid;
     gap: 16px;
 }

@@ -48,6 +48,14 @@ const reservationService = {
     getByStatus: async (status) => {
         const response = await axiosInstance.get(`/reservation/${status}`)
         return response.data.data;
+    },
+    getByUser: async () => {
+        const response = await axiosInstance.get(`/reservation/user`);
+        return response.data.data;
+    },
+    getUserUpcomingReservations: async () => {
+        const response = await axiosInstance.get(`/reservation/user/upcoming`);
+        return response.data.data;
     }
 };
 
