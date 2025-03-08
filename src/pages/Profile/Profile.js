@@ -33,14 +33,14 @@ export default function Profile() {
           <h2>My Profile</h2>
         </div>
         <ul className="sidebar-menu">
-          <li 
-            className={activeTab === "account" ? "active" : ""} 
+          <li
+            className={activeTab === "account" ? "active" : ""}
             onClick={() => setActiveTab("account")}
           >
             My Account
           </li>
-          <li 
-            className={activeTab === "reservations" ? "active" : ""} 
+          <li
+            className={activeTab === "reservations" ? "active" : ""}
             onClick={() => setActiveTab("reservations")}
           >
             Reservations
@@ -57,7 +57,7 @@ export default function Profile() {
       {/* Main Content */}
 
       <>
-      
+
       {activeTab === 'reservations' && (
         <MyReservations handleManage={handleManage} handleCancel={handleCancel}/>
       )}
@@ -70,5 +70,3 @@ export default function Profile() {
     </div>
   );
 }
-  
-    

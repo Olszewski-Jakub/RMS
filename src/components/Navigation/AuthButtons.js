@@ -1,21 +1,26 @@
-const AuthButtons = ({ handleLoginClick, handleSignUpClick }) => (
-    <div className="header-right">
-        <button
+import React from "react";
+import { motion } from "framer-motion";
+
+const AuthButtons = ({ handleLoginClick, handleSignUpClick, isMobile }) => (
+    <div className={isMobile ? "mobile-header-right" : "header-right"}>
+        <motion.button
             onClick={handleLoginClick}
-            className="login-btn auth-btn"
-            style={{ color: "#FF7D05", border: "1px solid #FF7D05", marginRight: "1rem", backgroundColor: "white" }}
+            className={`login-btn auth-btn ${isMobile ? "mobile-auth-btn" : ""}`}
+            whileHover={{ scale: 1.05, boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.1)" }}
+            whileTap={{ scale: 0.95 }}
         >
             Log In
-        </button>
+        </motion.button>
 
-        <button
+        <motion.button
             onClick={handleSignUpClick}
-            className="signup-btn auth-btn"
-            style={{ color: "white", border: "none", backgroundColor: "#FF7D05" }}
+            className={`signup-btn auth-btn ${isMobile ? "mobile-auth-btn" : ""}`}
+            whileHover={{ scale: 1.05, boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.1)" }}
+            whileTap={{ scale: 0.95 }}
         >
             Sign Up
-        </button>
+        </motion.button>
     </div>
 );
 
-export default AuthButtons
+export default AuthButtons;

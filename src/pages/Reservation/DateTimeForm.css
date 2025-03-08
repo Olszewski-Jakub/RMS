@@ -1,30 +1,247 @@
-/* Custom styling for the DatePicker */
-.custom-datepicker {
-  border: 2px solid #007bff; /* Blue border */
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 16px;
+
+.reservation-form {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.reservation-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(to right, #e8962a, #f2b45c);
+}
+
+.reservation-form h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.75rem;
+  color: #333;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.reservation-form h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: #e8962a;
+  border-radius: 2px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.input-field:focus {
+  border-color: #e8962a;
+  box-shadow: 0 0 0 2px rgba(232, 150, 42, 0.2);
+  outline: none;
+  background-color: #fff;
+}
+
+.input-field:hover {
+  background-color: #fff;
+}
+
+.input-field::placeholder {
+  color: #aaa;
+}
+
+input[type="number"].input-field {
+  -moz-appearance: textfield;
+}
+
+input[type="number"].input-field::-webkit-outer-spin-button,
+input[type="number"].input-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time-select-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.select-field {
+  padding: 0.875rem 1rem;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  color: #333;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8.825L1.175 4 2.05 3.125 6 7.075 9.95 3.125 10.825 4 6 8.825z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  transition: all 0.3s ease;
+}
+
+.select-field:focus {
+  border-color: #e8962a;
+  box-shadow: 0 0 0 2px rgba(232, 150, 42, 0.2);
+  outline: none;
+  background-color: #fff;
+}
+
+.select-field:hover {
+  background-color: #fff;
+}
+
+.search-button {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to right, #e8962a, #f2b45c);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0) 100%
+  );
+  transition: all 0.6s ease;
+}
+
+.search-button:hover {
+  background: linear-gradient(to right, #d78620, #e8a143);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232, 150, 42, 0.3);
+}
+
+.search-button:hover::before {
+  left: 100%;
+}
+
+.search-button:active {
+  transform: translateY(0);
+}
+
+.search-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.search-button:disabled::before {
+  display: none;
+}
+
+.helper-text {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #777;
+  text-align: center;
+  line-height: 1.4;
+}
+
+:focus {
+  outline: 2px solid rgba(232, 150, 42, 0.5);
+  outline-offset: 2px;
+}
+
+.react-datepicker-wrapper {
   width: 100%;
 }
 
-.custom-datepicker__input-container {
-  display: block;
-  position: relative;
+.react-datepicker__input-container {
+  width: 100%;
 }
 
-/* Add more styles as needed */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.react-datepicker {
+  font-family: inherit;
+  border-color: #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.form-item {
-  display: flex;
-  flex-direction: column;
+.react-datepicker__header {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e1e1e1;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.react-datepicker__current-month {
+  font-weight: 600;
+  color: #333;
+}
+
+.react-datepicker__day-name {
+  color: #888;
+}
+
+.react-datepicker__day--selected {
+  background-color: #e8962a;
+  border-radius: 50%;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: rgba(232, 150, 42, 0.2);
+  border-radius: 50%;
+}
+
+.react-datepicker__day:hover {
+  background-color: #f2f2f2;
+  border-radius: 50%;
+}
+
+.react-datepicker__navigation {
+  top: 12px;
+}
+
+@media (max-width: 768px) {
+  .reservation-form {
+    padding: 1.5rem;
+  }
 }
