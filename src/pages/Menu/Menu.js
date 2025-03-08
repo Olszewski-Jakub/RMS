@@ -1,6 +1,6 @@
 // src/pages/Menu/Menu.js
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Menu.css";
 import menuItems from "../../constants/MenuItems.js";
 import { FaRegClock, FaSearch, FaShoppingCart, FaChevronUp, FaChevronDown } from "react-icons/fa";
@@ -16,16 +16,32 @@ menuItems.forEach(item => {
 const Menu = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState(menuItems);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
   const [isMobile, setIsMobile] = useState(false);
   const [showMobileCart, setShowMobileCart] = useState(false);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // Checkout button
   const handleProceedToCheckout = () => {
-    navigate("/checkout"); // Navigate to the checkout page
+    navigate("/checkout", { state: { cart } });
   };
+
+  // Clear order button
+  const clearOrder = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
+
+  // Updates the cart state and saves it to localStorage if a cart exists in the navigation state
+  useEffect(() => {
+    if (location.state?.cart) {
+      setCart(location.state.cart);
+      localStorage.setItem("cart", JSON.stringify(location.state.cart));
+    }
+  }, [location.state]);
 
   // Check screen size
   useEffect(() => {
@@ -109,6 +125,7 @@ const Menu = () => {
   useEffect(() => {
     const handleScroll = () => {
       const stickyElement = document.querySelector(".sticky-searchbar");
+      if (!stickyElement) return;
       if (window.scrollY > 48) {
         // 3rem in pixels
         stickyElement.classList.add("sticky-padding");
@@ -281,6 +298,12 @@ const Menu = () => {
               <span className='total-label'>Total</span>
               <span className='total-value'>&euro;{getTotal().toFixed(2)}</span>
             </div>
+            {cart.length > 0 && (
+              <button className='clear-order-btn' onClick={clearOrder}>
+                Clear Order
+              </button>
+            )}
+
             <button className='checkout-btn' onClick={handleProceedToCheckout}>
               Proceed to Checkout
               <MdOutlineKeyboardArrowRight size={20} />
@@ -340,7 +363,12 @@ const Menu = () => {
                 <span className='total-label'>Total</span>
                 <span className='total-value'>&euro;{getTotal().toFixed(2)}</span>
               </div>
-              <button className='checkout-btn'>
+              {cart.length > 0 && (
+                <button className='clear-order-btn' onClick={clearOrder}>
+                  Clear Order
+                </button>
+              )}
+              <button className='checkout-btn' onClick={handleProceedToCheckout}>
                 Proceed to Checkout
                 <MdOutlineKeyboardArrowRight size={20} />
               </button>
