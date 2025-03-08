@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 
-const MyReservations = ({ handleManage, handleCancel }) => {
+const MyReservations = ({ handleManage, handleCancel, reservations, upcomingReservation }) => {
   // Current reservation state
-  const [currentReservation, setCurrentReservation] = useState({
-    id: "12345",
-    date: "2025-02-20",
-    startTime: "18:00",
-    endTime: "20:00",
-    people: 4,
-  });
+  // const [upcomingReservation, setupcomingReservation] = useState({
+  //   id: "12345",
+  //   date: "2025-02-20",
+  //   startTime: "18:00",
+  //   endTime: "20:00",
+  //   people: 4,
+  // });
 
   // Reservation history
-  const [reservationHistory, setReservationHistory] = useState([
-    { id: "12344", date: "2025-02-10", startTime: "19:00", endTime: "21:00", people: 2 },
-    { id: "12343", date: "2025-01-25", startTime: "20:00", endTime: "22:00", people: 6 },
-  ]);
+  // const [reservationHistory, setReservationHistory] = useState([
+  //   { id: "12344", date: "2025-02-10", startTime: "19:00", endTime: "21:00", people: 2 },
+  //   { id: "12343", date: "2025-01-25", startTime: "20:00", endTime: "22:00", people: 6 },
+  // ]);
 
   const [showCancelConfirmation, setShowCancelConfirmation] = useState(false);
 
@@ -31,22 +31,22 @@ const MyReservations = ({ handleManage, handleCancel }) => {
   // Handler for confirming cancellation
   const confirmCancellation = () => {
     // Add current reservation to history with a cancelled status
-    setReservationHistory([
-      {
-        ...currentReservation,
-        status: "Cancelled",
-      },
-      ...reservationHistory,
-    ]);
+    // setReservationHistory([
+    //   {
+    //     ...upcomingReservation,
+    //     status: "Cancelled",
+    //   },
+    //   ...reservationHistory,
+    // ]);
 
     // Clear the current reservation
-    setCurrentReservation(null);
+    // setupcomingReservation(null);
     
     // Hide the confirmation modal
     setShowCancelConfirmation(false);
     
     // Call the parent handler
-    handleCancel(currentReservation.id);
+    // handleCancel(upcomingReservation.id);
   };
 
   // Handler for canceling the confirmation
@@ -60,7 +60,7 @@ const MyReservations = ({ handleManage, handleCancel }) => {
         <h2>My Reservations</h2>
       </div>
 
-      {currentReservation ? (
+      {upcomingReservation ? (
         <div className="card upcoming-reservation">
           <div className="card-header">
             <h3>Upcoming Reservation</h3>
@@ -69,27 +69,27 @@ const MyReservations = ({ handleManage, handleCancel }) => {
             <div className="reservation-grid">
               <div className="reservation-field">
                 <span className="field-label">Reservation ID</span>
-                <span className="field-value">{currentReservation.id}</span>
+                <span className="field-value">{upcomingReservation.id}</span>
               </div>
               <div className="reservation-field">
                 <span className="field-label">Date</span>
-                <span className="field-value">{currentReservation.date}</span>
+                <span className="field-value">{upcomingReservation.date}</span>
               </div>
               <div className="reservation-field">
                 <span className="field-label">Time</span>
                 <span className="field-value">
-                  {currentReservation.startTime} - {currentReservation.endTime}
+                  {upcomingReservation.startTime} - {upcomingReservation.endTime}
                 </span>
               </div>
               <div className="reservation-field">
                 <span className="field-label">People</span>
-                <span className="field-value">{currentReservation.people} people</span>
+                <span className="field-value">{upcomingReservation.people} people</span>
               </div>
             </div>
             <div className="card-actions">
               <button
                 className="btn-primary"
-                onClick={() => onManageClick(currentReservation.id)}
+                onClick={() => onManageClick(upcomingReservation.id)}
               >
                 Manage Reservation
               </button>
@@ -120,7 +120,7 @@ const MyReservations = ({ handleManage, handleCancel }) => {
               <h3>Confirm Cancellation</h3>
             </div>
             <div className="modal-body">
-              <p>Are you sure you want to cancel your reservation for {currentReservation.date} at {currentReservation.startTime}?</p>
+              <p>Are you sure you want to cancel your reservation for {upcomingReservation.date} at {upcomingReservation.startTime}?</p>
               <p>This action cannot be undone.</p>
             </div>
             <div className="modal-actions">
@@ -140,7 +140,7 @@ const MyReservations = ({ handleManage, handleCancel }) => {
           <h3>Reservation History</h3>
         </div>
         <div className="card-body">
-          {reservationHistory.length > 0 ? (
+          {reservations.length > 0 ? (
             <table className="history-table">
               <thead>
                 <tr>
@@ -153,7 +153,7 @@ const MyReservations = ({ handleManage, handleCancel }) => {
                 </tr>
               </thead>
               <tbody>
-                {reservationHistory.map((res) => (
+                {reservations.map((res) => (
                   <tr key={res.id}>
                     <td>{res.id}</td>
                     <td>{res.date}</td>

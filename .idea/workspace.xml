@@ -8,8 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f462b43-378b-4e67-8e72-27975d40f95e" name="Changes" comment="hto fix">
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile/Profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile/components/MyReservations.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile/components/MyReservations.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/reservation.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/reservation.service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +69,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "profile-page-resolve-conflicts",
+    "git-widget-placeholder": "profile-page",
     "last_opened_file_path": "/Users/jakubolszewski/Developer/RMS/RMS",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -344,7 +346,8 @@
     <MESSAGE value="Removed unused packages" />
     <MESSAGE value="Removed unused packages" />
     <MESSAGE value="hto fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="hto fix" />
+    <MESSAGE value="resolve conflicts" />
+    <option name="LAST_COMMIT_MESSAGE" value="resolve conflicts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -352,7 +355,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/Profile/components/MyAccount.jsx</url>
           <line>34</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
