@@ -9,58 +9,60 @@ import { ROUTES } from "./constants/routes";
 import Profile from "./pages/Profile/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import RestaurantDashboard from "./pages/Dashboard/Dashboard";
+import Checkout from "./pages/Checkout/Checkout";
 
 function AppRoutes() {
-    return (
-        <Router>
-            <Routes>
-                {/* Main route with HashNavigationWrapper */}
-                <Route
-                    path={ROUTES.HOME}
-                    element={
-                        <Layout>
-                            <HashNavigationWrapper />
-                        </Layout>
-                    }
-                />
+  return (
+    <Router>
+      <Routes>
+        {/* Main route with HashNavigationWrapper */}
+        <Route
+          path={ROUTES.HOME}
+          element={
+            <Layout>
+              <HashNavigationWrapper />
+            </Layout>
+          }
+        />
 
-                {/* Redirect legacy routes to hash-based navigation */}
-                <Route
-                    path={ROUTES.MENU}
-                    element={<Navigate to="/#Menu" replace />}
-                />
-                <Route
-                    path={ROUTES.LOCATION}
-                    element={<Navigate to="/#Location" replace />}
-                />
-                <Route
-                    path={ROUTES.RESERVETABLE}
-                    element={<Navigate to="/#Reservation" replace />}
-                />
+        {/* Redirect legacy routes to hash-based navigation */}
+        <Route path={ROUTES.MENU} element={<Navigate to='/#Menu' replace />} />
+        <Route path={ROUTES.LOCATION} element={<Navigate to='/#Location' replace />} />
+        <Route path={ROUTES.RESERVETABLE} element={<Navigate to='/#Reservation' replace />} />
 
-                {/* Non-hash based routes remain the same */}
-                <Route
-                    path={ROUTES.PROFILE}
-                    element={
-                        <Layout>
-                            <Profile />
-                        </Layout>
-                    }
-                />
+        {/* Non-hash based routes remain the same */}
+        <Route
+          path={ROUTES.PROFILE}
+          element={
+            <Layout>
+              <Profile />
+            </Layout>
+          }
+        />
 
-                {/* Auth Route */}
-                <Route path={ROUTES.AUTH} element={<Auth />} />
+        {/* Checkout Route */}
+        <Route
+          path={ROUTES.CHECKOUT}
+          element={
+            <Layout>
+              <Checkout />
+            </Layout>
+          }
+        />
 
-                {/* Admin Dashboard */}
-                <Route path={ROUTES.ADMIN} element={<ProtectedRoute roles={['owner', 'employee']} />}>
-                    <Route index element={<RestaurantDashboard />} />
-                </Route>
+        {/* Auth Route */}
+        <Route path={ROUTES.AUTH} element={<Auth />} />
 
-                {/* Redirect unknown routes to 404 page */}
-                <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
-            </Routes>
-        </Router>
-    );
+        {/* Admin Dashboard */}
+        <Route path={ROUTES.ADMIN} element={<ProtectedRoute roles={["owner", "employee"]} />}>
+          <Route index element={<RestaurantDashboard />} />
+        </Route>
+
+        {/* Redirect unknown routes to 404 page */}
+        <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default AppRoutes;

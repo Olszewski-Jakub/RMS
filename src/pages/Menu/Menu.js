@@ -1,5 +1,6 @@
 // src/pages/Menu/Menu.js
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Menu.css";
 import menuItems from "../../constants/MenuItems.js";
 import { FaRegClock, FaSearch, FaShoppingCart, FaChevronUp, FaChevronDown } from "react-icons/fa";
@@ -20,6 +21,11 @@ const Menu = () => {
   const [showMobileCart, setShowMobileCart] = useState(false);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
+  const navigate = useNavigate();
+
+  const handleProceedToCheckout = () => {
+    navigate("/checkout"); // Navigate to the checkout page
+  };
 
   // Check screen size
   useEffect(() => {
@@ -275,7 +281,7 @@ const Menu = () => {
               <span className='total-label'>Total</span>
               <span className='total-value'>&euro;{getTotal().toFixed(2)}</span>
             </div>
-            <button className='checkout-btn'>
+            <button className='checkout-btn' onClick={handleProceedToCheckout}>
               Proceed to Checkout
               <MdOutlineKeyboardArrowRight size={20} />
             </button>
